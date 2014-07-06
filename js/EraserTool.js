@@ -47,7 +47,6 @@ function EraserTool (canvas) {
 
     return {
         enable: function () {
-            console.log('eraser enable')
             enabled = true
             c.lineWidth = brushSize
             c.lineCap = 'round'
