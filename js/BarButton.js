@@ -1,4 +1,4 @@
-function BarButton (icon) {
+function BarButton (icon, clickListener) {
 
     var classPrefix = 'BarButton'
 
@@ -7,7 +7,16 @@ function BarButton (icon) {
 
     var element = Div('BarButton')
     element.appendChild(iconElement)
+    element.addEventListener('touchstart', clickListener)
 
-    return { element: element }
+    return {
+        element: element,
+        check: function () {
+            element.classList.add('checked')
+        },
+        uncheck: function () {
+            element.classList.remove('checked')
+        },
+    }
 
 }
