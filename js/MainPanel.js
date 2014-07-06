@@ -2,6 +2,10 @@ function MainPanel () {
 
     var classPrefix = 'MainPanel'
 
+    var canvas = Canvas()
+
+    var brushTool = BrushTool(canvas.canvas)
+
     var brushButton = BarButton('pencil', function () {
         eraserButton.uncheck()
         brushButton.check()
@@ -16,8 +20,6 @@ function MainPanel () {
     var barElement = Div(classPrefix + '-bar')
     barElement.appendChild(brushButton.element)
     barElement.appendChild(eraserButton.element)
-
-    var canvas = Canvas()
 
     var element = Div(classPrefix)
     element.appendChild(canvas.element)

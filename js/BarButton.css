@@ -9,11 +9,13 @@
 }
 .BarButton.checked {
     background-color: #aaa;
-    box-shadow: 0 1px 3px #999 inset;
+    background-image: linear-gradient(#999, #bbb);
+    box-shadow: 0 1px 3px #777 inset;
 }
 .BarButton:active {
     background-color: #888;
-    box-shadow: 0 1px 3px #666 inset;
+    background-image: linear-gradient(#777, #999);
+    box-shadow: 0 1px 3px #555 inset;
 }
 
 .BarButton-icon {
