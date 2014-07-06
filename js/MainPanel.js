@@ -25,14 +25,7 @@ function MainPanel () {
     })
 
     var saveButton = BarButton('floppy', function () {
-        var a = document.createElement('a')
-        a.href = canvas.canvas.toDataURL('image/png')
-        a.download = 'picture.png'
-        a.style.position = 'absolute'
-        a.style.top = a.style.left = 0
-        document.body.appendChild(a)
-        a.click()
-        document.body.removeChild(a)
+        SaveCanvas(canvas.canvas, canvas.element.offsetWidth, canvas.element.offsetHeight)
     })
 
     var barElement = Div(classPrefix + '-bar')

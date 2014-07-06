@@ -20,6 +20,7 @@ echo '<!DOCTYPE html>'
             .'<script type="text/javascript" src="js/Div.js"></script>'
             .'<script type="text/javascript" src="js/EraserTool.js"></script>'
             .'<script type="text/javascript" src="js/MainPanel.js"></script>'
+            .'<script type="text/javascript" src="js/SaveCanvas.js"></script>'
             .'<script type="text/javascript" src="js/Main.js"></script>'
         .'</body>'
     .'</html>';
