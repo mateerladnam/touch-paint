@@ -1,4 +1,4 @@
-function BrushTool (canvas) {
+function EraserTool (canvas) {
 
     var activeTouches = {}
 
@@ -47,12 +47,13 @@ function BrushTool (canvas) {
 
     return {
         enable: function () {
+            console.log('eraser enable')
             enabled = true
             c.lineWidth = brushSize
             c.lineCap = 'round'
-            c.strokeStyle = c.fillStyle = '#0f0';
+            c.strokeStyle = c.fillStyle = '#fff';
         },
-        disabled: function () {
+        disable: function () {
             enabled = false
         },
     }

@@ -5,16 +5,23 @@ function MainPanel () {
     var canvas = Canvas()
 
     var brushTool = BrushTool(canvas.canvas)
+    brushTool.enable()
+
+    var eraserTool = EraserTool(canvas.canvas)
 
     var brushButton = BarButton('pencil', function () {
         eraserButton.uncheck()
         brushButton.check()
+        eraserTool.disable()
+        brushTool.enable()
     })
     brushButton.check()
 
     var eraserButton = BarButton('eraser', function () {
         brushButton.uncheck()
         eraserButton.check()
+        brushTool.disabled()
+        eraserTool.enable()
     })
 
     var barElement = Div(classPrefix + '-bar')

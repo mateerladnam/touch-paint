@@ -9,6 +9,10 @@ function Canvas () {
     canvas.width = canvas.height = size
     canvas.style.left = canvas.style.top = -size / 2 + 'px'
 
+    var c = canvas.getContext('2d')
+    c.fillStyle = '#fff'
+    c.fillRect(0, 0, size, size)
+
     var centerElement = Div(classPrefix + '-center')
     centerElement.appendChild(canvas)
 
