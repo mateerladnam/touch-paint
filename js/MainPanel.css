@@ -5,3 +5,15 @@
     bottom: 0;
     left: 0;
 }
+
+.MainPanel-bar {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 64px;
+    background: #ddd;
+    background-image: linear-gradient(#eee, #ccc);
+    padding: 8px;
+    white-space: nowrap;
+}

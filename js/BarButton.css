@@ -1,0 +1,22 @@
+.BarButton {
+    display: inline-block;
+    vertical-align: top;
+    width: 48px;
+    height: 48px;
+    cursor: pointer;
+    border-radius: 2px;
+    position: relative;
+}
+.BarButton:active {
+    background-color: #888;
+    box-shadow: 0 1px 3px #666 inset;
+}
+
+.BarButton-icon {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    width: 32px;
+    height: 32px;
+    margin-auto;
+}
