@@ -17,3 +17,14 @@
     padding: 8px;
     white-space: nowrap;
 }
+
+@media (orientation:landscape) {
+    .MainPanel-bar {
+        top: 0;
+        left: auto;
+        height: auto;
+        width: 64px;
+        background-image: linear-gradient(90deg, #eee, #ccc);
+        white-space: normal;
+    }
+}

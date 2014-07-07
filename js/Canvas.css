@@ -18,3 +18,10 @@
     vertical-align: top;
     position: absolute;
 }
+
+@media (orientation:landscape) {
+    .Canvas {
+        right: 64px;
+        bottom: 0;
+    }
+}
