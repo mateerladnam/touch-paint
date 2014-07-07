@@ -11,6 +11,9 @@ function BarButton (icon, clickListener) {
 
     return {
         element: element,
+        addClass: function (className) {
+            element.classList.add(className)
+        },
         check: function () {
             element.classList.add('checked')
         },

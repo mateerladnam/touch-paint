@@ -15,6 +15,7 @@ function MainPanel () {
         eraserTool.disable()
         brushTool.enable()
     })
+    brushButton.addClass(classPrefix + '-brushButton')
     brushButton.check()
 
     var eraserButton = BarButton('eraser', function () {
@@ -23,14 +24,21 @@ function MainPanel () {
         brushTool.disabled()
         eraserTool.enable()
     })
+    eraserButton.addClass(classPrefix + '-eraserButton')
+
+    var paletteButton = BarButton('palette', function () {
+    })
+    paletteButton.addClass(classPrefix + '-paletteButton')
 
     var saveButton = BarButton('floppy', function () {
         SaveCanvas(canvas.canvas, canvas.element.offsetWidth, canvas.element.offsetHeight)
     })
+    saveButton.addClass(classPrefix + '-saveButton')
 
     var barElement = Div(classPrefix + '-bar')
     barElement.appendChild(brushButton.element)
     barElement.appendChild(eraserButton.element)
+    barElement.appendChild(paletteButton.element)
     barElement.appendChild(saveButton.element)
 
     var element = Div(classPrefix)

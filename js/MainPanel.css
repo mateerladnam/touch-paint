@@ -14,17 +14,59 @@
     height: 64px;
     background: #ddd;
     background-image: linear-gradient(#eee, #ccc);
-    padding: 8px;
-    white-space: nowrap;
+}
+
+.MainPanel-brushButton {
+    top: 8px;
+    left: 8px;
+}
+
+.MainPanel-eraserButton {
+    top: 8px;
+    left: 56px;
+}
+
+.MainPanel-paletteButton {
+    top: 8px;
+    left: 104px;
+}
+
+.MainPanel-saveButton {
+    top: 8px;
+    left: 152px;
 }
 
 @media (orientation:landscape) {
+
     .MainPanel-bar {
         top: 0;
         left: auto;
         height: auto;
         width: 64px;
         background-image: linear-gradient(90deg, #eee, #ccc);
-        white-space: normal;
+    }
+
+    .MainPanel-brushButton {
+        top: auto;
+        bottom: 8px;
+        left: 8px;
+    }
+
+    .MainPanel-eraserButton {
+        top: auto;
+        bottom: 56px;
+        left: 8px;
+    }
+
+    .MainPanel-paletteButton {
+        top: auto;
+        bottom: 104px;
+        left: 8px;
+    }
+
+    .MainPanel-saveButton {
+        top: auto;
+        bottom: 152px;
+        left: 8px;
     }
 }

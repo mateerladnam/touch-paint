@@ -1,11 +1,9 @@
 .BarButton {
-    display: inline-block;
-    vertical-align: top;
+    position: absolute;
     width: 48px;
     height: 48px;
     cursor: pointer;
     border-radius: 2px;
-    position: relative;
 }
 .BarButton.checked {
     background-color: #aaa;
