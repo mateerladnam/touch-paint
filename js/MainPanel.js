@@ -76,6 +76,11 @@ function MainPanel () {
     })
     paletteButton.addClass(classPrefix + '-paletteButton')
 
+    var paramsButton = BarButton('params', function () {
+        
+    })
+    paramsButton.addClass(classPrefix + '-paramsButton')
+
     var saveButton = BarButton('floppy', function () {
         SaveCanvas(canvas.canvas, canvas.element.offsetWidth, canvas.element.offsetHeight)
     })
@@ -89,6 +94,7 @@ function MainPanel () {
     barElement.appendChild(brushButton.element)
     barElement.appendChild(eraserButton.element)
     barElement.appendChild(paletteButton.element)
+    barElement.appendChild(paramsButton.element)
     barElement.appendChild(saveButton.element)
 
     var element = Div(classPrefix)

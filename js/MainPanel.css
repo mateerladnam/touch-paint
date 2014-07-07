@@ -23,25 +23,27 @@
     left: 0;
 }
 
-
-.MainPanel-brushButton {
-    top: 8px;
-    left: 8px;
-}
-
-.MainPanel-eraserButton {
-    top: 8px;
-    left: 56px;
-}
-
-.MainPanel-paletteButton {
-    top: 8px;
-    left: 104px;
-}
-
+.MainPanel-brushButton,
+.MainPanel-eraserButton,
+.MainPanel-paletteButton,
+.MainPanel-paramsButton,
 .MainPanel-saveButton {
     top: 8px;
+}
+.MainPanel-brushButton {
+    left: 8px;
+}
+.MainPanel-eraserButton {
+    left: 56px;
+}
+.MainPanel-paletteButton {
+    left: 104px;
+}
+.MainPanel-paramsButton {
     left: 152px;
+}
+.MainPanel-saveButton {
+    left: 200px;
 }
 
 @media (orientation:landscape) {
@@ -59,27 +61,28 @@
         bottom: 0;
     }
 
-    .MainPanel-brushButton {
-        top: auto;
-        bottom: 8px;
-        left: 8px;
-    }
-
-    .MainPanel-eraserButton {
-        top: auto;
-        bottom: 56px;
-        left: 8px;
-    }
-
-    .MainPanel-paletteButton {
-        top: auto;
-        bottom: 104px;
-        left: 8px;
-    }
-
+    .MainPanel-brushButton,
+    .MainPanel-eraserButton,
+    .MainPanel-paletteButton,
+    .MainPanel-paramsButton,
     .MainPanel-saveButton {
         top: auto;
-        bottom: 152px;
         left: 8px;
     }
+    .MainPanel-brushButton {
+        bottom: 8px;
+    }
+    .MainPanel-eraserButton {
+        bottom: 56px;
+    }
+    .MainPanel-paletteButton {
+        bottom: 104px;
+    }
+    .MainPanel-paramsButton {
+        bottom: 152px;
+    }
+    .MainPanel-saveButton {
+        bottom: 200px;
+    }
+
 }
