@@ -1,5 +1,19 @@
 function MainPanel () {
 
+    function brushListener () {
+        closePalette()
+        disableEraser()
+        enableBrush()
+        brushOrEraserListener = brushListener
+    }
+
+    function eraserListener () {
+        closePalette()
+        disableBrush()
+        enableEraser()
+        brushOrEraserListener = eraserListener
+    }
+
     function closePalette () {
         palettePanel.hide()
         paletteButton.uncheck()
@@ -29,6 +43,8 @@ function MainPanel () {
 
     var canvas = Canvas()
 
+    var brushOrEraserListener = brushListener
+
     var brushTool = BrushTool(canvas.canvas)
     brushTool.enable()
 
@@ -36,24 +52,17 @@ function MainPanel () {
 
     var palettePanel = PalettePanel()
 
-    var brushButton = BarButton('pencil', function () {
-        closePalette()
-        disableEraser()
-        enableBrush()
-    })
+    var brushButton = BarButton('pencil', brushListener)
     brushButton.addClass(classPrefix + '-brushButton')
     brushButton.check()
 
-    var eraserButton = BarButton('eraser', function () {
-        closePalette()
-        disableBrush()
-        enableEraser()
-    })
+    var eraserButton = BarButton('eraser', eraserListener)
     eraserButton.addClass(classPrefix + '-eraserButton')
 
     var paletteButton = BarButton('palette', function () {
         if (paletteButton.isChecked()) {
             closePalette()
+            brushOrEraserListener()
         } else {
             disableBrush()
             disableEraser()
