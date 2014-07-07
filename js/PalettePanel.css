@@ -31,6 +31,16 @@
     left: 56px;
 }
 
+.PalettePanel-greenButton {
+    top: 8px;
+    left: 104px;
+}
+
+.PalettePanel-blueButton {
+    top: 8px;
+    left: 152px;
+}
+
 @media (orientation:landscape) {
 
     .PalettePanel {
@@ -62,6 +72,18 @@
     .PalettePanel-redButton {
         top: auto;
         bottom: 56px;
+        left: 8px;
+    }
+
+    .PalettePanel-greenButton {
+        top: auto;
+        bottom: 104px;
+        left: 8px;
+    }
+
+    .PalettePanel-blueButton {
+        top: auto;
+        bottom: 152px;
         left: 8px;
     }
 
