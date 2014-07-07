@@ -6,8 +6,20 @@
     height: 64px;
     background-color: #eee;
     background-image: linear-gradient(#eee, #fff);
-    transition: ease-in-out 0.2s top;
+    opacity: 0;
+    transition: ease-in-out 0.2s top, ease-in-out 0.2s opacity;
 }
 .PalettePanel.visible {
+    opacity: 1;
     top: calc(100% - 64px);
+}
+
+.PalettePanel-blackButton {
+    top: 8px;
+    left: 8px;
+}
+
+.PalettePanel-redButton {
+    top: 8px;
+    left: 56px;
 }

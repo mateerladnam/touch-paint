@@ -45,15 +45,20 @@ function BrushTool (canvas) {
         })
     })
 
+    var color = '#000'
+
     return {
+        disable: function () {
+            enabled = false
+        },
         enable: function () {
             enabled = true
             c.lineWidth = brushSize
             c.lineCap = 'round'
-            c.strokeStyle = c.fillStyle = '#0f0';
+            c.strokeStyle = c.fillStyle = color
         },
-        disable: function () {
-            enabled = false
+        setColor: function (_color) {
+            color = _color
         },
     }
 

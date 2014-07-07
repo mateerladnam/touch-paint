@@ -46,14 +46,14 @@ function EraserTool (canvas) {
     })
 
     return {
+        disable: function () {
+            enabled = false
+        },
         enable: function () {
             enabled = true
             c.lineWidth = brushSize
             c.lineCap = 'round'
             c.strokeStyle = c.fillStyle = '#fff';
-        },
-        disable: function () {
-            enabled = false
         },
     }
 

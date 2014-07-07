@@ -50,7 +50,11 @@ function MainPanel () {
 
     var eraserTool = EraserTool(canvas.canvas)
 
-    var palettePanel = PalettePanel()
+    var palettePanel = PalettePanel(function (color) {
+        brushTool.setColor(color)
+        closePalette()
+        enableBrush()
+    })
 
     var brushButton = BarButton('pencil', brushListener)
     brushButton.addClass(classPrefix + '-brushButton')
