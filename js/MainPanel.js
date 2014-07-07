@@ -1,5 +1,30 @@
 function MainPanel () {
 
+    function closePalette () {
+        palettePanel.hide()
+        paletteButton.uncheck()
+    }
+
+    function disableBrush () {
+        brushButton.uncheck()
+        brushTool.disable()
+    }
+
+    function disableEraser () {
+        eraserButton.uncheck()
+        eraserTool.disable()
+    }
+
+    function enableBrush () {
+        brushButton.check()
+        brushTool.enable()
+    }
+
+    function enableEraser () {
+        eraserButton.check()
+        eraserTool.enable()
+    }
+
     var classPrefix = 'MainPanel'
 
     var canvas = Canvas()
@@ -12,27 +37,26 @@ function MainPanel () {
     var palettePanel = PalettePanel()
 
     var brushButton = BarButton('pencil', function () {
-        eraserButton.uncheck()
-        brushButton.check()
-        eraserTool.disable()
-        brushTool.enable()
+        closePalette()
+        disableEraser()
+        enableBrush()
     })
     brushButton.addClass(classPrefix + '-brushButton')
     brushButton.check()
 
     var eraserButton = BarButton('eraser', function () {
-        brushButton.uncheck()
-        eraserButton.check()
-        brushTool.disabled()
-        eraserTool.enable()
+        closePalette()
+        disableBrush()
+        enableEraser()
     })
     eraserButton.addClass(classPrefix + '-eraserButton')
 
     var paletteButton = BarButton('palette', function () {
         if (paletteButton.isChecked()) {
-            palettePanel.hide()
-            paletteButton.uncheck()
+            closePalette()
         } else {
+            disableBrush()
+            disableEraser()
             palettePanel.show()
             paletteButton.check()
         }

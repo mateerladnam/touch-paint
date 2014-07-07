@@ -52,7 +52,7 @@ function BrushTool (canvas) {
             c.lineCap = 'round'
             c.strokeStyle = c.fillStyle = '#0f0';
         },
-        disabled: function () {
+        disable: function () {
             enabled = false
         },
     }
