@@ -2,6 +2,7 @@ function MainPanel () {
 
     function brushListener () {
         closePalette()
+        closeParams()
         disableEraser()
         enableBrush()
         brushOrEraserListener = brushListener
@@ -9,6 +10,7 @@ function MainPanel () {
 
     function eraserListener () {
         closePalette()
+        closeParams()
         disableBrush()
         enableEraser()
         brushOrEraserListener = eraserListener
@@ -17,6 +19,11 @@ function MainPanel () {
     function closePalette () {
         palettePanel.hide()
         paletteButton.uncheck()
+    }
+
+    function closeParams () {
+        paramsPanel.hide()
+        paramsButton.uncheck()
     }
 
     function disableBrush () {
@@ -56,6 +63,9 @@ function MainPanel () {
         enableBrush()
     })
 
+    var paramsPanel = ParamsPanel(function () {
+    })
+
     var brushButton = BarButton('pencil', brushListener)
     brushButton.addClass(classPrefix + '-brushButton')
     brushButton.check()
@@ -68,6 +78,7 @@ function MainPanel () {
             closePalette()
             brushOrEraserListener()
         } else {
+            closeParams()
             disableBrush()
             disableEraser()
             palettePanel.show()
@@ -77,7 +88,16 @@ function MainPanel () {
     paletteButton.addClass(classPrefix + '-paletteButton')
 
     var paramsButton = BarButton('params', function () {
-        
+        if (paramsButton.isChecked()) {
+            closeParams()
+            brushOrEraserListener()
+        } else {
+            closePalette()
+            disableBrush()
+            disableEraser()
+            paramsPanel.show()
+            paramsButton.check()
+        }
     })
     paramsButton.addClass(classPrefix + '-paramsButton')
 
@@ -89,6 +109,7 @@ function MainPanel () {
     var contentElement = Div(classPrefix + '-content')
     contentElement.appendChild(canvas.element)
     contentElement.appendChild(palettePanel.element)
+    contentElement.appendChild(paramsPanel.element)
 
     var barElement = Div(classPrefix + '-bar')
     barElement.appendChild(brushButton.element)
