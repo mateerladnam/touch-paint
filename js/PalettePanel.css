@@ -1,4 +1,13 @@
 .PalettePanel {
     position: absolute;
     top: 100%;
+    right: 0;
+    left: 0;
+    height: 64px;
+    background-color: #eee;
+    background-image: linear-gradient(#eee, #fff);
+    transition: ease-in-out 0.2s top;
+}
+.PalettePanel.visible {
+    top: calc(100% - 64px);
 }

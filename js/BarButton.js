@@ -9,16 +9,23 @@ function BarButton (icon, clickListener) {
     element.appendChild(iconElement)
     element.addEventListener('touchstart', clickListener)
 
+    var checked = false
+
     return {
         element: element,
         addClass: function (className) {
             element.classList.add(className)
         },
+        isChecked: function () {
+            return checked
+        },
         check: function () {
             element.classList.add('checked')
+            checked = true
         },
         uncheck: function () {
             element.classList.remove('checked')
+            checked = false
         },
     }
 

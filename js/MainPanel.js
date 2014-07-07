@@ -29,6 +29,13 @@ function MainPanel () {
     eraserButton.addClass(classPrefix + '-eraserButton')
 
     var paletteButton = BarButton('palette', function () {
+        if (paletteButton.isChecked()) {
+            palettePanel.hide()
+            paletteButton.uncheck()
+        } else {
+            palettePanel.show()
+            paletteButton.check()
+        }
     })
     paletteButton.addClass(classPrefix + '-paletteButton')
 
@@ -39,6 +46,7 @@ function MainPanel () {
 
     var contentElement = Div(classPrefix + '-content')
     contentElement.appendChild(canvas.element)
+    contentElement.appendChild(palettePanel.element)
 
     var barElement = Div(classPrefix + '-bar')
     barElement.appendChild(brushButton.element)
