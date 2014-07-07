@@ -17,17 +17,20 @@ function PalettePanel (colorListener) {
     })
     redButton.addClass(classPrefix + '-redButton')
 
+    var contentElement = Div(classPrefix + '-content')
+    contentElement.appendChild(blackButton.element)
+    contentElement.appendChild(redButton.element)
+
     var element = Div(classPrefix)
-    element.appendChild(blackButton.element)
-    element.appendChild(redButton.element)
+    element.appendChild(contentElement)
 
     return {
         element: element,
         hide: function () {
-            element.classList.remove('visible')
+            contentElement.classList.remove('visible')
         },
         show: function () {
-            element.classList.add('visible')
+            contentElement.classList.add('visible')
         },
     }
 
