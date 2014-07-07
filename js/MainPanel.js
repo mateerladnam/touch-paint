@@ -9,6 +9,8 @@ function MainPanel () {
 
     var eraserTool = EraserTool(canvas.canvas)
 
+    var palettePanel = PalettePanel()
+
     var brushButton = BarButton('pencil', function () {
         eraserButton.uncheck()
         brushButton.check()
@@ -35,6 +37,9 @@ function MainPanel () {
     })
     saveButton.addClass(classPrefix + '-saveButton')
 
+    var contentElement = Div(classPrefix + '-content')
+    contentElement.appendChild(canvas.element)
+
     var barElement = Div(classPrefix + '-bar')
     barElement.appendChild(brushButton.element)
     barElement.appendChild(eraserButton.element)
@@ -42,7 +47,7 @@ function MainPanel () {
     barElement.appendChild(saveButton.element)
 
     var element = Div(classPrefix)
-    element.appendChild(canvas.element)
+    element.appendChild(contentElement)
     element.appendChild(barElement)
 
     return { element: element }
