@@ -47,7 +47,7 @@ function Slider (changeListener, endListener) {
             })
 
             addEventListener('touchend', function (e) {
-                var touches = e.touches
+                var touches = e.changedTouches
                 for (var i = 0; i < touches.length; i++) {
                     if (touches[i].identifier == identifier) {
                         e.preventDefault()
