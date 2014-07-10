@@ -21,6 +21,11 @@
     top: -64px;
 }
 
+.FilePanel-saveButton {
+    top: 8px;
+    right: 8px;
+}
+
 @media (orientation:landscape) {
 
     .FilePanel {

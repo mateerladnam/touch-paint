@@ -82,6 +82,8 @@ function MainPanel () {
 
     var filePanel = FilePanel(function () {
         SaveCanvas(canvas.canvas, canvas.element.offsetWidth, canvas.element.offsetHeight)
+        closeParams()
+        brushOrEraserListener()
     })
 
     var brushButton = BarButton('pencil', brushListener)
