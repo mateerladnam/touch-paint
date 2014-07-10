@@ -1,4 +1,4 @@
-function Slider (changeListener, endListener) {
+function Slider (initialRatio, changeListener, endListener) {
 
     function update (clientX) {
         var rect = handleWrapperElement.getBoundingClientRect()
@@ -15,6 +15,7 @@ function Slider (changeListener, endListener) {
     var identifier
 
     var handleElement = Div(classPrefix + '-handle')
+    handleElement.style.left = initialRatio * 100 + '%'
 
     var handleWrapperElement = Div(classPrefix + '-handleWrapper')
     handleWrapperElement.appendChild(handleElement)
