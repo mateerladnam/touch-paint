@@ -63,7 +63,12 @@ function MainPanel () {
         enableBrush()
     })
 
-    var paramsPanel = ParamsPanel(function () {
+    var paramsPanel = ParamsPanel(function (brushSize) {
+        brushTool.setSize(brushSize)
+        eraserTool.setSize(brushSize)
+    }, function () {
+        closeParams()
+        brushOrEraserListener()
     })
 
     var brushButton = BarButton('pencil', brushListener)

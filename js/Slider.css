@@ -1,0 +1,35 @@
+.Slider {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 64px;
+}
+
+.Slider-bar {
+    position: absolute;
+    top: 31px;
+    right: 31px;
+    bottom: 31px;
+    left: 31px;
+    background: #333;
+    border-radius: 2px;
+}
+
+.Slider-handleWrapper {
+    position: absolute;
+    top: 16px;
+    right: 46px;
+    bottom: 16px;
+    left: 16px;
+}
+
+.Slider-handle {
+    position: absolute;
+    left: 0;
+    width: 32px;
+    height: 32px;
+    border: 2px solid #333;
+    border-radius: 24px;
+    background: #eee;
+}

@@ -2,8 +2,9 @@ function EraserTool (canvas) {
 
     var activeTouches = {}
 
-    var brushSize = 10
-    var halfBrushSize = brushSize / 2
+    var size = 10
+    var halfSize = size / 2
+
     var enabled = false
 
     var c = canvas.getContext('2d')
@@ -17,7 +18,7 @@ function EraserTool (canvas) {
             c.save()
             c.translate(x, y)
             c.beginPath()
-            c.arc(0, 0, halfBrushSize, 0, Math.PI * 2)
+            c.arc(0, 0, halfSize, 0, Math.PI * 2)
             c.fill()
             c.restore()
             activeTouches[touch.identifier] = { x: x, y: y }
@@ -51,9 +52,13 @@ function EraserTool (canvas) {
         },
         enable: function () {
             enabled = true
-            c.lineWidth = brushSize
+            c.lineWidth = size
             c.lineCap = 'round'
             c.strokeStyle = c.fillStyle = '#fff';
+        },
+        setSize: function (_size) {
+            size = _size
+            halfSize = size / 2
         },
     }
 
