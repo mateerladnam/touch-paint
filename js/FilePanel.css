@@ -1,0 +1,46 @@
+.FilePanel {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+.FilePanel-content {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 64px;
+    background-color: #eee;
+    background-image: linear-gradient(#ddd, #eee);
+    opacity: 0;
+    transition: ease-in-out 0.2s top, ease-in-out 0.2s opacity;
+}
+.FilePanel-content.visible {
+    opacity: 1;
+    top: -64px;
+}
+
+@media (orientation:landscape) {
+
+    .FilePanel {
+        top: 0;
+        left: auto;
+    }
+
+    .FilePanel-content {
+        top: 0;
+        right: auto;
+        bottom: 0;
+        left: 0;
+        width: 64px;
+        height: auto;
+        background-image: linear-gradient(90deg, #ddd, #eee);
+        transition: ease-in-out 0.2s left, ease-in-out 0.2s opacity;
+    }
+    .FilePanel-content.visible {
+        top: 0;
+        left: -64px;
+    }
+
+}

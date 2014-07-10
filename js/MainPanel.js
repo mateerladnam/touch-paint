@@ -3,17 +3,10 @@ function MainPanel () {
     function brushListener () {
         closePalette()
         closeParams()
+        closeFile()
         disableEraser()
         enableBrush()
         brushOrEraserListener = brushListener
-    }
-
-    function eraserListener () {
-        closePalette()
-        closeParams()
-        disableBrush()
-        enableEraser()
-        brushOrEraserListener = eraserListener
     }
 
     function closePalette () {
@@ -24,6 +17,11 @@ function MainPanel () {
     function closeParams () {
         paramsPanel.hide()
         paramsButton.uncheck()
+    }
+
+    function closeFile () {
+        filePanel.hide()
+        fileButton.uncheck()
     }
 
     function disableBrush () {
@@ -46,6 +44,15 @@ function MainPanel () {
         eraserTool.enable()
     }
 
+    function eraserListener () {
+        closePalette()
+        closeParams()
+        closeFile()
+        disableBrush()
+        enableEraser()
+        brushOrEraserListener = eraserListener
+    }
+
     var classPrefix = 'MainPanel'
 
     var canvas = Canvas()
@@ -60,6 +67,7 @@ function MainPanel () {
     var palettePanel = PalettePanel(function (color) {
         brushTool.setColor(color)
         closePalette()
+        closeFile()
         enableBrush()
     })
 
@@ -68,7 +76,12 @@ function MainPanel () {
         eraserTool.setSize(brushSize)
     }, function () {
         closeParams()
+        closeFile()
         brushOrEraserListener()
+    })
+
+    var filePanel = FilePanel(function () {
+        SaveCanvas(canvas.canvas, canvas.element.offsetWidth, canvas.element.offsetHeight)
     })
 
     var brushButton = BarButton('pencil', brushListener)
@@ -84,6 +97,7 @@ function MainPanel () {
             brushOrEraserListener()
         } else {
             closeParams()
+            closeFile()
             disableBrush()
             disableEraser()
             palettePanel.show()
@@ -98,6 +112,7 @@ function MainPanel () {
             brushOrEraserListener()
         } else {
             closePalette()
+            closeFile()
             disableBrush()
             disableEraser()
             paramsPanel.show()
@@ -106,22 +121,34 @@ function MainPanel () {
     })
     paramsButton.addClass(classPrefix + '-paramsButton')
 
-    var saveButton = BarButton('floppy', function () {
-        SaveCanvas(canvas.canvas, canvas.element.offsetWidth, canvas.element.offsetHeight)
+    var fileButton = BarButton('burger', function () {
+        if (fileButton.isChecked()) {
+            closeFile()
+            closeParams()
+            brushOrEraserListener()
+        } else {
+            closePalette()
+            closeParams()
+            disableBrush()
+            disableEraser()
+            filePanel.show()
+            fileButton.check()
+        }
     })
-    saveButton.addClass(classPrefix + '-saveButton')
+    fileButton.addClass(classPrefix + '-fileButton')
 
     var contentElement = Div(classPrefix + '-content')
     contentElement.appendChild(canvas.element)
     contentElement.appendChild(palettePanel.element)
     contentElement.appendChild(paramsPanel.element)
+    contentElement.appendChild(filePanel.element)
 
     var barElement = Div(classPrefix + '-bar')
     barElement.appendChild(brushButton.element)
     barElement.appendChild(eraserButton.element)
     barElement.appendChild(paletteButton.element)
     barElement.appendChild(paramsButton.element)
-    barElement.appendChild(saveButton.element)
+    barElement.appendChild(fileButton.element)
 
     var element = Div(classPrefix)
     element.appendChild(contentElement)

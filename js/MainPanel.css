@@ -27,7 +27,7 @@
 .MainPanel-eraserButton,
 .MainPanel-paletteButton,
 .MainPanel-paramsButton,
-.MainPanel-saveButton {
+.MainPanel-fileButton {
     top: 8px;
 }
 .MainPanel-brushButton {
@@ -42,8 +42,8 @@
 .MainPanel-paramsButton {
     left: 152px;
 }
-.MainPanel-saveButton {
-    left: 200px;
+.MainPanel-fileButton {
+    right: 8px;
 }
 
 @media (orientation:landscape) {
@@ -64,8 +64,7 @@
     .MainPanel-brushButton,
     .MainPanel-eraserButton,
     .MainPanel-paletteButton,
-    .MainPanel-paramsButton,
-    .MainPanel-saveButton {
+    .MainPanel-paramsButton {
         top: auto;
         left: 8px;
     }
