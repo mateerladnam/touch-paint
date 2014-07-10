@@ -1,13 +1,27 @@
-function Slider (initialRatio, changeListener, endListener) {
+function Slider (ratio, changeListener, endListener) {
 
-    function update (clientX) {
+    function change (touch) {
+
         var rect = handleWrapperElement.getBoundingClientRect()
-        var handleWidth = handleElement.offsetWidth
-        var wrapperWidth = handleWrapperElement.offsetWidth
-        var ratio = (clientX - rect.left - handleWidth / 2) / wrapperWidth
+        var handleSize = handleElement.offsetHeight
+
+        if (innerWidth > innerHeight) {
+            var wrapperHeight = handleWrapperElement.offsetHeight
+            ratio = 1 - (touch.clientY - rect.top - handleSize / 2) / wrapperHeight
+        } else {
+            var wrapperWidth = handleWrapperElement.offsetWidth
+            ratio = (touch.clientX - rect.left - handleSize / 2) / wrapperWidth
+        }
+
         ratio = Math.max(0, Math.min(1, ratio))
-        handleElement.style.left = ratio * 100 + '%'
+        updateHandle()
         changeListener(ratio)
+
+    }
+
+    function updateHandle () {
+        handleElement.style.top = (1 - ratio) * 100 + '%'
+        handleElement.style.left = ratio * 100 + '%'
     }
 
     var classPrefix = 'Slider'
@@ -15,7 +29,6 @@ function Slider (initialRatio, changeListener, endListener) {
     var identifier
 
     var handleElement = Div(classPrefix + '-handle')
-    handleElement.style.left = initialRatio * 100 + '%'
 
     var handleWrapperElement = Div(classPrefix + '-handleWrapper')
     handleWrapperElement.appendChild(handleElement)
@@ -33,7 +46,7 @@ function Slider (initialRatio, changeListener, endListener) {
             identifier = touch.identifier
             handleElement.classList.add('active')
 
-            update(touch.clientX)
+            change(touch)
 
             addEventListener('touchmove', function (e) {
                 var touches = e.changedTouches
@@ -41,7 +54,7 @@ function Slider (initialRatio, changeListener, endListener) {
                     var touch = touches[i]
                     if (touch.identifier == identifier) {
                         e.preventDefault()
-                        update(touch.clientX)
+                        change(touch)
                         break
                     }
                 }
@@ -62,6 +75,8 @@ function Slider (initialRatio, changeListener, endListener) {
 
         }
     })
+
+    updateHandle()
 
     return { element: element }
 
