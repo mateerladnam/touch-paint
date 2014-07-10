@@ -1,9 +1,10 @@
 function Slider (changeListener, endListener) {
 
     function update (clientX) {
-        var rect = element.getBoundingClientRect()
+        var rect = handleWrapperElement.getBoundingClientRect()
         var handleWidth = handleElement.offsetWidth
-        var ratio = (clientX - rect.left - handleWidth) / (element.offsetWidth - handleWidth)
+        var wrapperWidth = handleWrapperElement.offsetWidth
+        var ratio = (clientX - rect.left - handleWidth / 2) / wrapperWidth
         ratio = Math.max(0, Math.min(1, ratio))
         handleElement.style.left = ratio * 100 + '%'
         changeListener(ratio)
