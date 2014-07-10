@@ -81,6 +81,7 @@ function MainPanel () {
     })
 
     var filePanel = FilePanel(function () {
+    }, function () {
         SaveCanvas(canvas.canvas, canvas.element.offsetWidth, canvas.element.offsetHeight)
         closeParams()
         brushOrEraserListener()
