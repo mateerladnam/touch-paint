@@ -7,7 +7,10 @@ function BarButton (icon, clickListener) {
 
     var element = Div('BarButton')
     element.appendChild(iconElement)
-    element.addEventListener('touchstart', clickListener)
+    element.addEventListener('touchstart', function (e) {
+        e.preventDefault()
+        clickListener()
+    })
 
     var checked = false
 

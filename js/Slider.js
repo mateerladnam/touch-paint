@@ -27,6 +27,7 @@ function Slider (changeListener, endListener) {
     element.addEventListener('touchstart', function (e) {
         if (!identifier) {
 
+            e.preventDefault()
             var touch = e.changedTouches[0]
             identifier = touch.identifier
             handleElement.classList.add('active')
@@ -38,7 +39,9 @@ function Slider (changeListener, endListener) {
                 for (var i = 0; i < touches.length; i++) {
                     var touch = touches[i]
                     if (touch.identifier == identifier) {
+                        e.preventDefault()
                         update(touch.clientX)
+                        break
                     }
                 }
             })
@@ -47,9 +50,11 @@ function Slider (changeListener, endListener) {
                 var touches = e.touches
                 for (var i = 0; i < touches.length; i++) {
                     if (touches[i].identifier == identifier) {
+                        e.preventDefault()
                         identifier = null
                         handleElement.classList.remove('active')
                         endListener()
+                        break
                     }
                 }
             })

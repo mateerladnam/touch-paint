@@ -7,7 +7,10 @@ function ColorButton (color, clickListener) {
 
     var element = Div('ColorButton')
     element.appendChild(colorElement)
-    element.addEventListener('touchstart', clickListener)
+    element.addEventListener('touchstart', function (e) {
+        e.preventDefault()
+        clickListener()
+    })
 
     var checked = false
 

@@ -11,6 +11,7 @@ function BrushTool (canvas) {
 
     canvas.addEventListener('touchstart', function (e) {
         if (!enabled) return
+        e.preventDefault()
         var rect = canvas.getBoundingClientRect()
         Array.prototype.forEach.call(e.changedTouches, function (touch) {
             var x = touch.clientX - rect.left,
@@ -25,6 +26,7 @@ function BrushTool (canvas) {
         })
     })
     canvas.addEventListener('touchmove', function (e) {
+        e.preventDefault()
         var rect = canvas.getBoundingClientRect()
         Array.prototype.forEach.call(e.changedTouches, function (touch) {
             var activeTouch = activeTouches[touch.identifier]
@@ -41,6 +43,7 @@ function BrushTool (canvas) {
         })
     })
     canvas.addEventListener('touchend', function (e) {
+        e.preventDefault()
         Array.prototype.forEach.call(e.changedTouches, function (touch) {
             delete activeTouches[touch.identifier]
         })
