@@ -1,5 +1,12 @@
 function BrushTool (canvas) {
 
+    function enable () {
+        enabled = true
+        c.lineWidth = size
+        c.lineCap = 'round'
+        c.strokeStyle = c.fillStyle = color
+    }
+
     var activeTouches = {}
 
     var size = 10
@@ -52,14 +59,9 @@ function BrushTool (canvas) {
     var color = '#000'
 
     return {
+        enable: enable,
         disable: function () {
             enabled = false
-        },
-        enable: function () {
-            enabled = true
-            c.lineWidth = size
-            c.lineCap = 'round'
-            c.strokeStyle = c.fillStyle = color
         },
         setColor: function (_color) {
             color = _color
@@ -67,6 +69,7 @@ function BrushTool (canvas) {
         setSize: function (_size) {
             size = _size
             halfSize = size / 2
+            if (enabled) enable()
         },
     }
 

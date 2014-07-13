@@ -1,5 +1,12 @@
 function EraserTool (canvas) {
 
+    function enable () {
+        enabled = true
+        c.lineWidth = size
+        c.lineCap = 'round'
+        c.strokeStyle = c.fillStyle = '#fff';
+    }
+
     var activeTouches = {}
 
     var size = 10
@@ -50,18 +57,14 @@ function EraserTool (canvas) {
     })
 
     return {
+        enable: enable,
         disable: function () {
             enabled = false
-        },
-        enable: function () {
-            enabled = true
-            c.lineWidth = size
-            c.lineCap = 'round'
-            c.strokeStyle = c.fillStyle = '#fff';
         },
         setSize: function (_size) {
             size = _size
             halfSize = size / 2
+            if (enabled) enable()
         },
     }
 
