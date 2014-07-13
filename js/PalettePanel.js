@@ -4,10 +4,18 @@ function PalettePanel (colorListener) {
 
     var classPrefix = 'PalettePanel'
 
-    var colorButtonsPanel = ColorButtonsPanel(colorListener)
+    var colorButtonsPanel = ColorButtonsPanel(function (color) {
+        previewButton.setColor(color)
+        colorListener(color)
+    })
+
+    var previewButton = ColorButton('#000', function () {
+    })
+    previewButton.addClass(classPrefix + '-previewButton')
 
     var contentElement = Div(classPrefix + '-content')
     contentElement.appendChild(colorButtonsPanel.element)
+    contentElement.appendChild(previewButton.element)
 
     var element = Div(classPrefix)
     element.appendChild(contentElement)

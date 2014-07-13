@@ -15,6 +15,21 @@
     opacity: 1;
 }
 
+.PalettePanel-previewButton {
+    top: 8px;
+    right: 8px;
+    width: auto;
+    height: auto;
+}
+.PalettePanel-previewButton > .Button-content {
+    width: auto;
+    height: auto;
+    top: 8px;
+    right: 8px;
+    bottom: 8px;
+    left: 8px;
+}
+
 @media (orientation:portrait) {
 
     .PalettePanel {
@@ -29,6 +44,11 @@
     }
     .PalettePanel-content.visible {
         top: -160px;
+    }
+
+    .PalettePanel-previewButton {
+        bottom: 8px;
+        left: 200px;
     }
 
 }
@@ -47,6 +67,11 @@
     }
     .PalettePanel-content.visible {
         left: -160px;
+    }
+
+    .PalettePanel-previewButton {
+        bottom: 200px;
+        left: 8px;
     }
 
 }

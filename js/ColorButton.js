@@ -1,7 +1,10 @@
 function ColorButton (color, clickListener) {
 
+    function setColor (color) {
+        contentElement.style.backgroundColor = color
+    }
+
     var contentElement = Div('Button-content')
-    contentElement.style.backgroundColor = color
 
     var element = Div('Button')
     element.appendChild(contentElement)
@@ -18,8 +21,11 @@ function ColorButton (color, clickListener) {
     var activeTimeout
     var checked = false
 
+    setColor(color)
+
     return {
         element: element,
+        setColor: setColor,
         addClass: function (className) {
             element.classList.add(className)
         },
