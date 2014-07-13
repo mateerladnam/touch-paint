@@ -1,5 +1,12 @@
 function Canvas () {
 
+    function clear () {
+        c.save()
+        c.fillStyle = '#fff'
+        c.fillRect(0, 0, size, size)
+        c.restore()
+    }
+
     var classPrefix = 'Canvas'
 
     var size = Math.max(screen.width, screen.height)
@@ -10,8 +17,6 @@ function Canvas () {
     canvas.style.left = canvas.style.top = -size / 2 + 'px'
 
     var c = canvas.getContext('2d')
-    c.fillStyle = '#fff'
-    c.fillRect(0, 0, size, size)
 
     var centerElement = Div(classPrefix + '-center')
     centerElement.appendChild(canvas)
@@ -19,8 +24,11 @@ function Canvas () {
     var element = Div(classPrefix)
     element.appendChild(centerElement)
 
+    clear()
+
     return {
         canvas: canvas,
+        clear: clear,
         element: element,
     }
 
