@@ -4,8 +4,8 @@ function SaveCanvas (canvas, width, height) {
     croppedImage.width = width
     croppedImage.height = height
 
-    var x = width / 2 - canvas.width / 2,
-        y = height / 2 - canvas.height / 2
+    var x = (width - canvas.width) / 2,
+        y = (height - canvas.height) / 2
 
     var c = croppedImage.getContext('2d')
     c.drawImage(canvas, x, y)
