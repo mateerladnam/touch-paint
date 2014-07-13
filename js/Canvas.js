@@ -30,6 +30,11 @@ function Canvas () {
         canvas: canvas,
         clear: clear,
         element: element,
+        open: function (image) {
+            var x = (size - image.width) / 2
+            var y = (size - image.height) / 2
+            c.drawImage(image, x, y)
+        },
     }
 
 }

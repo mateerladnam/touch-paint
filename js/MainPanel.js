@@ -79,7 +79,9 @@ function MainPanel () {
     var filePanel = FilePanel(function () {
         canvas.clear()
         brushOrEraserListener()
-    }, function () {
+    }, function (image) {
+        canvas.open(image)
+        brushOrEraserListener()
     }, function () {
         SaveCanvas(canvas.canvas, canvas.element.offsetWidth, canvas.element.offsetHeight)
         brushOrEraserListener()
