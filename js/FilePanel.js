@@ -5,7 +5,7 @@ function FilePanel (newListener, openListener, saveListener) {
     var newButton = BarButton('file', newListener)
     newButton.addClass(classPrefix + '-newButton')
 
-    var openButton = BarButton('open', openListener)
+    var openButton = FileButton('open', openListener)
     openButton.addClass(classPrefix + '-openButton')
 
     var saveButton = BarButton('save', saveListener)

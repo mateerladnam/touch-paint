@@ -1,10 +1,10 @@
 function BarButton (icon, clickListener) {
 
-    var iconElement = Div('Button-content')
-    iconElement.style.backgroundImage = 'url(images/' + icon + '.svg)'
+    var contentElement = Div('Button-content')
+    contentElement.style.backgroundImage = 'url(images/' + icon + '.svg)'
 
     var element = Div('Button')
-    element.appendChild(iconElement)
+    element.appendChild(contentElement)
     element.addEventListener('touchstart', function (e) {
         e.preventDefault()
         clickListener()

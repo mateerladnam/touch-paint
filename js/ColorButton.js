@@ -1,10 +1,10 @@
 function ColorButton (color, clickListener) {
 
-    var colorElement = Div('Button-content')
-    colorElement.style.backgroundColor = color
+    var contentElement = Div('Button-content')
+    contentElement.style.backgroundColor = color
 
     var element = Div('Button')
-    element.appendChild(colorElement)
+    element.appendChild(contentElement)
     element.addEventListener('touchstart', function (e) {
         e.preventDefault()
         clickListener()
