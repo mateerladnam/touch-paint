@@ -2,23 +2,17 @@
     position: absolute;
     right: 0;
     bottom: 0;
-    left: 0;
 }
 
 .FilePanel-content {
     position: absolute;
     top: 0;
-    right: 0;
     left: 0;
-    height: 64px;
     background-color: #eee;
-    background-image: linear-gradient(#ddd, #eee);
     opacity: 0;
-    transition: ease-in-out 0.2s top, ease-in-out 0.2s opacity;
 }
 .FilePanel-content.visible {
     opacity: 1;
-    top: -64px;
 }
 
 .FilePanel-saveButton {
@@ -26,35 +20,47 @@
     right: 8px;
 }
 
-.FilePanel-openButton {
-    top: 8px;
-    right: 56px;
-}
+@media (orientation:portrait) {
 
-.FilePanel-newButton {
-    top: 8px;
-    right: 104px;
+    .FilePanel {
+        left: 0;
+    }
+
+    .FilePanel-content {
+        right: 0;
+        height: 64px;
+        background-image: linear-gradient(#ddd, #eee);
+        transition: ease-in-out 0.2s top, ease-in-out 0.2s opacity;
+    }
+    .FilePanel-content.visible {
+        top: -64px;
+    }
+
+    .FilePanel-openButton {
+        top: 8px;
+        right: 56px;
+    }
+
+    .FilePanel-newButton {
+        top: 8px;
+        right: 104px;
+    }
+
 }
 
 @media (orientation:landscape) {
 
     .FilePanel {
         top: 0;
-        left: auto;
     }
 
     .FilePanel-content {
-        top: 0;
-        right: auto;
         bottom: 0;
-        left: 0;
         width: 64px;
-        height: auto;
         background-image: linear-gradient(90deg, #ddd, #eee);
         transition: ease-in-out 0.2s left, ease-in-out 0.2s opacity;
     }
     .FilePanel-content.visible {
-        top: 0;
         left: -64px;
     }
 
