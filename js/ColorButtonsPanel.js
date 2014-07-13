@@ -6,6 +6,7 @@ function ColorButtonsPanel (selectListener) {
                 button.uncheck()
             })
             button.check()
+            activeButton = button
             selectListener(h, s, l)
         })
         button.addClass(classPrefix + '-colorButton')
@@ -54,6 +55,8 @@ function ColorButtonsPanel (selectListener) {
     var pinkButton = createColorButton(312, 100, 83)
     pinkButton.addClass(classPrefix + '-pinkButton')
 
+    var activeButton = blackButton
+
     var element = Div(classPrefix)
     element.appendChild(blackButton.element)
     element.appendChild(greyButton.element)
@@ -68,6 +71,11 @@ function ColorButtonsPanel (selectListener) {
     element.appendChild(violetButton.element)
     element.appendChild(pinkButton.element)
 
-    return { element: element }
+    return {
+        element: element,
+        setColor: function (h, s, l) {
+            activeButton.setColor(h, s, l)
+        },
+    }
 
 }

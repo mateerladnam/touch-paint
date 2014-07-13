@@ -27,6 +27,7 @@ function PalettePanel (colorListener) {
 
     var editColorPanel = EditColorPanel(function (h, s, l) {
         previewButton.setColor(h, s, l)
+        colorButtonsPanel.setColor(h, s, l)
     })
 
     var secondLayerElement = Div(classPrefix + '-secondLayer')
