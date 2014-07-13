@@ -9,9 +9,10 @@ function PalettePanel (colorListener) {
 
     var classPrefix = 'PalettePanel'
 
-    var colorButtonsPanel = ColorButtonsPanel(function (color) {
-        previewButton.setColor(color)
-        colorListener(color)
+    var colorButtonsPanel = ColorButtonsPanel(function (h, s, l) {
+        previewButton.setColor(h, s, l)
+        editColorPanel.setColor(h, s, l)
+        colorListener(h, s, l)
     })
 
     var previewButton = ColorButton(0, 0, 0, function () {
@@ -24,7 +25,9 @@ function PalettePanel (colorListener) {
     })
     previewButton.addClass(classPrefix + '-previewButton')
 
-    var editColorPanel = EditColorPanel()
+    var editColorPanel = EditColorPanel(function (h, s, l) {
+        previewButton.setColor(h, s, l)
+    })
 
     var secondLayerElement = Div(classPrefix + '-secondLayer')
     secondLayerElement.appendChild(colorButtonsPanel.element)

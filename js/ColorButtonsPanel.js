@@ -6,7 +6,7 @@ function ColorButtonsPanel (selectListener) {
                 button.uncheck()
             })
             button.check()
-            selectListener(color)
+            selectListener(h, s, l)
         })
         button.addClass(classPrefix + '-colorButton')
         buttons.push(button)

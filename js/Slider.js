@@ -95,6 +95,10 @@ function Slider (ratio, changeListener, endListener) {
         addClass: function (className) {
             element.classList.add(className)
         },
+        setRatio: function (_ratio) {
+            ratio = _ratio
+            updateHandle()
+        },
     }
 
 }
