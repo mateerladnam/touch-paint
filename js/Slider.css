@@ -1,9 +1,7 @@
 .Slider {
     position: absolute;
     top: 0;
-    right: 0;
     left: 0;
-    height: 64px;
 }
 
 .Slider-bar {
@@ -19,7 +17,6 @@
 .Slider-handleWrapper {
     position: absolute;
     top: 16px;
-    right: 46px;
     left: 16px;
 }
 
@@ -38,15 +35,28 @@
     box-shadow: 0 1px 3px #333 inset;
 }
 
-@media (orientation:landscape) {
+@media (orientation:portrait) {
+
     .Slider {
-        right: auto;
+        right: 0;
+        height: 64px;
+    }
+
+    .Slider-handleWrapper {
+        right: 46px;
+    }
+
+}
+
+@media (orientation:landscape) {
+
+    .Slider {
         bottom: 0;
         width: 64px;
-        height: auto;
     }
+
     .Slider-handleWrapper {
-        right: auto;
         bottom: 46px;
     }
+
 }
