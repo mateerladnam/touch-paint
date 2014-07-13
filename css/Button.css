@@ -1,25 +1,26 @@
-.BarButton {
+.Button {
     position: absolute;
     width: 48px;
     height: 48px;
     cursor: pointer;
     border-radius: 2px;
 }
-.BarButton.checked {
+.Button.checked {
     background-color: #999;
     background-image: linear-gradient(#888, #aaa);
     box-shadow: 0 1px 3px #555 inset;
 }
-.BarButton.active {
+.Button.active {
     background-color: #777;
     background-image: linear-gradient(#666, #888);
     box-shadow: 0 1px 3px #333 inset;
 }
 
-.BarButton-icon {
+.Button-content {
     position: absolute;
     top: 8px;
     left: 8px;
     width: 32px;
     height: 32px;
+    border-radius: 2px;
 }

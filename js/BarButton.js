@@ -1,11 +1,9 @@
 function BarButton (icon, clickListener) {
 
-    var classPrefix = 'BarButton'
-
-    var iconElement = Div(classPrefix + '-icon')
+    var iconElement = Div('Button-content')
     iconElement.style.backgroundImage = 'url(images/' + icon + '.svg)'
 
-    var element = Div('BarButton')
+    var element = Div('Button')
     element.appendChild(iconElement)
     element.addEventListener('touchstart', function (e) {
         e.preventDefault()
@@ -25,12 +23,12 @@ function BarButton (icon, clickListener) {
         addClass: function (className) {
             element.classList.add(className)
         },
-        isChecked: function () {
-            return checked
-        },
         check: function () {
             element.classList.add('checked')
             checked = true
+        },
+        isChecked: function () {
+            return checked
         },
         uncheck: function () {
             element.classList.remove('checked')
