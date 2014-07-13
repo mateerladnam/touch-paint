@@ -2,121 +2,100 @@
     position: absolute;
     right: 0;
     bottom: 0;
-    left: 0;
 }
 
 .PalettePanel-content {
     position: absolute;
     top: 0;
-    right: 0;
     left: 0;
-    height: 112px;
     background-color: #eee;
-    background-image: linear-gradient(#ddd, #eee);
     opacity: 0;
-    transition: ease-in-out 0.2s top, ease-in-out 0.2s opacity;
 }
 .PalettePanel-content.visible {
     opacity: 1;
-    top: -112px;
 }
 
-.PalettePanel-blackButton {
-    top: 8px;
-    left: 8px;
-}
+@media (orientation:portrait) {
 
-.PalettePanel-redButton {
-    top: 8px;
-    left: 56px;
-}
+    .PalettePanel {
+        left: 0;
+    }
 
-.PalettePanel-greenButton {
-    top: 8px;
-    left: 104px;
-}
+    .PalettePanel-content {
+        right: 0;
+        height: 112px;
+        background-image: linear-gradient(#ddd, #eee);
+        transition: ease-in-out 0.2s top, ease-in-out 0.2s opacity;
+    }
+    .PalettePanel-content.visible {
+        top: -112px;
+    }
 
-.PalettePanel-blueButton {
-    top: 8px;
-    left: 152px;
-}
+    .PalettePanel-colorButton:nth-child(4n + 1) {
+        left: 8px;
+    }
+    .PalettePanel-colorButton:nth-child(4n + 2) {
+        left: 56px;
+    }
+    .PalettePanel-colorButton:nth-child(4n + 3) {
+        left: 104px;
+    }
+    .PalettePanel-colorButton:nth-child(4n) {
+        left: 152px;
+    }
 
-.PalettePanel-greyButton {
-    top: 56px;
-    left: 8px;
-}
+    .PalettePanel-blackButton,
+    .PalettePanel-redButton,
+    .PalettePanel-greenButton,
+    .PalettePanel-blueButton {
+        top: 8px;
+    }
+    .PalettePanel-greyButton,
+    .PalettePanel-brownButton,
+    .PalettePanel-darkGreenButton {
+        top: 56px;
+    }
 
-.PalettePanel-brownButton {
-    top: 56px;
-    left: 56px;
-}
-
-.PalettePanel-darkGreenButton {
-    top: 56px;
-    left: 104px;
 }
 
 @media (orientation:landscape) {
 
     .PalettePanel {
         top: 0;
-        left: auto;
     }
 
     .PalettePanel-content {
-        top: 0;
-        right: auto;
         bottom: 0;
-        left: 0;
         width: 112px;
-        height: auto;
         background-image: linear-gradient(90deg, #ddd, #eee);
         transition: ease-in-out 0.2s left, ease-in-out 0.2s opacity;
     }
     .PalettePanel-content.visible {
-        top: 0;
         left: -112px;
     }
 
-    .PalettePanel-blackButton {
-        top: auto;
+    .PalettePanel-colorButton:nth-child(4n + 1) {
         bottom: 8px;
-        left: 8px;
     }
-
-    .PalettePanel-redButton {
-        top: auto;
+    .PalettePanel-colorButton:nth-child(4n + 2) {
         bottom: 56px;
-        left: 8px;
     }
-
-    .PalettePanel-greenButton {
-        top: auto;
+    .PalettePanel-colorButton:nth-child(4n + 3) {
         bottom: 104px;
-        left: 8px;
     }
-
-    .PalettePanel-blueButton {
-        top: auto;
+    .PalettePanel-colorButton:nth-child(4n) {
         bottom: 152px;
+    }
+
+    .PalettePanel-blackButton,
+    .PalettePanel-redButton,
+    .PalettePanel-greenButton,
+    .PalettePanel-blueButton {
         left: 8px;
     }
-
-    .PalettePanel-greyButton {
-        top: auto;
-        bottom: 8px;
-        left: 56px;
-    }
-
-    .PalettePanel-brownButton {
-        top: auto;
-        bottom: 56px;
-        left: 56px;
-    }
-
+    .PalettePanel-greyButton,
+    .PalettePanel-brownButton,
     .PalettePanel-darkGreenButton {
-        top: auto;
-        bottom: 104px;
         left: 56px;
     }
 

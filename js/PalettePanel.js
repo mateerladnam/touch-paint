@@ -1,111 +1,42 @@
 function PalettePanel (colorListener) {
 
+    function createColorButton (color) {
+        var button = ColorButton(color, function () {
+            colorButtons.forEach(function (button) {
+                button.uncheck()
+            })
+            button.check()
+            colorListener(color)
+        })
+        button.addClass(classPrefix + '-colorButton')
+        colorButtons.push(button)
+        return button
+    }
+
+    var colorButtons = []
+
     var classPrefix = 'PalettePanel'
 
-    var blackButton = ColorButton('#000', function () {
-
-        redButton.uncheck()
-        greenButton.uncheck()
-        blueButton.uncheck()
-        greyButton.uncheck()
-        brownButton.uncheck()
-        darkGreenButton.uncheck()
-
-        blackButton.check()
-        colorListener('#000')
-
-    })
+    var blackButton = createColorButton('#000')
     blackButton.addClass(classPrefix + '-blackButton')
     blackButton.check()
 
-    var redButton = ColorButton('#f00', function () {
-
-        blackButton.uncheck()
-        greenButton.uncheck()
-        blueButton.uncheck()
-        greyButton.uncheck()
-        brownButton.uncheck()
-        darkGreenButton.uncheck()
-
-        redButton.check()
-        colorListener('#f00')
-
-    })
+    var redButton = createColorButton('#f00')
     redButton.addClass(classPrefix + '-redButton')
 
-    var greenButton = ColorButton('#0f0', function () {
-
-        blackButton.uncheck()
-        redButton.uncheck()
-        blueButton.uncheck()
-        greyButton.uncheck()
-        brownButton.uncheck()
-        darkGreenButton.uncheck()
-
-        greenButton.check()
-        colorListener('#0f0')
-
-    })
+    var greenButton = createColorButton('#0f0')
     greenButton.addClass(classPrefix + '-greenButton')
 
-    var blueButton = ColorButton('#00f', function () {
-
-        blackButton.uncheck()
-        redButton.uncheck()
-        greenButton.uncheck()
-        greyButton.uncheck()
-        brownButton.uncheck()
-        darkGreenButton.uncheck()
-
-        blueButton.check()
-        colorListener('#00f')
-
-    })
+    var blueButton = createColorButton('#00f')
     blueButton.addClass(classPrefix + '-blueButton')
 
-    var greyButton = ColorButton('#888', function () {
-
-        blackButton.uncheck()
-        redButton.uncheck()
-        greenButton.uncheck()
-        blueButton.uncheck()
-        brownButton.uncheck()
-        darkGreenButton.uncheck()
-
-        greyButton.check()
-        colorListener('#888')
-
-    })
+    var greyButton = createColorButton('#888')
     greyButton.addClass(classPrefix + '-greyButton')
 
-    var brownButton = ColorButton('#a50', function () {
-
-        blackButton.uncheck()
-        redButton.uncheck()
-        greenButton.uncheck()
-        blueButton.uncheck()
-        greyButton.uncheck()
-        darkGreenButton.uncheck()
-
-        brownButton.check()
-        colorListener('#a50')
-
-    })
+    var brownButton = createColorButton('#a50')
     brownButton.addClass(classPrefix + '-brownButton')
 
-    var darkGreenButton = ColorButton('#0a0', function () {
-
-        blackButton.uncheck()
-        redButton.uncheck()
-        greenButton.uncheck()
-        blueButton.uncheck()
-        greyButton.uncheck()
-        brownButton.uncheck()
-
-        darkGreenButton.check()
-        colorListener('#0a0')
-
-    })
+    var darkGreenButton = createColorButton('#0a0')
     darkGreenButton.addClass(classPrefix + '-darkGreenButton')
 
     var contentElement = Div(classPrefix + '-content')
