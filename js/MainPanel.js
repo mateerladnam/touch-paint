@@ -74,19 +74,13 @@ function MainPanel () {
     var paramsPanel = ParamsPanel(function (brushSize) {
         brushTool.setSize(brushSize)
         eraserTool.setSize(brushSize)
-    }, function () {
-        closeParams()
-        closeFile()
-        brushOrEraserListener()
-    })
+    }, brushOrEraserListener)
 
     var filePanel = FilePanel(function () {
         canvas.clear()
-        closeParams()
         brushOrEraserListener()
     }, function () {
         SaveCanvas(canvas.canvas, canvas.element.offsetWidth, canvas.element.offsetHeight)
-        closeParams()
         brushOrEraserListener()
     })
 
@@ -99,7 +93,6 @@ function MainPanel () {
 
     var paletteButton = BarButton('palette', function () {
         if (paletteButton.isChecked()) {
-            closePalette()
             brushOrEraserListener()
         } else {
             closeParams()
@@ -114,7 +107,6 @@ function MainPanel () {
 
     var paramsButton = BarButton('params', function () {
         if (paramsButton.isChecked()) {
-            closeParams()
             brushOrEraserListener()
         } else {
             closePalette()
@@ -129,8 +121,6 @@ function MainPanel () {
 
     var fileButton = BarButton('burger', function () {
         if (fileButton.isChecked()) {
-            closeFile()
-            closeParams()
             brushOrEraserListener()
         } else {
             closePalette()
