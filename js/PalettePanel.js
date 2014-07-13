@@ -39,7 +39,7 @@ function PalettePanel (colorListener) {
     var darkGreenButton = createColorButton('#1a0')
     darkGreenButton.addClass(classPrefix + '-darkGreenButton')
 
-    var skyBlueButton = createColorButton('#abf')
+    var skyBlueButton = createColorButton('#9cf')
     skyBlueButton.addClass(classPrefix + '-skyBlueButton')
 
     var contentElement = Div(classPrefix + '-content')
