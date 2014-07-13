@@ -1,0 +1,88 @@
+.ColorButtonsPanel {
+    position: absolute;
+    left: 8px;
+}
+
+@media (orientation:portrait) {
+
+    .ColorButtonsPanel {
+        top: 8px;
+        width: 192px;
+        height: 144px;
+    }
+
+    .ColorButtonsPanel-colorButton:nth-child(4n + 1) {
+        left: 0;
+    }
+    .ColorButtonsPanel-colorButton:nth-child(4n + 2) {
+        left: 48px;
+    }
+    .ColorButtonsPanel-colorButton:nth-child(4n + 3) {
+        left: 96px;
+    }
+    .ColorButtonsPanel-colorButton:nth-child(4n) {
+        left: 144px;
+    }
+
+    .ColorButtonsPanel-blackButton,
+    .ColorButtonsPanel-greyButton,
+    .ColorButtonsPanel-blueButton,
+    .ColorButtonsPanel-skyBlueButton {
+        top: 0;
+    }
+    .ColorButtonsPanel-darkGreenButton,
+    .ColorButtonsPanel-greenButton,
+    .ColorButtonsPanel-yellowButton,
+    .ColorButtonsPanel-redButton {
+        top: 48px;
+    }
+    .ColorButtonsPanel-brownButton,
+    .ColorButtonsPanel-orangeButton,
+    .ColorButtonsPanel-violetButton,
+    .ColorButtonsPanel-pinkButton {
+        top: 96px;
+    }
+
+}
+
+@media (orientation:landscape) {
+
+    .ColorButtonsPanel {
+        bottom: 8px;
+        width: 144px;
+        height: 192px;
+    }
+
+    .ColorButtonsPanel-colorButton:nth-child(4n + 1) {
+        bottom: 0;
+    }
+    .ColorButtonsPanel-colorButton:nth-child(4n + 2) {
+        bottom: 48px;
+    }
+    .ColorButtonsPanel-colorButton:nth-child(4n + 3) {
+        bottom: 96px;
+    }
+    .ColorButtonsPanel-colorButton:nth-child(4n) {
+        bottom: 144px;
+    }
+
+    .ColorButtonsPanel-blackButton,
+    .ColorButtonsPanel-greyButton,
+    .ColorButtonsPanel-blueButton,
+    .ColorButtonsPanel-skyBlueButton {
+        left: 0;
+    }
+    .ColorButtonsPanel-darkGreenButton,
+    .ColorButtonsPanel-greenButton,
+    .ColorButtonsPanel-yellowButton,
+    .ColorButtonsPanel-redButton {
+        left: 48px;
+    }
+    .ColorButtonsPanel-brownButton,
+    .ColorButtonsPanel-orangeButton,
+    .ColorButtonsPanel-violetButton,
+    .ColorButtonsPanel-pinkButton {
+        left: 96px;
+    }
+
+}
