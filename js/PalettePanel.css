@@ -10,7 +10,7 @@
     top: 0;
     right: 0;
     left: 0;
-    height: 64px;
+    height: 112px;
     background-color: #eee;
     background-image: linear-gradient(#ddd, #eee);
     opacity: 0;
@@ -18,7 +18,7 @@
 }
 .PalettePanel-content.visible {
     opacity: 1;
-    top: -64px;
+    top: -112px;
 }
 
 .PalettePanel-blackButton {
@@ -41,6 +41,21 @@
     left: 152px;
 }
 
+.PalettePanel-greyButton {
+    top: 56px;
+    left: 8px;
+}
+
+.PalettePanel-brownButton {
+    top: 56px;
+    left: 56px;
+}
+
+.PalettePanel-darkGreenButton {
+    top: 56px;
+    left: 104px;
+}
+
 @media (orientation:landscape) {
 
     .PalettePanel {
@@ -53,14 +68,14 @@
         right: auto;
         bottom: 0;
         left: 0;
-        width: 64px;
+        width: 112px;
         height: auto;
         background-image: linear-gradient(90deg, #ddd, #eee);
         transition: ease-in-out 0.2s left, ease-in-out 0.2s opacity;
     }
     .PalettePanel-content.visible {
         top: 0;
-        left: -64px;
+        left: -112px;
     }
 
     .PalettePanel-blackButton {
@@ -85,6 +100,24 @@
         top: auto;
         bottom: 152px;
         left: 8px;
+    }
+
+    .PalettePanel-greyButton {
+        top: auto;
+        bottom: 8px;
+        left: 56px;
+    }
+
+    .PalettePanel-brownButton {
+        top: auto;
+        bottom: 56px;
+        left: 56px;
+    }
+
+    .PalettePanel-darkGreenButton {
+        top: auto;
+        bottom: 104px;
+        left: 56px;
     }
 
 }

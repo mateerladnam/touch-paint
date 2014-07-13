@@ -15,17 +15,17 @@ function FileButton (icon, openListener) {
                     openListener(image)
                 }
                 image.onabort = function () {
-                    console.log('image.onabort')
+                    // TODO
                 }
                 image.onerror = function () {
-                    console.log('image.onerror')
+                    // TODO
                 }
             }
             reader.onabort = function () {
-                console.log('reader.onabort')
+                // TODO
             }
             reader.onerror = function () {
-                console.log('reader.onerror')
+                // TODO
             }
             element.removeChild(input)
             newInput()
