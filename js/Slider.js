@@ -92,6 +92,9 @@ function Slider (ratio, changeListener, endListener) {
         abortTouch: function () {
             if (identifier !== null) finishTouch()
         },
+        addClass: function (className) {
+            element.classList.add(className)
+        },
     }
 
 }

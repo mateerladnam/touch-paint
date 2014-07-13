@@ -6,18 +6,18 @@
 
 .Slider-bar {
     position: absolute;
-    top: 31px;
-    right: 31px;
-    bottom: 31px;
-    left: 31px;
+    top: 23px;
+    right: 23px;
+    bottom: 23px;
+    left: 23px;
     background: #333;
     border-radius: 2px;
 }
 
 .Slider-handleWrapper {
     position: absolute;
-    top: 16px;
-    left: 16px;
+    top: 8px;
+    left: 8px;
 }
 
 .Slider-handle {
@@ -39,11 +39,11 @@
 
     .Slider {
         right: 0;
-        height: 64px;
+        height: 48px;
     }
 
     .Slider-handleWrapper {
-        right: 46px;
+        right: 40px;
     }
 
 }
@@ -52,11 +52,11 @@
 
     .Slider {
         bottom: 0;
-        width: 64px;
+        width: 48px;
     }
 
     .Slider-handleWrapper {
-        bottom: 46px;
+        bottom: 40px;
     }
 
 }

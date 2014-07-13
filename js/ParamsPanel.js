@@ -9,6 +9,7 @@ function ParamsPanel (changeListener, closeListener) {
     var slider = Slider(initialRatio, function (ratio) {
         changeListener(minBrushSize + ratio * maxBrushSize)
     }, closeListener)
+    slider.addClass(classPrefix + '-slider')
 
     var contentElement = Div(classPrefix + '-content')
     contentElement.appendChild(slider.element)

@@ -15,6 +15,11 @@
     opacity: 1;
 }
 
+.ParamsPanel-slider {
+    top: 8px;
+    left: 8px;
+}
+
 @media (orientation:portrait) {
 
     .ParamsPanel {
@@ -29,6 +34,10 @@
     }
     .ParamsPanel-content.visible {
         top: -64px;
+    }
+
+    .ParamsPanel-slider {
+        right: 8px;
     }
 
 }
@@ -47,6 +56,10 @@
     }
     .ParamsPanel-content.visible {
         left: -64px;
+    }
+
+    .ParamsPanel-slider {
+        bottom: 8px;
     }
 
 }
