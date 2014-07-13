@@ -31,38 +31,6 @@
         top: -160px;
     }
 
-    .PalettePanel-colorButton:nth-child(4n + 1) {
-        left: 8px;
-    }
-    .PalettePanel-colorButton:nth-child(4n + 2) {
-        left: 56px;
-    }
-    .PalettePanel-colorButton:nth-child(4n + 3) {
-        left: 104px;
-    }
-    .PalettePanel-colorButton:nth-child(4n) {
-        left: 152px;
-    }
-
-    .PalettePanel-blackButton,
-    .PalettePanel-greyButton,
-    .PalettePanel-blueButton,
-    .PalettePanel-skyBlueButton {
-        top: 8px;
-    }
-    .PalettePanel-darkGreenButton,
-    .PalettePanel-greenButton,
-    .PalettePanel-yellowButton,
-    .PalettePanel-redButton {
-        top: 56px;
-    }
-    .PalettePanel-brownButton,
-    .PalettePanel-orangeButton,
-    .PalettePanel-violetButton,
-    .PalettePanel-pinkButton {
-        top: 104px;
-    }
-
 }
 
 @media (orientation:landscape) {
@@ -79,38 +47,6 @@
     }
     .PalettePanel-content.visible {
         left: -160px;
-    }
-
-    .PalettePanel-colorButton:nth-child(4n + 1) {
-        bottom: 8px;
-    }
-    .PalettePanel-colorButton:nth-child(4n + 2) {
-        bottom: 56px;
-    }
-    .PalettePanel-colorButton:nth-child(4n + 3) {
-        bottom: 104px;
-    }
-    .PalettePanel-colorButton:nth-child(4n) {
-        bottom: 152px;
-    }
-
-    .PalettePanel-blackButton,
-    .PalettePanel-greyButton,
-    .PalettePanel-blueButton,
-    .PalettePanel-skyBlueButton {
-        left: 8px;
-    }
-    .PalettePanel-darkGreenButton,
-    .PalettePanel-greenButton,
-    .PalettePanel-yellowButton,
-    .PalettePanel-redButton {
-        left: 56px;
-    }
-    .PalettePanel-brownButton,
-    .PalettePanel-orangeButton,
-    .PalettePanel-violetButton,
-    .PalettePanel-pinkButton {
-        left: 104px;
     }
 
 }
