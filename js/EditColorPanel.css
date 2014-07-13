@@ -9,7 +9,13 @@
     opacity: 1;
 }
 
+.EditColorPanel-hueSlider {
+    top: 8px;
+    left: 8px;
+}
+
 @media (orientation:portrait) {
+
     .EditColorPanel {
         right: 0;
         height: 160px;
@@ -19,9 +25,27 @@
     .EditColorPanel.visible {
         top: -160px;
     }
+
+    .EditColorPanel-hueSlider {
+        right: 8px;
+    }
+
+    .EditColorPanel-saturationSlider {
+        top: 56px;
+        left: 8px;
+        right: 8px;
+    }
+
+    .EditColorPanel-luminanceSlider {
+        top: 104px;
+        left: 8px;
+        right: 8px;
+    }
+
 }
 
 @media (orientation:landscape) {
+
     .EditColorPanel {
         bottom: 0;
         width: 160px;
@@ -31,4 +55,21 @@
     .EditColorPanel.visible {
         left: -160px;
     }
+
+    .EditColorPanel-hueSlider {
+        bottom: 8px;
+    }
+
+    .EditColorPanel-saturationSlider {
+        top: 8px;
+        bottom: 8px;
+        left: 54px;
+    }
+
+    .EditColorPanel-luminanceSlider {
+        top: 8px;
+        bottom: 8px;
+        left: 104px;
+    }
+
 }
