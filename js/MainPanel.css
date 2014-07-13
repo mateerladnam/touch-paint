@@ -10,48 +10,61 @@
     position: absolute;
     right: 0;
     bottom: 0;
-    left: 0;
-    height: 64px;
     background: #ddd;
-    background-image: linear-gradient(#ddd, #bbb);
 }
+
 .MainPanel-content {
     position: absolute;
     top: 0;
-    right: 0;
-    bottom: 64px;
     left: 0;
 }
 
-.MainPanel-brushButton,
-.MainPanel-eraserButton,
-.MainPanel-paletteButton,
-.MainPanel-paramsButton,
 .MainPanel-fileButton {
     top: 8px;
 }
-.MainPanel-brushButton {
-    left: 8px;
-}
-.MainPanel-eraserButton {
-    left: 56px;
-}
-.MainPanel-paletteButton {
-    left: 104px;
-}
-.MainPanel-paramsButton {
-    left: 152px;
-}
-.MainPanel-fileButton {
-    right: 8px;
+
+@media (orientation:portrait) {
+
+    .MainPanel-bar {
+        left: 0;
+        height: 64px;
+        background-image: linear-gradient(#ddd, #bbb);
+    }
+
+    .MainPanel-content {
+        right: 0;
+        bottom: 64px;
+    }
+
+    .MainPanel-brushButton,
+    .MainPanel-eraserButton,
+    .MainPanel-paletteButton,
+    .MainPanel-paramsButton {
+        top: 8px;
+    }
+
+    .MainPanel-brushButton {
+        left: 8px;
+    }
+    .MainPanel-eraserButton {
+        left: 56px;
+    }
+    .MainPanel-paletteButton {
+        left: 104px;
+    }
+    .MainPanel-paramsButton {
+        left: 152px;
+    }
+    .MainPanel-fileButton {
+        right: 8px;
+    }
+
 }
 
 @media (orientation:landscape) {
 
     .MainPanel-bar {
         top: 0;
-        left: auto;
-        height: auto;
         width: 64px;
         background-image: linear-gradient(90deg, #ddd, #bbb);
     }
@@ -64,10 +77,11 @@
     .MainPanel-brushButton,
     .MainPanel-eraserButton,
     .MainPanel-paletteButton,
-    .MainPanel-paramsButton {
-        top: auto;
+    .MainPanel-paramsButton,
+    .MainPanel-fileButton {
         left: 8px;
     }
+
     .MainPanel-brushButton {
         bottom: 8px;
     }
