@@ -1,15 +1,19 @@
-function FilePanel (newListener, saveListener) {
+function FilePanel (newListener, openListener, saveListener) {
 
     var classPrefix = 'FilePanel'
 
     var newButton = BarButton('file', newListener)
     newButton.addClass(classPrefix + '-newButton')
 
-    var saveButton = BarButton('floppy', saveListener)
+    var openButton = BarButton('open', openListener)
+    openButton.addClass(classPrefix + '-openButton')
+
+    var saveButton = BarButton('save', saveListener)
     saveButton.addClass(classPrefix + '-saveButton')
 
     var contentElement = Div(classPrefix + '-content')
     contentElement.appendChild(newButton.element)
+    contentElement.appendChild(openButton.element)
     contentElement.appendChild(saveButton.element)
 
     var element = Div(classPrefix)

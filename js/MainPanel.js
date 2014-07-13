@@ -80,6 +80,7 @@ function MainPanel () {
         canvas.clear()
         brushOrEraserListener()
     }, function () {
+    }, function () {
         SaveCanvas(canvas.canvas, canvas.element.offsetWidth, canvas.element.offsetHeight)
         brushOrEraserListener()
     })

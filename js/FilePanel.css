@@ -26,9 +26,14 @@
     right: 8px;
 }
 
-.FilePanel-newButton {
+.FilePanel-openButton {
     top: 8px;
     right: 56px;
+}
+
+.FilePanel-newButton {
+    top: 8px;
+    right: 104px;
 }
 
 @media (orientation:landscape) {
@@ -53,8 +58,13 @@
         left: -64px;
     }
 
-    .FilePanel-newButton {
+    .FilePanel-openButton {
         top: 56px;
+        right: 8px;
+    }
+
+    .FilePanel-newButton {
+        top: 104px;
         right: 8px;
     }
 
