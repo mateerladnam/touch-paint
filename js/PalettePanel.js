@@ -42,15 +42,31 @@ function PalettePanel (colorListener) {
     var skyBlueButton = createColorButton('#9cf')
     skyBlueButton.addClass(classPrefix + '-skyBlueButton')
 
+    var yellowButton = createColorButton('#ff0')
+    yellowButton.addClass(classPrefix + '-yellowButton')
+
+    var orangeButton = createColorButton('#f80')
+    orangeButton.addClass(classPrefix + '-orangeButton')
+
+    var violetButton = createColorButton('#a09')
+    violetButton.addClass(classPrefix + '-violetButton')
+
+    var pinkButton = createColorButton('#fae')
+    pinkButton.addClass(classPrefix + '-pinkButton')
+
     var contentElement = Div(classPrefix + '-content')
     contentElement.appendChild(blackButton.element)
-    contentElement.appendChild(redButton.element)
-    contentElement.appendChild(greenButton.element)
-    contentElement.appendChild(blueButton.element)
     contentElement.appendChild(greyButton.element)
-    contentElement.appendChild(brownButton.element)
-    contentElement.appendChild(darkGreenButton.element)
+    contentElement.appendChild(blueButton.element)
     contentElement.appendChild(skyBlueButton.element)
+    contentElement.appendChild(darkGreenButton.element)
+    contentElement.appendChild(greenButton.element)
+    contentElement.appendChild(redButton.element)
+    contentElement.appendChild(yellowButton.element)
+    contentElement.appendChild(brownButton.element)
+    contentElement.appendChild(orangeButton.element)
+    contentElement.appendChild(violetButton.element)
+    contentElement.appendChild(pinkButton.element)
 
     var element = Div(classPrefix)
     element.appendChild(contentElement)

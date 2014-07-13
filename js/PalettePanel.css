@@ -23,12 +23,12 @@
 
     .PalettePanel-content {
         right: 0;
-        height: 112px;
+        height: 160px;
         background-image: linear-gradient(#ddd, #eee);
         transition: ease-in-out 0.2s top, ease-in-out 0.2s opacity;
     }
     .PalettePanel-content.visible {
-        top: -112px;
+        top: -160px;
     }
 
     .PalettePanel-colorButton:nth-child(4n + 1) {
@@ -45,16 +45,22 @@
     }
 
     .PalettePanel-blackButton,
-    .PalettePanel-redButton,
-    .PalettePanel-greenButton,
-    .PalettePanel-blueButton {
+    .PalettePanel-greyButton,
+    .PalettePanel-blueButton,
+    .PalettePanel-skyBlueButton {
         top: 8px;
     }
-    .PalettePanel-greyButton,
-    .PalettePanel-brownButton,
     .PalettePanel-darkGreenButton,
-    .PalettePanel-skyBlueButton {
+    .PalettePanel-greenButton,
+    .PalettePanel-yellowButton,
+    .PalettePanel-redButton {
         top: 56px;
+    }
+    .PalettePanel-brownButton,
+    .PalettePanel-orangeButton,
+    .PalettePanel-violetButton,
+    .PalettePanel-pinkButton {
+        top: 104px;
     }
 
 }
@@ -67,12 +73,12 @@
 
     .PalettePanel-content {
         bottom: 0;
-        width: 112px;
+        width: 160px;
         background-image: linear-gradient(90deg, #ddd, #eee);
         transition: ease-in-out 0.2s left, ease-in-out 0.2s opacity;
     }
     .PalettePanel-content.visible {
-        left: -112px;
+        left: -160px;
     }
 
     .PalettePanel-colorButton:nth-child(4n + 1) {
@@ -89,16 +95,22 @@
     }
 
     .PalettePanel-blackButton,
-    .PalettePanel-redButton,
-    .PalettePanel-greenButton,
-    .PalettePanel-blueButton {
+    .PalettePanel-greyButton,
+    .PalettePanel-blueButton,
+    .PalettePanel-skyBlueButton {
         left: 8px;
     }
-    .PalettePanel-greyButton,
-    .PalettePanel-brownButton,
     .PalettePanel-darkGreenButton,
-    .PalettePanel-skyBlueButton {
+    .PalettePanel-greenButton,
+    .PalettePanel-yellowButton,
+    .PalettePanel-redButton {
         left: 56px;
+    }
+    .PalettePanel-brownButton,
+    .PalettePanel-orangeButton,
+    .PalettePanel-violetButton,
+    .PalettePanel-pinkButton {
+        left: 104px;
     }
 
 }
