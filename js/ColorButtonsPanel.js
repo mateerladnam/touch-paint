@@ -1,7 +1,7 @@
 function ColorButtonsPanel (selectListener) {
 
-    function createColorButton (color) {
-        var button = ColorButton(color, function () {
+    function createColorButton (h, s, l) {
+        var button = ColorButton(h, s, l, function () {
             buttons.forEach(function (button) {
                 button.uncheck()
             })
@@ -17,41 +17,41 @@ function ColorButtonsPanel (selectListener) {
 
     var classPrefix = 'ColorButtonsPanel'
 
-    var blackButton = createColorButton('#000')
+    var blackButton = createColorButton(0, 0, 0)
     blackButton.addClass(classPrefix + '-blackButton')
     blackButton.check()
 
-    var redButton = createColorButton('#e10')
+    var redButton = createColorButton(4, 100, 47)
     redButton.addClass(classPrefix + '-redButton')
 
-    var greenButton = createColorButton('#2e1')
+    var greenButton = createColorButton(115, 87, 50)
     greenButton.addClass(classPrefix + '-greenButton')
 
-    var blueButton = createColorButton('#02f')
+    var blueButton = createColorButton(232, 100, 50)
     blueButton.addClass(classPrefix + '-blueButton')
 
-    var greyButton = createColorButton('#888')
+    var greyButton = createColorButton(0, 0, 53)
     greyButton.addClass(classPrefix + '-greyButton')
 
-    var brownButton = createColorButton('#a50')
+    var brownButton = createColorButton(30, 100, 33)
     brownButton.addClass(classPrefix + '-brownButton')
 
-    var darkGreenButton = createColorButton('#1a0')
+    var darkGreenButton = createColorButton(114, 100, 33)
     darkGreenButton.addClass(classPrefix + '-darkGreenButton')
 
-    var skyBlueButton = createColorButton('#9cf')
+    var skyBlueButton = createColorButton(210, 100, 80)
     skyBlueButton.addClass(classPrefix + '-skyBlueButton')
 
-    var yellowButton = createColorButton('#ff0')
+    var yellowButton = createColorButton(60, 100, 50)
     yellowButton.addClass(classPrefix + '-yellowButton')
 
-    var orangeButton = createColorButton('#f80')
+    var orangeButton = createColorButton(32, 100, 50)
     orangeButton.addClass(classPrefix + '-orangeButton')
 
-    var violetButton = createColorButton('#a09')
+    var violetButton = createColorButton(306, 100, 33)
     violetButton.addClass(classPrefix + '-violetButton')
 
-    var pinkButton = createColorButton('#fae')
+    var pinkButton = createColorButton(312, 100, 83)
     pinkButton.addClass(classPrefix + '-pinkButton')
 
     var element = Div(classPrefix)

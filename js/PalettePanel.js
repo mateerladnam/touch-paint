@@ -14,7 +14,7 @@ function PalettePanel (colorListener) {
         colorListener(color)
     })
 
-    var previewButton = ColorButton('#000', function () {
+    var previewButton = ColorButton(0, 0, 0, function () {
         if (previewButton.isChecked()) {
             closeEdit()
         } else {
