@@ -34,6 +34,9 @@ function EditColorPanel (updateListener) {
     return {
         element: element,
         hide: function () {
+            hueSlider.abortTouch()
+            saturationSlider.abortTouch()
+            luminanceSlider.abortTouch()
             element.classList.remove('visible')
         },
         setColor: function (_h, _s, _l) {
