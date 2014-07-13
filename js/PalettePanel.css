@@ -52,7 +52,8 @@
     }
     .PalettePanel-greyButton,
     .PalettePanel-brownButton,
-    .PalettePanel-darkGreenButton {
+    .PalettePanel-darkGreenButton,
+    .PalettePanel-skyBlueButton {
         top: 56px;
     }
 
@@ -95,7 +96,8 @@
     }
     .PalettePanel-greyButton,
     .PalettePanel-brownButton,
-    .PalettePanel-darkGreenButton {
+    .PalettePanel-darkGreenButton,
+    .PalettePanel-skyBlueButton {
         left: 56px;
     }
 
