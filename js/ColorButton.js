@@ -33,6 +33,9 @@ function ColorButton (color, clickListener) {
             element.classList.add('checked')
             checked = true
         },
+        isChecked: function () {
+            return checked
+        },
         uncheck: function () {
             element.classList.remove('checked')
             checked = false

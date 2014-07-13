@@ -1,0 +1,34 @@
+.EditColorPanel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #eee;
+    opacity: 0;
+}
+.EditColorPanel.visible {
+    opacity: 1;
+}
+
+@media (orientation:portrait) {
+    .EditColorPanel {
+        right: 0;
+        height: 160px;
+        background-image: linear-gradient(#ddd, #eee);
+        transition: ease-in-out 0.2s top, ease-in-out 0.2s opacity;
+    }
+    .EditColorPanel.visible {
+        top: -160px;
+    }
+}
+
+@media (orientation:landscape) {
+    .EditColorPanel {
+        bottom: 0;
+        width: 160px;
+        background-image: linear-gradient(90deg, #ddd, #eee);
+        transition: ease-in-out 0.2s left, ease-in-out 0.2s opacity;
+    }
+    .EditColorPanel.visible {
+        left: -160px;
+    }
+}
