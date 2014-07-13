@@ -74,7 +74,9 @@ function MainPanel () {
     var paramsPanel = ParamsPanel(function (brushSize) {
         brushTool.setSize(brushSize)
         eraserTool.setSize(brushSize)
-    }, brushOrEraserListener)
+    }, function () {
+        brushOrEraserListener()
+    })
 
     var filePanel = FilePanel(function () {
         canvas.clear()

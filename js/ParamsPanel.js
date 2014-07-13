@@ -7,8 +7,7 @@ function ParamsPanel (changeListener, closeListener) {
         initialRatio = (4 - minBrushSize) / (maxBrushSize - minBrushSize)
 
     var slider = Slider(initialRatio, function (ratio) {
-        var brushSize = minBrushSize + ratio * maxBrushSize
-        changeListener(brushSize)
+        changeListener(minBrushSize + ratio * maxBrushSize)
     }, closeListener)
 
     var contentElement = Div(classPrefix + '-content')
