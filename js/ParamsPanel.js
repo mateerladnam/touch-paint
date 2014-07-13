@@ -20,6 +20,7 @@ function ParamsPanel (changeListener, closeListener) {
     return {
         element: element,
         hide: function () {
+            slider.abortTouch()
             contentElement.classList.remove('visible')
         },
         show: function () {

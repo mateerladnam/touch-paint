@@ -19,6 +19,37 @@ function Slider (ratio, changeListener, endListener) {
 
     }
 
+    function finishTouch () {
+        identifier = null
+        handleElement.classList.remove('active')
+        removeEventListener('touchmove', touchMove)
+        removeEventListener('touchend', touchEnd)
+    }
+
+    function touchEnd (e) {
+        var touches = e.changedTouches
+        for (var i = 0; i < touches.length; i++) {
+            if (touches[i].identifier === identifier) {
+                e.preventDefault()
+                finishTouch()
+                endListener()
+                break
+            }
+        }
+    }
+
+    function touchMove (e) {
+        var touches = e.changedTouches
+        for (var i = 0; i < touches.length; i++) {
+            var touch = touches[i]
+            if (touch.identifier === identifier) {
+                e.preventDefault()
+                change(touch)
+                break
+            }
+        }
+    }
+
     function updateHandle () {
         handleElement.style.top = (1 - ratio) * 100 + '%'
         handleElement.style.left = ratio * 100 + '%'
@@ -26,7 +57,7 @@ function Slider (ratio, changeListener, endListener) {
 
     var classPrefix = 'Slider'
 
-    var identifier
+    var identifier = null
 
     var handleElement = Div(classPrefix + '-handle')
 
@@ -39,7 +70,7 @@ function Slider (ratio, changeListener, endListener) {
     element.appendChild(barElement)
     element.appendChild(handleWrapperElement)
     element.addEventListener('touchstart', function (e) {
-        if (!identifier) {
+        if (identifier === null) {
 
             e.preventDefault()
             var touch = e.changedTouches[0]
@@ -48,36 +79,19 @@ function Slider (ratio, changeListener, endListener) {
 
             change(touch)
 
-            addEventListener('touchmove', function (e) {
-                var touches = e.changedTouches
-                for (var i = 0; i < touches.length; i++) {
-                    var touch = touches[i]
-                    if (touch.identifier == identifier) {
-                        e.preventDefault()
-                        change(touch)
-                        break
-                    }
-                }
-            })
-
-            addEventListener('touchend', function (e) {
-                var touches = e.changedTouches
-                for (var i = 0; i < touches.length; i++) {
-                    if (touches[i].identifier == identifier) {
-                        e.preventDefault()
-                        identifier = null
-                        handleElement.classList.remove('active')
-                        endListener()
-                        break
-                    }
-                }
-            })
+            addEventListener('touchmove', touchMove)
+            addEventListener('touchend', touchEnd)
 
         }
     })
 
     updateHandle()
 
-    return { element: element }
+    return {
+        element: element,
+        abortTouch: function () {
+            if (identifier !== null) finishTouch()
+        },
+    }
 
 }
