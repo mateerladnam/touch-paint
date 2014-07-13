@@ -10,8 +10,14 @@ function BarButton (icon, clickListener) {
     element.addEventListener('touchstart', function (e) {
         e.preventDefault()
         clickListener()
+        element.classList.add('active')
+        clearTimeout(activeTimeout)
+        activeTimeout = setTimeout(function () {
+            element.classList.remove('active')
+        }, 100)
     })
 
+    var activeTimeout
     var checked = false
 
     return {
