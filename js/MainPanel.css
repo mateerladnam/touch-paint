@@ -40,7 +40,8 @@
     .MainPanel-brushButton,
     .MainPanel-eraserButton,
     .MainPanel-paletteButton,
-    .MainPanel-paramsButton {
+    .MainPanel-paramsButton,
+    .MainPanel-undoButton {
         top: 8px;
     }
 
@@ -55,6 +56,9 @@
     }
     .MainPanel-paramsButton {
         left: 152px;
+    }
+    .MainPanel-undoButton {
+        left: 200px;
     }
     .MainPanel-fileButton {
         right: 8px;
@@ -79,6 +83,7 @@
     .MainPanel-eraserButton,
     .MainPanel-paletteButton,
     .MainPanel-paramsButton,
+    .MainPanel-undoButton,
     .MainPanel-fileButton {
         left: 8px;
     }
@@ -94,6 +99,9 @@
     }
     .MainPanel-paramsButton {
         bottom: 152px;
+    }
+    .MainPanel-undoButton {
+        bottom: 200px;
     }
     .MainPanel-saveButton {
         bottom: 200px;

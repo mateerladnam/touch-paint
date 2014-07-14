@@ -127,6 +127,10 @@ function MainPanel () {
     })
     paramsButton.addClass(classPrefix + '-paramsButton')
 
+    var undoButton = BarButton('undo', function () {
+    })
+    undoButton.addClass(classPrefix + '-undoButton')
+
     var fileButton = BarButton('burger', function () {
         if (fileButton.isChecked()) {
             brushOrEraserListener()
@@ -152,6 +156,7 @@ function MainPanel () {
     barElement.appendChild(eraserButton.element)
     barElement.appendChild(paletteButton.element)
     barElement.appendChild(paramsButton.element)
+    barElement.appendChild(undoButton.element)
     barElement.appendChild(fileButton.element)
 
     var element = Div(classPrefix)
