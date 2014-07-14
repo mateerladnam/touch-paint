@@ -64,8 +64,8 @@ function MainPanel () {
 
     var eraserTool = EraserTool(canvas.canvas)
 
-    var palettePanel = PalettePanel(function (color) {
-        brushTool.setColor(color)
+    var palettePanel = PalettePanel(function (hue, saturation, luminance) {
+        brushTool.setColor(hue, saturation, luminance)
         closePalette()
         closeFile()
         enableBrush()
@@ -85,7 +85,9 @@ function MainPanel () {
         canvas.open(image)
         brushOrEraserListener()
     }, function () {
-        SaveCanvas(canvas.canvas, canvas.element.offsetWidth, canvas.element.offsetHeight)
+        var width = canvas.element.offsetWidth
+        var height = canvas.element.offsetHeight
+        SaveCanvas(canvas.canvas, width, height)
         brushOrEraserListener()
     })
 

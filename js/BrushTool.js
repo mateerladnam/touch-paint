@@ -4,7 +4,7 @@ function BrushTool (canvas) {
         enabled = true
         c.lineWidth = size
         c.lineCap = 'round'
-        c.strokeStyle = c.fillStyle = color
+        c.strokeStyle = c.fillStyle = 'hsl(' + hue + ', ' + saturation + '%, ' + luminance + '%)'
     }
 
     var activeTouches = {}
@@ -56,15 +56,17 @@ function BrushTool (canvas) {
         })
     })
 
-    var color = '#000'
+    var hue = 0, saturation = 0, luminance = 0
 
     return {
         enable: enable,
         disable: function () {
             enabled = false
         },
-        setColor: function (_color) {
-            color = _color
+        setColor: function (_hue, _saturation, _luminance) {
+            hue = _hue
+            saturation = _saturation
+            luminance = _luminance
         },
         setSize: function (_size) {
             size = _size

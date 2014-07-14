@@ -1,27 +1,27 @@
 function EditColorPanel (updateListener) {
 
     function update () {
-        updateListener(h, s, l)
+        updateListener(hue, saturation, luminance)
     }
 
-    var h = 0, s = 0, l = 0
+    var hue = 0, saturation = 0, luminance = 0
 
     var classPrefix = 'EditColorPanel'
 
     var hueSlider = Slider(0, function (ratio) {
-        h = ratio * 360
+        hue = ratio * 360
         update()
     }, update)
     hueSlider.addClass(classPrefix + '-hueSlider')
 
     var saturationSlider = Slider(0, function (ratio) {
-        s = ratio * 100
+        saturation = ratio * 100
         update()
     }, update)
     saturationSlider.addClass(classPrefix + '-saturationSlider')
 
     var luminanceSlider = Slider(0, function (ratio) {
-        l = ratio * 100
+        luminance = ratio * 100
         update()
     }, update)
     luminanceSlider.addClass(classPrefix + '-luminanceSlider')
@@ -39,13 +39,13 @@ function EditColorPanel (updateListener) {
             luminanceSlider.abortTouch()
             element.classList.remove('visible')
         },
-        setColor: function (_h, _s, _l) {
-            h = _h
-            s = _s
-            l = _l
-            hueSlider.setRatio(h / 360)
-            saturationSlider.setRatio(s / 100)
-            luminanceSlider.setRatio(l / 100)
+        setColor: function (_hue, _saturation, _luminance) {
+            hue = _hue
+            saturation = _saturation
+            luminance = _luminance
+            hueSlider.setRatio(hue / 360)
+            saturationSlider.setRatio(saturation / 100)
+            luminanceSlider.setRatio(luminance / 100)
         },
         show: function () {
             element.classList.add('visible')

@@ -1,7 +1,8 @@
-function ColorButton (h, s, l, clickListener) {
+function ColorButton (hue, saturation, luminance, clickListener) {
 
-    function setColor (h, s, l) {
-        contentElement.style.backgroundColor = 'hsl(' + h + ', ' + s + '%, ' + l + '%)'
+    function setColor (hue, saturation, luminance) {
+        var hsl = 'hsl(' + hue + ', ' + saturation + '%, ' + luminance + '%)'
+        contentElement.style.backgroundColor = hsl
     }
 
     var contentElement = Div('Button-content')
@@ -21,7 +22,7 @@ function ColorButton (h, s, l, clickListener) {
     var activeTimeout
     var checked = false
 
-    setColor(h, s, l)
+    setColor(hue, saturation, luminance)
 
     return {
         element: element,

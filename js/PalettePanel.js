@@ -9,10 +9,10 @@ function PalettePanel (colorListener) {
 
     var classPrefix = 'PalettePanel'
 
-    var colorButtonsPanel = ColorButtonsPanel(function (h, s, l) {
-        previewButton.setColor(h, s, l)
-        editColorPanel.setColor(h, s, l)
-        colorListener(h, s, l)
+    var colorButtonsPanel = ColorButtonsPanel(function (hue, saturation, luminance) {
+        previewButton.setColor(hue, saturation, luminance)
+        editColorPanel.setColor(hue, saturation, luminance)
+        colorListener(hue, saturation, luminance)
     })
 
     var previewButton = ColorButton(0, 0, 0, function () {
@@ -25,9 +25,9 @@ function PalettePanel (colorListener) {
     })
     previewButton.addClass(classPrefix + '-previewButton')
 
-    var editColorPanel = EditColorPanel(function (h, s, l) {
-        previewButton.setColor(h, s, l)
-        colorButtonsPanel.setColor(h, s, l)
+    var editColorPanel = EditColorPanel(function (hue, saturation, luminance) {
+        previewButton.setColor(hue, saturation, luminance)
+        colorButtonsPanel.setColor(hue, saturation, luminance)
     })
 
     var secondLayerElement = Div(classPrefix + '-secondLayer')
