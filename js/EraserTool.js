@@ -3,7 +3,6 @@ function EraserTool (size, canvas) {
     function enable () {
         enabled = true
         c.lineWidth = size
-        c.lineCap = 'round'
         c.strokeStyle = c.fillStyle = '#fff';
     }
 

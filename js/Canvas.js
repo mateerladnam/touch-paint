@@ -17,6 +17,7 @@ function Canvas () {
     canvas.style.left = canvas.style.top = -size / 2 + 'px'
 
     var c = canvas.getContext('2d')
+    c.lineCap = 'round'
 
     var centerElement = Div(classPrefix + '-center')
     centerElement.appendChild(canvas)

@@ -3,8 +3,6 @@ function BrushTool (size, canvas) {
     function enable () {
         enabled = true
         c.lineWidth = size
-        c.lineCap = 'round'
-        var hsl = 'hsl(' + hue + ', ' + saturation + '%, ' + luminance + '%)'
         c.strokeStyle = c.fillStyle = hsl
     }
 
@@ -75,6 +73,7 @@ function BrushTool (size, canvas) {
     })
 
     var hue = 0, saturation = 0, luminance = 0
+    var hsl = 'hsl(0, 0%, 0%)'
 
     return {
         enable: enable,
@@ -85,6 +84,7 @@ function BrushTool (size, canvas) {
             hue = _hue
             saturation = _saturation
             luminance = _luminance
+            hsl = 'hsl(' + hue + ', ' + saturation + '%, ' + luminance + '%)'
         },
         setSize: function (_size) {
             size = _size
