@@ -1,0 +1,15 @@
+@media (orientation:portrait) {
+    .SaturationSlider {
+        top: 56px;
+        left: 8px;
+        right: 8px;
+    }
+}
+
+@media (orientation:landscape) {
+    .SaturationSlider {
+        top: 8px;
+        bottom: 8px;
+        left: 54px;
+    }
+}

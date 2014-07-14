@@ -14,11 +14,10 @@ function EditColorPanel (updateListener) {
     }, update)
     hueSlider.addClass(classPrefix + '-hueSlider')
 
-    var saturationSlider = Slider(0, function (ratio) {
+    var saturationSlider = SaturationSlider(function (ratio) {
         saturation = ratio * 100
         update()
     }, update)
-    saturationSlider.addClass(classPrefix + '-saturationSlider')
 
     var luminanceSlider = Slider(0, function (ratio) {
         luminance = ratio * 100
