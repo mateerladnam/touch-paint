@@ -9,9 +9,11 @@ function BrushTool (size, canvas) {
         if (!enabled) return
         e.preventDefault()
         var rect = canvasElement.getBoundingClientRect()
-        Array.prototype.forEach.call(e.changedTouches, function (touch) {
+        var touches = e.changedTouches
+        for (var i = 0; i < touches.length; i++) {
 
-            var x = touch.clientX - rect.left,
+            var touch = touches[i],
+                x = touch.clientX - rect.left,
                 y = touch.clientY - rect.top
 
             ;(function (size, hsl, halfSize) {
@@ -26,12 +28,15 @@ function BrushTool (size, canvas) {
 
             activeTouches[touch.identifier] = { x: x, y: y }
 
-        })
+        }
     })
     canvasElement.addEventListener('touchmove', function (e) {
+        if (!enabled) return
         e.preventDefault()
         var rect = canvasElement.getBoundingClientRect()
-        Array.prototype.forEach.call(e.changedTouches, function (touch) {
+        var touches = e.changedTouches
+        for (var i = 0; i < touches.length; i++) {
+            var touch = touches[i]
             var activeTouch = activeTouches[touch.identifier]
             if (activeTouch) {
 
@@ -53,13 +58,14 @@ function BrushTool (size, canvas) {
                 activeTouch.y = y
 
             }
-        })
+        }
     })
     canvasElement.addEventListener('touchend', function (e) {
         e.preventDefault()
-        Array.prototype.forEach.call(e.changedTouches, function (touch) {
-            delete activeTouches[touch.identifier]
-        })
+        var touches = e.changedTouches
+        for (var i = 0; i < touches.length; i++) {
+            delete activeTouches[touches[i].identifier]
+        }
     })
 
     var hue = 0, saturation = 0, luminance = 0

@@ -10,9 +10,11 @@ function EraserTool (size, canvas) {
         if (!enabled) return
         e.preventDefault()
         var rect = canvasElement.getBoundingClientRect()
-        Array.prototype.forEach.call(e.changedTouches, function (touch) {
+        var touches = e.changedTouches
+        for (var i = 0; i < touches.length; i++) {
 
-            var x = touch.clientX - rect.left,
+            var touch = touches[i],
+                x = touch.clientX - rect.left,
                 y = touch.clientY - rect.top
 
             ;(function (size, halfSize) {
@@ -27,12 +29,15 @@ function EraserTool (size, canvas) {
 
             activeTouches[touch.identifier] = { x: x, y: y }
 
-        })
+        }
     })
     canvasElement.addEventListener('touchmove', function (e) {
+        if (!enabled) return
         e.preventDefault()
         var rect = canvasElement.getBoundingClientRect()
-        Array.prototype.forEach.call(e.changedTouches, function (touch) {
+        var touches = e.changedTouches
+        for (var i = 0; i < touches.length; i++) {
+            var touch = touches[i]
             var activeTouch = activeTouches[touch.identifier]
             if (activeTouch) {
 
@@ -53,13 +58,14 @@ function EraserTool (size, canvas) {
                 activeTouch.x = x
                 activeTouch.y = y
             }
-        })
+        }
     })
     canvasElement.addEventListener('touchend', function (e) {
         e.preventDefault()
-        Array.prototype.forEach.call(e.changedTouches, function (touch) {
-            delete activeTouches[touch.identifier]
-        })
+        var touches = e.changedTouches
+        for (var i = 0; i < touches.length; i++) {
+            delete activeTouches[touches[i].identifier]
+        }
     })
 
     return {
