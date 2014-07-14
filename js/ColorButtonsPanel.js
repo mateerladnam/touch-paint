@@ -3,17 +3,17 @@ function ColorButtonsPanel (selectListener) {
     function createColorButton (hue, saturation, luminance) {
 
         var button = ColorButton(hue, saturation, luminance, function () {
-            buttons.forEach(function (button) {
-                button.uncheck()
+            items.forEach(function (item) {
+                item.uncheck()
             })
             button.check()
-            activeButton = button
+            activeItem = item
             selectListener(hue, saturation, luminance)
         })
         button.addClass(classPrefix + '-colorButton')
-        buttons.push(button)
+        items.push(button)
 
-        return {
+        var item = {
             addClass: button.addClass,
             check: button.check,
             element: button.element,
@@ -25,9 +25,11 @@ function ColorButtonsPanel (selectListener) {
             },
         }
 
+        return item
+
     }
 
-    var buttons = []
+    var items = []
 
     var classPrefix = 'ColorButtonsPanel'
 
@@ -68,7 +70,7 @@ function ColorButtonsPanel (selectListener) {
     var pinkButton = createColorButton(312, 100, 83)
     pinkButton.addClass(classPrefix + '-pinkButton')
 
-    var activeButton = blackButton
+    var activeItem = blackButton
 
     var element = Div(classPrefix)
     element.appendChild(blackButton.element)
@@ -87,7 +89,7 @@ function ColorButtonsPanel (selectListener) {
     return {
         element: element,
         setColor: function (hue, saturation, luminance) {
-            activeButton.setColor(hue, saturation, luminance)
+            activeItem.setColor(hue, saturation, luminance)
         },
     }
 

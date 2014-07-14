@@ -1,4 +1,4 @@
-function PalettePanel (colorListener) {
+function PalettePanel (colorListener, closeListener) {
 
     function closeEdit () {
         editColorPanel.hide()
@@ -13,6 +13,9 @@ function PalettePanel (colorListener) {
         previewButton.setColor(hue, saturation, luminance)
         editColorPanel.setColor(hue, saturation, luminance)
         colorListener(hue, saturation, luminance)
+        if (!previewButton.isChecked()) {
+            closeListener()
+        }
     })
 
     var previewButton = ColorButton(0, 0, 0, function () {
@@ -28,6 +31,7 @@ function PalettePanel (colorListener) {
     var editColorPanel = EditColorPanel(function (hue, saturation, luminance) {
         previewButton.setColor(hue, saturation, luminance)
         colorButtonsPanel.setColor(hue, saturation, luminance)
+        colorListener(hue, saturation, luminance)
     })
 
     var secondLayerElement = Div(classPrefix + '-secondLayer')
