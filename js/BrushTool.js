@@ -9,7 +9,7 @@ function BrushTool (canvas) {
 
     var activeTouches = {}
 
-    var size = 10
+    var size = 4
     var halfSize = size / 2
 
     var enabled = false
