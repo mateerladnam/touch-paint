@@ -61,10 +61,10 @@ function MainPanel () {
 
     var brushOrEraserListener = brushListener
 
-    var brushTool = BrushTool(brushSize, canvas.canvas)
+    var brushTool = BrushTool(brushSize, canvas)
     brushTool.enable()
 
-    var eraserTool = EraserTool(brushSize, canvas.canvas)
+    var eraserTool = EraserTool(brushSize, canvas)
 
     var palettePanel = PalettePanel(brushTool.setColor, function (hue, saturation, luminance) {
         closePalette()
@@ -83,7 +83,12 @@ function MainPanel () {
         canvas.clear()
         brushOrEraserListener()
     }, function (image) {
-        canvas.open(image)
+        canvas.operate(function (c) {
+            var size = c.canvas.width
+            var x = (size - image.width) / 2
+            var y = (size - image.height) / 2
+            c.drawImage(image, x, y)
+        })
         brushOrEraserListener()
     }, function () {
         var width = canvas.element.offsetWidth
@@ -127,8 +132,7 @@ function MainPanel () {
     })
     paramsButton.addClass(classPrefix + '-paramsButton')
 
-    var undoButton = BarButton('undo', function () {
-    })
+    var undoButton = BarButton('undo', canvas.undo)
     undoButton.addClass(classPrefix + '-undoButton')
 
     var fileButton = BarButton('burger', function () {
