@@ -1,20 +1,10 @@
 function EraserTool (size, canvas) {
 
-    function enable () {
-        enabled = true
-        c.lineWidth = size
-        c.strokeStyle = c.fillStyle = '#fff';
-    }
-
+    var color = '#fff'
     var activeTouches = {}
-
     var halfSize = size / 2
-
     var enabled = false
-
     var canvasElement = canvas.canvas
-
-    var c = canvasElement.getContext('2d')
 
     canvasElement.addEventListener('touchstart', function (e) {
         if (!enabled) return
@@ -25,16 +15,18 @@ function EraserTool (size, canvas) {
             var x = touch.clientX - rect.left,
                 y = touch.clientY - rect.top
 
-            ;(function (halfSize) {
-                canvas.operate(function () {
+            ;(function (size, halfSize) {
+                canvas.operate(function (c) {
                     c.save()
+                    c.lineWidth = size
+                    c.strokeStyle = c.fillStyle = color
                     c.translate(x, y)
                     c.beginPath()
                     c.arc(0, 0, halfSize, 0, Math.PI * 2)
                     c.fill()
                     c.restore()
                 })
-            })(halfSize)
+            })(size, halfSize)
 
             activeTouches[touch.identifier] = { x: x, y: y }
 
@@ -50,12 +42,18 @@ function EraserTool (size, canvas) {
                 var x = touch.clientX - rect.left,
                     y = touch.clientY - rect.top
 
-                ;(function (oldX, oldY) {
-                    c.beginPath()
-                    c.moveTo(oldX, oldY)
-                    c.lineTo(x, y)
-                    c.stroke()
-                })(activeTouch.x, activeTouch.y)
+                ;(function (size, oldX, oldY) {
+                    canvas.operate(function (c) {
+                        c.save()
+                        c.lineWidth = size
+                        c.strokeStyle = c.fillStyle = color
+                        c.beginPath()
+                        c.moveTo(oldX, oldY)
+                        c.lineTo(x, y)
+                        c.stroke()
+                        c.restore()
+                    })
+                })(size, activeTouch.x, activeTouch.y)
 
                 activeTouch.x = x
                 activeTouch.y = y
@@ -70,9 +68,11 @@ function EraserTool (size, canvas) {
     })
 
     return {
-        enable: enable,
         disable: function () {
             enabled = false
+        },
+        enable: function () {
+            enabled = true
         },
         setSize: function (_size) {
             size = _size

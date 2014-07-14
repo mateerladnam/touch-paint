@@ -1,20 +1,9 @@
 function BrushTool (size, canvas) {
 
-    function enable () {
-        enabled = true
-        c.lineWidth = size
-        c.strokeStyle = c.fillStyle = hsl
-    }
-
     var activeTouches = {}
-
     var halfSize = size / 2
-
     var enabled = false
-
     var canvasElement = canvas.canvas
-
-    var c = canvasElement.getContext('2d')
 
     canvasElement.addEventListener('touchstart', function (e) {
         if (!enabled) return
@@ -25,16 +14,18 @@ function BrushTool (size, canvas) {
             var x = touch.clientX - rect.left,
                 y = touch.clientY - rect.top
 
-            ;(function (halfSize) {
+            ;(function (size, hsl, halfSize) {
                 canvas.operate(function (c) {
                     c.save()
+                    c.lineWidth = size
+                    c.strokeStyle = c.fillStyle = hsl
                     c.translate(x, y)
                     c.beginPath()
                     c.arc(0, 0, halfSize, 0, Math.PI * 2)
                     c.fill()
                     c.restore()
                 })
-            })(halfSize)
+            })(size, hsl, halfSize)
 
             activeTouches[touch.identifier] = { x: x, y: y }
 
@@ -50,14 +41,18 @@ function BrushTool (size, canvas) {
                 var x = touch.clientX - rect.left,
                     y = touch.clientY - rect.top
 
-                ;(function (oldX, oldY) {
+                ;(function (size, hsl, oldX, oldY) {
                     canvas.operate(function (c) {
+                        c.save()
+                        c.lineWidth = size
+                        c.strokeStyle = c.fillStyle = hsl
                         c.beginPath()
                         c.moveTo(oldX, oldY)
                         c.lineTo(x, y)
                         c.stroke()
+                        c.restore()
                     })
-                })(activeTouch.x, activeTouch.y)
+                })(size, hsl, activeTouch.x, activeTouch.y)
 
                 activeTouch.x = x
                 activeTouch.y = y
@@ -76,9 +71,11 @@ function BrushTool (size, canvas) {
     var hsl = 'hsl(0, 0%, 0%)'
 
     return {
-        enable: enable,
         disable: function () {
             enabled = false
+        },
+        enable: function () {
+            enabled = true
         },
         setColor: function (_hue, _saturation, _luminance) {
             hue = _hue
@@ -89,7 +86,6 @@ function BrushTool (size, canvas) {
         setSize: function (_size) {
             size = _size
             halfSize = size / 2
-            if (enabled) enable()
         },
     }
 
