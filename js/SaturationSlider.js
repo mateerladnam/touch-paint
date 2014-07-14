@@ -15,7 +15,9 @@ function SaturationSlider (changeListener, endListener) {
 
     var landscapeBarElement = Div(classPrefix + '-landscapeBar')
 
-    var slider = Slider(0, changeListener, endListener)
+    var slider = Slider(0, function (ratio) {
+        changeListener(ratio * 100)
+    }, endListener)
     slider.addClass(classPrefix)
     slider.barElement.appendChild(portraitBarElement)
     slider.barElement.appendChild(landscapeBarElement)
@@ -25,7 +27,6 @@ function SaturationSlider (changeListener, endListener) {
     return {
         abortTouch: slider.abortTouch,
         element: slider.element,
-        setRatio: slider.setRatio,
         setHue: function (_hue) {
             hue = _hue
             updateBar()
@@ -33,6 +34,9 @@ function SaturationSlider (changeListener, endListener) {
         setLuminance: function (_luminance) {
             luminance = _luminance
             updateBar()
+        },
+        setSaturation: function (saturation) {
+            slider.setRatio(saturation / 100)
         },
     }
 

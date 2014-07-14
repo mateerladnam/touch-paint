@@ -39,12 +39,6 @@
         right: 8px;
     }
 
-    .EditColorPanel-luminanceSlider {
-        top: 104px;
-        left: 8px;
-        right: 8px;
-    }
-
 }
 
 @media (orientation:landscape) {
@@ -70,12 +64,6 @@
         top: 8px;
         bottom: 8px;
         left: 54px;
-    }
-
-    .EditColorPanel-luminanceSlider {
-        top: 8px;
-        bottom: 8px;
-        left: 104px;
     }
 
 }

@@ -12,20 +12,21 @@ function EditColorPanel (updateListener) {
         hue = ratio * 360
         update()
         saturationSlider.setHue(hue)
+        luminanceSlider.setHue(hue)
     }, update)
     hueSlider.addClass(classPrefix + '-hueSlider')
 
-    var saturationSlider = SaturationSlider(function (ratio) {
-        saturation = ratio * 100
+    var saturationSlider = SaturationSlider(function (_saturation) {
+        saturation = _saturation
         update()
+        luminanceSlider.setSaturation(saturation)
     }, update)
 
-    var luminanceSlider = Slider(0, function (ratio) {
-        luminance = ratio * 100
+    var luminanceSlider = LuminanceSlider(function (_luminance) {
+        luminance = _luminance
         update()
         saturationSlider.setLuminance(luminance)
     }, update)
-    luminanceSlider.addClass(classPrefix + '-luminanceSlider')
 
     var element = Div(classPrefix)
     element.appendChild(hueSlider.element)
@@ -45,10 +46,12 @@ function EditColorPanel (updateListener) {
             saturation = _saturation
             luminance = _luminance
             hueSlider.setRatio(hue / 360)
-            saturationSlider.setRatio(saturation / 100)
+            saturationSlider.setSaturation(saturation)
             saturationSlider.setHue(hue)
             saturationSlider.setLuminance(luminance)
-            luminanceSlider.setRatio(luminance / 100)
+            luminanceSlider.setHue(hue)
+            luminanceSlider.setLuminance(luminance)
+            luminanceSlider.setSaturation(saturation)
         },
         show: function () {
             element.classList.add('visible')

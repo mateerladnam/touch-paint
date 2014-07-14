@@ -1,23 +1,23 @@
-.SaturationSlider .Slide-bar {
+.LuminanceSlider .Slide-bar {
     box-shadow: none;
     background: none;
 }
 
-.SaturationSlider-portraitBar,
-.SaturationSlider-landscapeBar {
+.LuminanceSlider-portraitBar,
+.LuminanceSlider-landscapeBar {
     border-radius: 16px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4) inset;
 }
 
 @media (orientation:portrait) {
 
-    .SaturationSlider {
-        top: 56px;
+    .LuminanceSlider {
+        top: 104px;
         left: 8px;
         right: 8px;
     }
 
-    .SaturationSlider-portraitBar {
+    .LuminanceSlider-portraitBar {
         position: absolute;
         top: 0;
         right: 0;
@@ -29,13 +29,13 @@
 
 @media (orientation:landscape) {
 
-    .SaturationSlider {
+    .LuminanceSlider {
         top: 8px;
         bottom: 8px;
-        left: 56px;
+        left: 106px;
     }
 
-    .SaturationSlider-landscapeBar {
+    .LuminanceSlider-landscapeBar {
         position: absolute;
         top: 0;
         right: 0;
