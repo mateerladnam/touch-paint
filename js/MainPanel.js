@@ -132,8 +132,7 @@ function MainPanel () {
     })
     paramsButton.addClass(classPrefix + '-paramsButton')
 
-    var undoButton = BarButton('undo', canvas.undo)
-    undoButton.addClass(classPrefix + '-undoButton')
+    var undoButton = UndoButton(canvas.undo)
 
     var fileButton = BarButton('burger', function () {
         if (fileButton.isChecked()) {
