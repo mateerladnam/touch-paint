@@ -88,6 +88,7 @@ function Slider (ratio, changeListener, endListener) {
     updateHandle()
 
     return {
+        barElement: barElement,
         element: element,
         abortTouch: function () {
             if (identifier !== null) finishTouch()

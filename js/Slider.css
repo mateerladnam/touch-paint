@@ -13,7 +13,7 @@
     background-color: #bbb;
     background-image: linear-gradient(#999, #ccc);
     border-radius: 16px;
-    box-shadow: 0 1px 3px #555 inset;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4) inset;
 }
 
 .Slider-handleWrapper {

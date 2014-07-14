@@ -1,8 +1,39 @@
 function SaturationSlider (changeListener, endListener) {
 
-    var slider = Slider(0, changeListener, endListener)
-    slider.addClass('SaturationSlider')
+    function updateBar () {
+        var saturatedColor = 'hsl(' + hue + ', 100%, ' + luminance + '%)'
+        var desaturatedColor = 'hsl(' + hue + ', 0%, ' + luminance + '%)'
+        portraitBarElement.style.backgroundImage = 'linear-gradient(90deg, ' + desaturatedColor + ', ' + saturatedColor + ')'
+        landscapeBarElement.style.backgroundImage = 'linear-gradient(' + saturatedColor + ', ' + desaturatedColor + ')'
+    }
 
-    return { element: slider.element }
+    var hue = 0, luminance = 0
+
+    var classPrefix = 'SaturationSlider'
+
+    var portraitBarElement = Div(classPrefix + '-portraitBar')
+
+    var landscapeBarElement = Div(classPrefix + '-landscapeBar')
+
+    var slider = Slider(0, changeListener, endListener)
+    slider.addClass(classPrefix)
+    slider.barElement.appendChild(portraitBarElement)
+    slider.barElement.appendChild(landscapeBarElement)
+
+    updateBar()
+
+    return {
+        abortTouch: slider.abortTouch,
+        element: slider.element,
+        setRatio: slider.setRatio,
+        setHue: function (_hue) {
+            hue = _hue
+            updateBar()
+        },
+        setLuminance: function (_luminance) {
+            luminance = _luminance
+            updateBar()
+        },
+    }
 
 }

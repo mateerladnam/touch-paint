@@ -11,6 +11,7 @@ function EditColorPanel (updateListener) {
     var hueSlider = Slider(0, function (ratio) {
         hue = ratio * 360
         update()
+        saturationSlider.setHue(hue)
     }, update)
     hueSlider.addClass(classPrefix + '-hueSlider')
 
@@ -22,6 +23,7 @@ function EditColorPanel (updateListener) {
     var luminanceSlider = Slider(0, function (ratio) {
         luminance = ratio * 100
         update()
+        saturationSlider.setLuminance(luminance)
     }, update)
     luminanceSlider.addClass(classPrefix + '-luminanceSlider')
 
@@ -44,6 +46,8 @@ function EditColorPanel (updateListener) {
             luminance = _luminance
             hueSlider.setRatio(hue / 360)
             saturationSlider.setRatio(saturation / 100)
+            saturationSlider.setHue(hue)
+            saturationSlider.setLuminance(luminance)
             luminanceSlider.setRatio(luminance / 100)
         },
         show: function () {
