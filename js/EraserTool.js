@@ -17,14 +17,11 @@ function EraserTool (size, canvas) {
 
             ;(function (size, halfSize) {
                 canvas.operate(function (c) {
-                    c.save()
                     c.lineWidth = size
                     c.strokeStyle = c.fillStyle = color
-                    c.translate(x, y)
                     c.beginPath()
-                    c.arc(0, 0, halfSize, 0, Math.PI * 2)
+                    c.arc(x, y, halfSize, 0, Math.PI * 2)
                     c.fill()
-                    c.restore()
                 })
             })(size, halfSize)
 
@@ -44,14 +41,12 @@ function EraserTool (size, canvas) {
 
                 ;(function (size, oldX, oldY) {
                     canvas.operate(function (c) {
-                        c.save()
                         c.lineWidth = size
                         c.strokeStyle = c.fillStyle = color
                         c.beginPath()
                         c.moveTo(oldX, oldY)
                         c.lineTo(x, y)
                         c.stroke()
-                        c.restore()
                     })
                 })(size, activeTouch.x, activeTouch.y)
 
