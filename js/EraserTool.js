@@ -1,4 +1,4 @@
-function EraserTool (canvas) {
+function EraserTool (size, canvas) {
 
     function enable () {
         enabled = true
@@ -9,7 +9,6 @@ function EraserTool (canvas) {
 
     var activeTouches = {}
 
-    var size = 10
     var halfSize = size / 2
 
     var enabled = false

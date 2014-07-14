@@ -53,16 +53,18 @@ function MainPanel () {
         brushOrEraserListener = eraserListener
     }
 
+    var brushSize = 4
+
     var classPrefix = 'MainPanel'
 
     var canvas = Canvas()
 
     var brushOrEraserListener = brushListener
 
-    var brushTool = BrushTool(canvas.canvas)
+    var brushTool = BrushTool(brushSize, canvas.canvas)
     brushTool.enable()
 
-    var eraserTool = EraserTool(canvas.canvas)
+    var eraserTool = EraserTool(brushSize, canvas.canvas)
 
     var palettePanel = PalettePanel(brushTool.setColor, function (hue, saturation, luminance) {
         closePalette()
@@ -70,7 +72,7 @@ function MainPanel () {
         enableBrush()
     })
 
-    var paramsPanel = ParamsPanel(function (brushSize) {
+    var paramsPanel = ParamsPanel(brushSize, function (brushSize) {
         brushTool.setSize(brushSize)
         eraserTool.setSize(brushSize)
     }, function () {
