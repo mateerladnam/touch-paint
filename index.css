@@ -9,10 +9,15 @@
     color: inherit;
 }
 
+*::-moz-focus-inner {
+    border: 0;
+}
+
 html, body {
     font: normal 16px/18px Arial, sans-serif;
     text-align: center;
     color: #333;
+    cursor: default;
 }
 
 body {
@@ -36,10 +41,17 @@ h2 {
 
 #installButton {
     margin-top: 32px;
-    background: #444;
-    color: #fff;
     padding: 8px;
     font-weight: bold;
+    cursor: pointer;
+    border-radius: 4px;
+    background-color: #ccc;
+    background-image: linear-gradient(rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0.1));
+}
+#installButton:active {
+    background-color: #777;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.1));
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5) inset;
 }
 
 #description {
