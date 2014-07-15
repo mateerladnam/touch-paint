@@ -44,7 +44,7 @@ if (false) {
         .'<script type="text/javascript" src="js/UndoButton.js"></script>'
         .'<script type="text/javascript" src="js/Main.js"></script>';
 } else {
-    $scripts = '<script type="text/javascript" src="compressed.js"></script>';
+    $scripts = '<script type="text/javascript" src="compressed.js?1"></script>';
 }
 
 echo '<!DOCTYPE html>'

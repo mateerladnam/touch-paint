@@ -797,8 +797,6 @@ function PalettePanel (colorListener, closeListener) {
         previewButton.uncheck()
     }
 
-    var colorButtons = []
-
     var classPrefix = 'PalettePanel'
 
     var colorButtonsPanel = ColorButtonsPanel(function (hue, saturation, luminance) {
@@ -1086,7 +1084,7 @@ function UndoButton (undoListener) {
             identifier = e.changedTouches[0].identifier
             element.classList.add('active')
             addEventListener('touchend', touchEnd)
-            repeatInterval = setInterval(undoListener, 100)
+            repeatInterval = setInterval(undoListener, 60)
             undoListener()
         }
 
