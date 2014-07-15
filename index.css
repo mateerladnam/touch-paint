@@ -1,0 +1,48 @@
+* {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: inherit;
+    font: inherit;
+    text-decoration: none;
+    color: inherit;
+}
+
+html, body {
+    font: normal 16px/18px Arial, sans-serif;
+    text-align: center;
+    color: #333;
+}
+
+body {
+    padding: 32px;
+}
+
+h1 {
+    font-size: 28px;
+    line-height: 32px;
+    font-weight: bold;
+    padding-top: 32px;
+}
+
+h2 {
+    font-size: 18px;
+    line-height: 22px;
+    font-weight: bold;
+    padding-top: 32px;
+    padding-bottom: 8px;
+}
+
+#installButton {
+    margin-top: 32px;
+    background: #444;
+    color: #fff;
+    padding: 8px;
+    font-weight: bold;
+}
+
+#description {
+    max-width: 600px;
+    margin: auto;
+}
