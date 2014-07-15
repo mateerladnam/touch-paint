@@ -66,7 +66,7 @@ function MainPanel () {
 
     var eraserTool = EraserTool(brushSize, canvas)
 
-    var palettePanel = PalettePanel(brushTool.setColor, function (hue, saturation, luminance) {
+    var palettePanel = PalettePanel(brushTool.setColor, function () {
         closePalette()
         closeFile()
         enableBrush()

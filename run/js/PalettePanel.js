@@ -5,8 +5,6 @@ function PalettePanel (colorListener, closeListener) {
         previewButton.uncheck()
     }
 
-    var colorButtons = []
-
     var classPrefix = 'PalettePanel'
 
     var colorButtonsPanel = ColorButtonsPanel(function (hue, saturation, luminance) {
