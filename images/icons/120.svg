@@ -10,8 +10,8 @@
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    version="1.1"
-   width="16"
-   height="16"
+   width="120"
+   height="120"
    id="svg2">
   <defs
      id="defs4">
@@ -26,14 +26,6 @@
          style="stop-color:#eeeeee;stop-opacity:1"
          offset="1" />
     </linearGradient>
-    <linearGradient
-       x1="25"
-       y1="32"
-       x2="25"
-       y2="0"
-       id="linearGradient3763"
-       xlink:href="#linearGradient3757"
-       gradientUnits="userSpaceOnUse" />
     <clipPath
        id="clipPath3762">
       <rect
@@ -45,6 +37,14 @@
          id="rect3764"
          style="fill:#000000;fill-opacity:0.33734939;stroke:none" />
     </clipPath>
+    <linearGradient
+       x1="25"
+       y1="32"
+       x2="25"
+       y2="0"
+       id="linearGradient3776"
+       xlink:href="#linearGradient3757"
+       gradientUnits="userSpaceOnUse" />
   </defs>
   <metadata
      id="metadata7">
@@ -59,15 +59,16 @@
     </rdf:RDF>
   </metadata>
   <g
-     transform="translate(0,-1036.3622)"
+     transform="translate(0,-932.3622)"
      id="layer1">
     <g
+       transform="matrix(7.5,0,0,7.5,0,-6840.3543)"
        id="g3771">
       <path
          d="M 32,16 A 16,16 0 1 1 0,16 16,16 0 1 1 32,16 z"
          transform="matrix(0.5,0,0,0.5,0,1036.3622)"
          id="path2987"
-         style="fill:url(#linearGradient3763);fill-opacity:1;stroke:none" />
+         style="fill:url(#linearGradient3776);fill-opacity:1;stroke:none" />
       <path
          d="m 6,1044.5497 c -0.03942,0.016 -2.6978331,-1.5564 0.75,-3.9063 2.383835,-1.6246 -0.125,-3.2812 -0.125,-3.2812"
          inkscape:connector-curvature="0"
