@@ -30,7 +30,7 @@
         right: 8px;
     }
     .EditColorPanel-hueSlider .Slider-bar {
-        background-image: linear-gradient(90deg, hsl(0, 100%, 50%) 8px, hsl(60, 100%, 50%), hsl(120, 100%, 50%), hsl(180, 100%, 50%), hsl(240, 100%, 50%), hsl(300, 100%, 50%), hsl(360, 100%, 50%) calc(100 - 8px));
+        background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.1)), linear-gradient(90deg, hsl(0, 100%, 50%) 8px, hsl(60, 100%, 50%), hsl(120, 100%, 50%), hsl(180, 100%, 50%), hsl(240, 100%, 50%), hsl(300, 100%, 50%), hsl(360, 100%, 50%) calc(100 - 8px));
     }
 
     .EditColorPanel-saturationSlider {
@@ -57,7 +57,7 @@
         bottom: 8px;
     }
     .EditColorPanel-hueSlider .Slider-bar {
-        background-image: linear-gradient(hsl(360, 100%, 50%), hsl(300, 100%, 50%), hsl(240, 100%, 50%), hsl(180, 100%, 50%), hsl(120, 100%, 50%), hsl(60, 100%, 50%), hsl(0, 100%, 50%));
+        background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.1)), linear-gradient(hsl(360, 100%, 50%), hsl(300, 100%, 50%), hsl(240, 100%, 50%), hsl(180, 100%, 50%), hsl(120, 100%, 50%), hsl(60, 100%, 50%), hsl(0, 100%, 50%));
     }
 
     .EditColorPanel-saturationSlider {

@@ -1,11 +1,16 @@
 function LuminanceSlider (changeListener, endListener) {
 
     function updateBar () {
-        var blackColor = 'hsl(' + hue + ', ' + saturation + '%, 0%)'
-        var saturatedColor = 'hsl(' + hue + ', ' + saturation + '%, 50%)'
-        var whiteColor = 'hsl(' + hue + ', ' + saturation + '%, 100%)'
-        portraitBarElement.style.backgroundImage = 'linear-gradient(90deg, ' + blackColor + ', ' + saturatedColor + ', ' + whiteColor + ')'
-        landscapeBarElement.style.backgroundImage = 'linear-gradient(' + whiteColor + ', ' + saturatedColor + ', ' + blackColor + ')'
+        var black = 'hsl(' + hue + ', ' + saturation + '%, 0%)'
+        var color = 'hsl(' + hue + ', ' + saturation + '%, 50%)'
+        var white = 'hsl(' + hue + ', ' + saturation + '%, 100%)'
+        var shadowStops = 'rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.1)'
+        portraitBarElement.style.backgroundImage =
+            'linear-gradient(' + shadowStops + '), ' +
+            'linear-gradient(90deg, ' + black + ', ' + color + ', ' + white + ')'
+        landscapeBarElement.style.backgroundImage =
+            'linear-gradient(90deg, ' + shadowStops + '), ' +
+            'linear-gradient(' + white + ', ' + color + ', ' + black + ')'
     }
 
     var hue = 0, saturation = 0
