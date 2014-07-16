@@ -1,10 +1,5 @@
 function PalettePanel (colorListener, closeListener) {
 
-    function closeEdit () {
-        editColorPanel.hide()
-        previewButton.uncheck()
-    }
-
     var classPrefix = 'PalettePanel'
 
     var colorButtonsPanel = ColorButtonsPanel(function (hue, saturation, luminance, alpha) {
@@ -16,10 +11,13 @@ function PalettePanel (colorListener, closeListener) {
 
     var previewButton = ColorButton(0, 0, 0, 1, function () {
         if (previewButton.isChecked()) {
-            closeEdit()
+            editColorPanel.hide()
+            previewButton.uncheck()
+            editVisible = false
         } else {
             editColorPanel.show()
             previewButton.check()
+            editVisible = true
         }
     })
     previewButton.addClass(classPrefix + '-previewButton')
@@ -41,13 +39,16 @@ function PalettePanel (colorListener, closeListener) {
     var element = Div(classPrefix)
     element.appendChild(contentElement)
 
+    var editVisible = false
+
     return {
         element: element,
         hide: function () {
-            closeEdit()
+            editColorPanel.hide()
             contentElement.classList.remove('visible')
         },
         show: function () {
+            if (editVisible) editColorPanel.show()
             contentElement.classList.add('visible')
         },
     }
