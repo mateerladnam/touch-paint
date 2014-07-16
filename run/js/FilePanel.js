@@ -19,13 +19,15 @@ function FilePanel (newListener, openListener, saveListener) {
     var element = Div(classPrefix)
     element.appendChild(contentElement)
 
+    var classList = contentElement.classList
+
     return {
         element: element,
         hide: function () {
-            contentElement.classList.remove('visible')
+            classList.remove('visible')
         },
         show: function () {
-            contentElement.classList.add('visible')
+            classList.add('visible')
         },
     }
 
