@@ -15,9 +15,11 @@
     opacity: 1;
 }
 
-.ParamsPanel-slider {
-    top: 8px;
-    left: 8px;
+.ParamsPanel-previewCanvas {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    margin: auto;
 }
 
 @media (orientation:portrait) {
@@ -28,16 +30,22 @@
 
     .ParamsPanel-content {
         right: 0;
-        height: 64px;
+        height: 128px;
         background-image: linear-gradient(#ddd, #eee);
         transition: ease-in-out 0.2s top, ease-in-out 0.2s opacity;
     }
     .ParamsPanel-content.visible {
-        top: -64px;
+        top: -128px;
     }
 
     .ParamsPanel-slider {
+        top: 72px;
         right: 8px;
+        left: 8px;
+    }
+
+    .ParamsPanel-previewCanvas {
+        right: 14px;
     }
 
 }
@@ -50,16 +58,22 @@
 
     .ParamsPanel-content {
         bottom: 0;
-        width: 64px;
+        width: 128px;
         background-image: linear-gradient(90deg, #ddd, #eee);
         transition: ease-in-out 0.2s left, ease-in-out 0.2s opacity;
     }
     .ParamsPanel-content.visible {
-        left: -64px;
+        left: -128px;
     }
 
     .ParamsPanel-slider {
+        top: 8px;
         bottom: 8px;
+        left: 72px;
+    }
+
+    .ParamsPanel-previewCanvas {
+        bottom: 14px;
     }
 
 }
