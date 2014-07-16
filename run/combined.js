@@ -215,6 +215,7 @@ function Canvas () {
     undoCanvas.width = undoCanvas.height = size
 
     var undoC = undoCanvas.getContext('2d')
+    undoC.lineCap = 'round'
     undoC.fillStyle = '#fff'
     undoC.fillRect(0, 0, size, size)
 
