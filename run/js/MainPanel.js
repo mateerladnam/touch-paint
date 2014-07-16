@@ -80,7 +80,7 @@ function MainPanel () {
     })
 
     var filePanel = FilePanel(function () {
-        canvas.clear()
+        canvas.operate(canvas.clear)
         brushOrEraserListener()
     }, function (image) {
         canvas.operate(function (c) {
