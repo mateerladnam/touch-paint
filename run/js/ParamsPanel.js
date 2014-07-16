@@ -1,13 +1,10 @@
 function ParamsPanel (brushSize, changeListener, closeListener) {
 
     function updatePreview () {
-        previewC.save()
         previewC.clearRect(0, 0, previewCanvas.width, previewCanvas.height)
-        previewC.translate(previewCanvas.width / 2, previewCanvas.height / 2)
         previewC.beginPath()
-        previewC.arc(0, 0, (brushSize + 1) / 2, 0, Math.PI * 2)
+        previewC.arc(previewCanvas.width / 2, previewCanvas.height / 2, (brushSize + 1) / 2, 0, Math.PI * 2)
         previewC.fill()
-        previewC.restore()
     }
 
     var classPrefix = 'ParamsPanel'
