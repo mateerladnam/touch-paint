@@ -189,13 +189,6 @@ function BrushTool (size, canvas) {
 ;
 function Canvas () {
 
-    function clear () {
-        c.save()
-        c.fillStyle = '#fff'
-        c.fillRect(0, 0, size, size)
-        c.restore()
-    }
-
     var classPrefix = 'Canvas'
 
     var size = Math.max(screen.width, screen.height)
@@ -207,6 +200,8 @@ function Canvas () {
 
     var c = canvas.getContext('2d')
     c.lineCap = 'round'
+    c.fillStyle = '#fff'
+    c.fillRect(0, 0, size, size)
 
     var centerElement = Div(classPrefix + '-center')
     centerElement.appendChild(canvas)
@@ -222,16 +217,23 @@ function Canvas () {
     var element = Div(classPrefix)
     element.appendChild(centerElement)
 
-    clear()
-
     var operations = []
+
+    var undoAvailableListener
+    var undoUnavailableListener
 
     return {
         canvas: canvas,
-        clear: clear,
         element: element,
+        onUndoAvailable: function (listener) {
+            undoAvailableListener = listener
+        },
+        onUndoUnavailable: function (listener) {
+            undoUnavailableListener = listener
+        },
         operate: function (operation) {
             operations.push(operation)
+            if (operations.length == 1) undoAvailableListener()
             operation(c)
             if (operations.length > 1024) operations.shift()(undoC)
         },
@@ -242,6 +244,7 @@ function Canvas () {
                 operations.forEach(function (operation) {
                     operation(c)
                 })
+                if (!operations.length) undoUnavailableListener()
             }
         },
     }
@@ -807,7 +810,11 @@ function MainPanel () {
     })
 
     var filePanel = FilePanel(function () {
-        canvas.operate(canvas.clear)
+        canvas.operate(function (c) {
+            var size = c.canvas.width
+            c.fillStyle = '#fff'
+            c.fillRect(0, 0, size, size)
+        })
         brushOrEraserListener()
     }, function (image) {
         canvas.operate(function (c) {
@@ -860,6 +867,9 @@ function MainPanel () {
     paramsButton.addClass(classPrefix + '-paramsButton')
 
     var undoButton = UndoButton(canvas.undo)
+
+    canvas.onUndoAvailable(undoButton.enable)
+    canvas.onUndoUnavailable(undoButton.disable)
 
     var fileButton = BarButton('burger', function () {
         if (fileButton.isChecked()) {
@@ -1168,7 +1178,7 @@ function UndoButton (undoListener) {
     var contentElement = Div('Button-content')
     contentElement.style.backgroundImage = 'url(images/undo.svg)'
 
-    var element = Div('Button UndoButton')
+    var element = Div('Button UndoButton disabled')
     element.appendChild(contentElement)
     element.addEventListener('touchstart', function (e) {
 
@@ -1198,7 +1208,15 @@ function UndoButton (undoListener) {
     var identifier = null
     var repeatInterval
 
-    return { element: element }
+    return {
+        element: element,
+        disable: function () {
+            element.classList.add('disabled')
+        },
+        enable: function () {
+            element.classList.remove('disabled')
+        },
+    }
 
 }
 ;

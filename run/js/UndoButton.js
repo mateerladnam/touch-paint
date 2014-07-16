@@ -3,7 +3,7 @@ function UndoButton (undoListener) {
     var contentElement = Div('Button-content')
     contentElement.style.backgroundImage = 'url(images/undo.svg)'
 
-    var element = Div('Button UndoButton')
+    var element = Div('Button UndoButton disabled')
     element.appendChild(contentElement)
     element.addEventListener('touchstart', function (e) {
 
@@ -33,6 +33,14 @@ function UndoButton (undoListener) {
     var identifier = null
     var repeatInterval
 
-    return { element: element }
+    return {
+        element: element,
+        disable: function () {
+            element.classList.add('disabled')
+        },
+        enable: function () {
+            element.classList.remove('disabled')
+        },
+    }
 
 }

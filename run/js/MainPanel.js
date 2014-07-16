@@ -138,6 +138,9 @@ function MainPanel () {
 
     var undoButton = UndoButton(canvas.undo)
 
+    canvas.onUndoAvailable(undoButton.enable)
+    canvas.onUndoUnavailable(undoButton.disable)
+
     var fileButton = BarButton('burger', function () {
         if (fileButton.isChecked()) {
             brushOrEraserListener()

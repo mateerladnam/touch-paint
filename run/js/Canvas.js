@@ -30,11 +30,21 @@ function Canvas () {
 
     var operations = []
 
+    var undoAvailableListener
+    var undoUnavailableListener
+
     return {
         canvas: canvas,
         element: element,
+        onUndoAvailable: function (listener) {
+            undoAvailableListener = listener
+        },
+        onUndoUnavailable: function (listener) {
+            undoUnavailableListener = listener
+        },
         operate: function (operation) {
             operations.push(operation)
+            if (operations.length == 1) undoAvailableListener()
             operation(c)
             if (operations.length > 1024) operations.shift()(undoC)
         },
@@ -45,6 +55,7 @@ function Canvas () {
                 operations.forEach(function (operation) {
                     operation(c)
                 })
+                if (!operations.length) undoUnavailableListener()
             }
         },
     }
