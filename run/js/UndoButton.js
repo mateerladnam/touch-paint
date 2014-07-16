@@ -12,7 +12,7 @@ function UndoButton (undoListener) {
             for (var i = 0; i < touches.length; i++) {
                 if (touches[i].identifier === identifier) {
                     identifier = null
-                    element.classList.remove('active')
+                    classList.remove('active')
                     removeEventListener('touchend', touchEnd)
                     clearInterval(repeatInterval)
                 }
@@ -22,7 +22,7 @@ function UndoButton (undoListener) {
         if (identifier === null) {
             e.preventDefault()
             identifier = e.changedTouches[0].identifier
-            element.classList.add('active')
+            classList.add('active')
             addEventListener('touchend', touchEnd)
             repeatInterval = setInterval(undoListener, 60)
             undoListener()
@@ -32,14 +32,15 @@ function UndoButton (undoListener) {
 
     var identifier = null
     var repeatInterval
+    var classList = element.classList
 
     return {
         element: element,
         disable: function () {
-            element.classList.add('disabled')
+            classList.add('disabled')
         },
         enable: function () {
-            element.classList.remove('disabled')
+            classList.remove('disabled')
         },
     }
 
