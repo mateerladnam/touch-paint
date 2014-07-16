@@ -5,6 +5,7 @@ echo_html(
     '<link rel="stylesheet" type="text/css" href="js/Main.css" />'
     .'<link rel="stylesheet" type="text/css" href="css/Button.css" />'
     .'<link rel="stylesheet" type="text/css" href="js/Canvas.css" />'
+    .'<link rel="stylesheet" type="text/css" href="js/ColorButton.css" />'
     .'<link rel="stylesheet" type="text/css" href="js/ColorButtonsPanel.css" />'
     .'<link rel="stylesheet" type="text/css" href="js/Slider.css" />'
     .'<link rel="stylesheet" type="text/css" href="js/AlphaSlider.css" />'

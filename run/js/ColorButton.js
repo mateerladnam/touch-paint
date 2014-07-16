@@ -2,10 +2,15 @@ function ColorButton (hue, saturation, luminance, alpha, clickListener) {
 
     function setColor (hue, saturation, luminance, alpha) {
         var hsl = 'hsla(' + hue + ', ' + saturation + '%, ' + luminance + '%, ' + alpha + ')'
-        contentElement.style.backgroundColor = hsl
+        colorElement.style.backgroundColor = hsl
     }
 
-    var contentElement = Div('Button-content')
+    var classPrefix = 'ColorButton'
+
+    var colorElement = Div(classPrefix + '-color')
+
+    var contentElement = Div(classPrefix + '-transparency Button-content')
+    contentElement.appendChild(colorElement)
 
     var element = Div('Button')
     element.appendChild(contentElement)

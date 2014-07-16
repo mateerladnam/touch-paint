@@ -7,6 +7,7 @@ var fs = require('fs')
 var uglifyJs = require('uglify-js')
 
 var files = [
+    'js/AlphaSlider.js',
     'js/BarButton.js',
     'js/BrushTool.js',
     'js/Canvas.js',
