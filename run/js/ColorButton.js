@@ -11,6 +11,7 @@ function ColorButton (hue, saturation, luminance, alpha, clickListener) {
 
     var contentElement = Div(classPrefix + '-transparency Button-content')
     contentElement.appendChild(colorElement)
+    contentElement.style.backgroundImage = 'url(images/color-background.svg)'
 
     var element = Div('Button')
     element.appendChild(contentElement)
