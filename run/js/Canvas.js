@@ -1,12 +1,5 @@
 function Canvas () {
 
-    function clear () {
-        c.save()
-        c.fillStyle = '#fff'
-        c.fillRect(0, 0, size, size)
-        c.restore()
-    }
-
     var classPrefix = 'Canvas'
 
     var size = Math.max(screen.width, screen.height)
@@ -18,6 +11,8 @@ function Canvas () {
 
     var c = canvas.getContext('2d')
     c.lineCap = 'round'
+    c.fillStyle = '#fff'
+    c.fillRect(0, 0, size, size)
 
     var centerElement = Div(classPrefix + '-center')
     centerElement.appendChild(canvas)
@@ -33,13 +28,10 @@ function Canvas () {
     var element = Div(classPrefix)
     element.appendChild(centerElement)
 
-    clear()
-
     var operations = []
 
     return {
         canvas: canvas,
-        clear: clear,
         element: element,
         operate: function (operation) {
             operations.push(operation)

@@ -80,7 +80,11 @@ function MainPanel () {
     })
 
     var filePanel = FilePanel(function () {
-        canvas.operate(canvas.clear)
+        canvas.operate(function (c) {
+            var size = c.canvas.width
+            c.fillStyle = '#fff'
+            c.fillRect(0, 0, size, size)
+        })
         brushOrEraserListener()
     }, function (image) {
         canvas.operate(function (c) {
