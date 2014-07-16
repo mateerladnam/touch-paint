@@ -4,7 +4,7 @@ function AlphaSlider (changeListener, endListener) {
     function update () {
         var color = 'hsl(' + hue + ', ' + saturation + '%, ' + luminance + '%)'
         var transparent = 'hsla(' + hue + ', ' + saturation + '%, ' + luminance + '%, 0)'
-        var grid = 'repeating-linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1) 8px, rgba(0, 0, 0, 0) 8px, rgba(0, 0, 0, 0) 16px, rgba(0, 0, 0, 0.1) 16px), repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1) 8px, rgba(0, 0, 0, 0) 8px, rgba(0, 0, 0, 0) 16px, rgba(0, 0, 0, 0.1) 16px)'
+        var grid = 'url(images/color-background.svg)'
         var shadowStops = 'rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.1)'
         portraitBarElement.style.backgroundImage =
             'linear-gradient(' + shadowStops + '), ' +
@@ -261,6 +261,7 @@ function ColorButton (hue, saturation, luminance, alpha, clickListener) {
 
     var contentElement = Div(classPrefix + '-transparency Button-content')
     contentElement.appendChild(colorElement)
+    contentElement.style.backgroundImage = 'url(images/color-background.svg)'
 
     var element = Div('Button')
     element.appendChild(contentElement)
