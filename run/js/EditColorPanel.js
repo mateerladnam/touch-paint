@@ -70,6 +70,7 @@ function EditColorPanel (updateListener) {
             alphaSlider.setHue(hue)
             alphaSlider.setSaturation(saturation)
             alphaSlider.setLuminance(luminance)
+            alphaSlider.setAlpha(alpha)
 
         },
         show: function () {

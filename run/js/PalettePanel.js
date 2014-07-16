@@ -7,16 +7,14 @@ function PalettePanel (colorListener, closeListener) {
 
     var classPrefix = 'PalettePanel'
 
-    var colorButtonsPanel = ColorButtonsPanel(function (hue, saturation, luminance) {
-        previewButton.setColor(hue, saturation, luminance)
-        editColorPanel.setColor(hue, saturation, luminance)
-        colorListener(hue, saturation, luminance)
-        if (!previewButton.isChecked()) {
-            closeListener()
-        }
+    var colorButtonsPanel = ColorButtonsPanel(function (hue, saturation, luminance, alpha) {
+        previewButton.setColor(hue, saturation, luminance, alpha)
+        editColorPanel.setColor(hue, saturation, luminance, alpha)
+        colorListener(hue, saturation, luminance, alpha)
+        if (!previewButton.isChecked()) closeListener()
     })
 
-    var previewButton = ColorButton(0, 0, 0, function () {
+    var previewButton = ColorButton(0, 0, 0, 1, function () {
         if (previewButton.isChecked()) {
             closeEdit()
         } else {
@@ -26,10 +24,10 @@ function PalettePanel (colorListener, closeListener) {
     })
     previewButton.addClass(classPrefix + '-previewButton')
 
-    var editColorPanel = EditColorPanel(function (hue, saturation, luminance) {
-        previewButton.setColor(hue, saturation, luminance)
-        colorButtonsPanel.setColor(hue, saturation, luminance)
-        colorListener(hue, saturation, luminance)
+    var editColorPanel = EditColorPanel(function (hue, saturation, luminance, alpha) {
+        previewButton.setColor(hue, saturation, luminance, alpha)
+        colorButtonsPanel.setColor(hue, saturation, luminance, alpha)
+        colorListener(hue, saturation, luminance, alpha)
     })
 
     var secondLayerElement = Div(classPrefix + '-secondLayer')
