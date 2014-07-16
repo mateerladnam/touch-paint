@@ -1,8 +1,9 @@
 function AlphaSlider (changeListener, endListener) {
 
     function update () {
-        var color = 'hsl(' + hue + ', ' + saturation + '%, ' + luminance + '%)'
-        var transparent = 'hsla(' + hue + ', ' + saturation + '%, ' + luminance + '%, 0)'
+        var hsl = hue + ', ' + saturation + '%, ' + luminance + '%'
+        var color = 'hsl(' + hsl + ')'
+        var transparent = 'hsla(' + hsl + ', 0)'
         var grid = 'url(images/color-background.svg)'
         var shadowStops = 'rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.1)'
         portraitBarElement.style.backgroundImage =
