@@ -2,8 +2,9 @@
 function AlphaSlider (changeListener, endListener) {
 
     function update () {
-        var color = 'hsl(' + hue + ', ' + saturation + '%, ' + luminance + '%)'
-        var transparent = 'hsla(' + hue + ', ' + saturation + '%, ' + luminance + '%, 0)'
+        var hsl = hue + ', ' + saturation + '%, ' + luminance + '%'
+        var color = 'hsl(' + hsl + ')'
+        var transparent = 'hsla(' + hsl + ', 0)'
         var grid = 'url(images/color-background.svg)'
         var shadowStops = 'rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.1)'
         portraitBarElement.style.backgroundImage =
@@ -22,10 +23,11 @@ function AlphaSlider (changeListener, endListener) {
 
     var hue = 0, saturation = 0, luminance = 0
 
-    var slider = Slider(1, function (ratio) {
+    var slider = Slider(function (ratio) {
         changeListener(ratio)
         update()
     }, endListener)
+    slider.setRatio(1)
     slider.addClass(classPrefix)
     slider.barElement.appendChild(portraitBarElement)
     slider.barElement.appendChild(landscapeBarElement)
@@ -62,30 +64,31 @@ function BarButton (icon, clickListener) {
     element.addEventListener('touchstart', function (e) {
         e.preventDefault()
         clickListener()
-        element.classList.add('active')
+        classList.add('active')
         clearTimeout(activeTimeout)
         activeTimeout = setTimeout(function () {
-            element.classList.remove('active')
+            classList.remove('active')
         }, 100)
     })
 
     var activeTimeout
     var checked = false
+    var classList = element.classList
 
     return {
         element: element,
         addClass: function (className) {
-            element.classList.add(className)
+            classList.add(className)
         },
         check: function () {
-            element.classList.add('checked')
+            classList.add('checked')
             checked = true
         },
         isChecked: function () {
             return checked
         },
         uncheck: function () {
-            element.classList.remove('checked')
+            classList.remove('checked')
             checked = false
         },
     }
@@ -94,38 +97,15 @@ function BarButton (icon, clickListener) {
 ;
 function BrushTool (size, canvas) {
 
-    var activeTouches = {}
-    var halfSize = size / 2
-    var enabled = false
-    var canvasElement = canvas.canvas
-
-    canvasElement.addEventListener('touchstart', function (e) {
-        if (!enabled) return
+    function touchEnd (e) {
         e.preventDefault()
-        var rect = canvasElement.getBoundingClientRect()
         var touches = e.changedTouches
         for (var i = 0; i < touches.length; i++) {
-
-            var touch = touches[i],
-                x = touch.clientX - rect.left,
-                y = touch.clientY - rect.top
-
-            ;(function (size, hsl, halfSize) {
-                canvas.operate(function (c) {
-                    c.lineWidth = size
-                    c.strokeStyle = c.fillStyle = hsl
-                    c.beginPath()
-                    c.arc(x, y, halfSize, 0, Math.PI * 2)
-                    c.fill()
-                })
-            })(size, hsl, halfSize)
-
-            activeTouches[touch.identifier] = { x: x, y: y }
-
+            delete activeTouches[touches[i].identifier]
         }
-    })
-    canvasElement.addEventListener('touchmove', function (e) {
-        if (!enabled) return
+    }
+
+    function touchMove (e) {
         e.preventDefault()
         var rect = canvasElement.getBoundingClientRect()
         var touches = e.changedTouches
@@ -153,24 +133,57 @@ function BrushTool (size, canvas) {
 
             }
         }
-    })
-    canvasElement.addEventListener('touchend', function (e) {
+    }
+
+    function touchStart (e) {
         e.preventDefault()
+        var rect = canvasElement.getBoundingClientRect()
         var touches = e.changedTouches
         for (var i = 0; i < touches.length; i++) {
-            delete activeTouches[touches[i].identifier]
+
+            var touch = touches[i],
+                x = touch.clientX - rect.left,
+                y = touch.clientY - rect.top
+
+            ;(function (size, hsl, halfSize) {
+                canvas.operate(function (c) {
+                    c.lineWidth = size
+                    c.strokeStyle = c.fillStyle = hsl
+                    c.beginPath()
+                    c.arc(x, y, halfSize, 0, Math.PI * 2)
+                    c.fill()
+                })
+            })(size, hsl, halfSize)
+
+            activeTouches[touch.identifier] = { x: x, y: y }
+
         }
-    })
+    }
+
+    var activeTouches = {}
+    var halfSize = size / 2
+    var enabled = false
+    var canvasElement = canvas.canvas
 
     var hue = 0, saturation = 0, luminance = 0, alpha = 1
     var hsl = 'hsla(0, 0%, 0%, 1)'
 
     return {
         disable: function () {
-            enabled = false
+            if (enabled) {
+                canvasElement.removeEventListener('touchstart', touchStart)
+                canvasElement.removeEventListener('touchmove', touchMove)
+                canvasElement.removeEventListener('touchend', touchEnd)
+                enabled = false
+            }
         },
         enable: function () {
-            enabled = true
+            if (!enabled) {
+                canvasElement.addEventListener('touchstart', touchStart)
+                canvasElement.addEventListener('touchmove', touchMove)
+                canvasElement.addEventListener('touchend', touchEnd)
+                enabled = true
+            }
         },
         setColor: function (_hue, _saturation, _luminance, _alpha) {
             hue = _hue
@@ -271,15 +284,16 @@ function ColorButton (hue, saturation, luminance, alpha, clickListener) {
     element.addEventListener('touchstart', function (e) {
         e.preventDefault()
         clickListener()
-        element.classList.add('active')
+        classList.add('active')
         clearTimeout(activeTimeout)
         activeTimeout = setTimeout(function () {
-            element.classList.remove('active')
+            classList.remove('active')
         }, 100)
     })
 
     var activeTimeout
     var checked = false
+    var classList = element.classList
 
     setColor(hue, saturation, luminance, alpha)
 
@@ -287,17 +301,17 @@ function ColorButton (hue, saturation, luminance, alpha, clickListener) {
         element: element,
         setColor: setColor,
         addClass: function (className) {
-            element.classList.add(className)
+            classList.add(className)
         },
         check: function () {
-            element.classList.add('checked')
+            classList.add('checked')
             checked = true
         },
         isChecked: function () {
             return checked
         },
         uncheck: function () {
-            element.classList.remove('checked')
+            classList.remove('checked')
             checked = false
         },
     }
@@ -492,39 +506,15 @@ function EditColorPanel (updateListener) {
 ;
 function EraserTool (size, canvas) {
 
-    var color = '#fff'
-    var activeTouches = {}
-    var halfSize = size / 2
-    var enabled = false
-    var canvasElement = canvas.canvas
-
-    canvasElement.addEventListener('touchstart', function (e) {
-        if (!enabled) return
+    function touchEnd (e) {
         e.preventDefault()
-        var rect = canvasElement.getBoundingClientRect()
         var touches = e.changedTouches
         for (var i = 0; i < touches.length; i++) {
-
-            var touch = touches[i],
-                x = touch.clientX - rect.left,
-                y = touch.clientY - rect.top
-
-            ;(function (size, halfSize) {
-                canvas.operate(function (c) {
-                    c.lineWidth = size
-                    c.strokeStyle = c.fillStyle = color
-                    c.beginPath()
-                    c.arc(x, y, halfSize, 0, Math.PI * 2)
-                    c.fill()
-                })
-            })(size, halfSize)
-
-            activeTouches[touch.identifier] = { x: x, y: y }
-
+            delete activeTouches[touches[i].identifier]
         }
-    })
-    canvasElement.addEventListener('touchmove', function (e) {
-        if (!enabled) return
+    }
+
+    function touchMove (e) {
         e.preventDefault()
         var rect = canvasElement.getBoundingClientRect()
         var touches = e.changedTouches
@@ -551,21 +541,55 @@ function EraserTool (size, canvas) {
                 activeTouch.y = y
             }
         }
-    })
-    canvasElement.addEventListener('touchend', function (e) {
+    }
+
+    function touchStart (e) {
         e.preventDefault()
+        var rect = canvasElement.getBoundingClientRect()
         var touches = e.changedTouches
         for (var i = 0; i < touches.length; i++) {
-            delete activeTouches[touches[i].identifier]
+
+            var touch = touches[i],
+                x = touch.clientX - rect.left,
+                y = touch.clientY - rect.top
+
+            ;(function (size, halfSize) {
+                canvas.operate(function (c) {
+                    c.lineWidth = size
+                    c.strokeStyle = c.fillStyle = color
+                    c.beginPath()
+                    c.arc(x, y, halfSize, 0, Math.PI * 2)
+                    c.fill()
+                })
+            })(size, halfSize)
+
+            activeTouches[touch.identifier] = { x: x, y: y }
+
         }
-    })
+    }
+
+    var color = '#fff'
+    var activeTouches = {}
+    var halfSize = size / 2
+    var enabled = false
+    var canvasElement = canvas.canvas
 
     return {
         disable: function () {
-            enabled = false
+            if (enabled) {
+                canvasElement.removeEventListener('touchstart', touchStart)
+                canvasElement.removeEventListener('touchmove', touchMove)
+                canvasElement.removeEventListener('touchend', touchEnd)
+                enabled = false
+            }
         },
         enable: function () {
-            enabled = true
+            if (!enabled) {
+                enabled = true
+                canvasElement.addEventListener('touchstart', touchStart)
+                canvasElement.addEventListener('touchmove', touchMove)
+                canvasElement.addEventListener('touchend', touchEnd)
+            }
         },
         setSize: function (_size) {
             size = _size
@@ -649,13 +673,15 @@ function FilePanel (newListener, openListener, saveListener) {
     var element = Div(classPrefix)
     element.appendChild(contentElement)
 
+    var classList = contentElement.classList
+
     return {
         element: element,
         hide: function () {
-            contentElement.classList.remove('visible')
+            classList.remove('visible')
         },
         show: function () {
-            contentElement.classList.add('visible')
+            classList.add('visible')
         },
     }
 
@@ -663,7 +689,7 @@ function FilePanel (newListener, openListener, saveListener) {
 ;
 function HueSlider (changeListener, endListener) {
 
-    var slider = Slider(0, function (ratio) {
+    var slider = Slider(function (ratio) {
         changeListener(ratio * 360)
     }, endListener)
     slider.addClass('HueSlider')
@@ -701,7 +727,7 @@ function LuminanceSlider (changeListener, endListener) {
 
     var landscapeBarElement = Div(classPrefix + '-landscapeBar')
 
-    var slider = Slider(0, function (ratio) {
+    var slider = Slider(function (ratio) {
         changeListener(ratio * 100)
     }, endListener)
     slider.addClass(classPrefix)
@@ -912,11 +938,6 @@ function MainPanel () {
 ;
 function PalettePanel (colorListener, closeListener) {
 
-    function closeEdit () {
-        editColorPanel.hide()
-        previewButton.uncheck()
-    }
-
     var classPrefix = 'PalettePanel'
 
     var colorButtonsPanel = ColorButtonsPanel(function (hue, saturation, luminance, alpha) {
@@ -928,10 +949,13 @@ function PalettePanel (colorListener, closeListener) {
 
     var previewButton = ColorButton(0, 0, 0, 1, function () {
         if (previewButton.isChecked()) {
-            closeEdit()
+            editColorPanel.hide()
+            previewButton.uncheck()
+            editVisible = false
         } else {
             editColorPanel.show()
             previewButton.check()
+            editVisible = true
         }
     })
     previewButton.addClass(classPrefix + '-previewButton')
@@ -953,13 +977,16 @@ function PalettePanel (colorListener, closeListener) {
     var element = Div(classPrefix)
     element.appendChild(contentElement)
 
+    var editVisible = false
+
     return {
         element: element,
         hide: function () {
-            closeEdit()
+            editColorPanel.hide()
             contentElement.classList.remove('visible')
         },
         show: function () {
+            if (editVisible) editColorPanel.show()
             contentElement.classList.add('visible')
         },
     }
@@ -969,20 +996,15 @@ function PalettePanel (colorListener, closeListener) {
 function ParamsPanel (brushSize, changeListener, closeListener) {
 
     function updatePreview () {
-        previewC.save()
         previewC.clearRect(0, 0, previewCanvas.width, previewCanvas.height)
-        previewC.translate(previewCanvas.width / 2, previewCanvas.height / 2)
         previewC.beginPath()
-        previewC.arc(0, 0, (brushSize + 1) / 2, 0, Math.PI * 2)
+        previewC.arc(previewCanvas.width / 2, previewCanvas.height / 2, (brushSize + 1) / 2, 0, Math.PI * 2)
         previewC.fill()
-        previewC.restore()
     }
 
     var classPrefix = 'ParamsPanel'
 
-    var minBrushSize = 1,
-        maxBrushSize = 48,
-        initialRatio = (brushSize - minBrushSize) / (maxBrushSize - minBrushSize)
+    var minBrushSize = 1, maxBrushSize = 48
 
     var previewCanvas = document.createElement('canvas')
     previewCanvas.width = previewCanvas.height = maxBrushSize + 4
@@ -990,11 +1012,12 @@ function ParamsPanel (brushSize, changeListener, closeListener) {
 
     var previewC = previewCanvas.getContext('2d')
 
-    var slider = Slider(initialRatio, function (ratio) {
+    var slider = Slider(function (ratio) {
         brushSize = minBrushSize + ratio * maxBrushSize
         changeListener(brushSize)
         updatePreview()
     }, closeListener)
+    slider.setRatio((brushSize - minBrushSize) / (maxBrushSize - minBrushSize))
     slider.addClass(classPrefix + '-slider')
 
     var contentElement = Div(classPrefix + '-content')
@@ -1074,7 +1097,7 @@ function SaturationSlider (changeListener, endListener) {
 
     var landscapeBarElement = Div(classPrefix + '-landscapeBar')
 
-    var slider = Slider(0, function (ratio) {
+    var slider = Slider(function (ratio) {
         changeListener(ratio * 100)
     }, endListener)
     slider.addClass(classPrefix)
@@ -1101,7 +1124,7 @@ function SaturationSlider (changeListener, endListener) {
 
 }
 ;
-function Slider (ratio, changeListener, endListener) {
+function Slider (changeListener, endListener) {
 
     function change (touch) {
 
@@ -1161,6 +1184,7 @@ function Slider (ratio, changeListener, endListener) {
     var classPrefix = 'Slider'
 
     var identifier = null
+    var ratio = 0
 
     var handleElement = Div(classPrefix + '-handle')
 
@@ -1221,7 +1245,7 @@ function UndoButton (undoListener) {
             for (var i = 0; i < touches.length; i++) {
                 if (touches[i].identifier === identifier) {
                     identifier = null
-                    element.classList.remove('active')
+                    classList.remove('active')
                     removeEventListener('touchend', touchEnd)
                     clearInterval(repeatInterval)
                 }
@@ -1231,7 +1255,7 @@ function UndoButton (undoListener) {
         if (identifier === null) {
             e.preventDefault()
             identifier = e.changedTouches[0].identifier
-            element.classList.add('active')
+            classList.add('active')
             addEventListener('touchend', touchEnd)
             repeatInterval = setInterval(undoListener, 60)
             undoListener()
@@ -1241,14 +1265,15 @@ function UndoButton (undoListener) {
 
     var identifier = null
     var repeatInterval
+    var classList = element.classList
 
     return {
         element: element,
         disable: function () {
-            element.classList.add('disabled')
+            classList.add('disabled')
         },
         enable: function () {
-            element.classList.remove('disabled')
+            classList.remove('disabled')
         },
     }
 
