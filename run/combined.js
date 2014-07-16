@@ -796,7 +796,10 @@ function MainPanel () {
 
     var eraserTool = EraserTool(brushSize, canvas)
 
-    var palettePanel = PalettePanel(brushTool.setColor, function () {
+    var palettePanel = PalettePanel(function (hue, saturation, luminance, alpha) {
+        brushTool.setColor(hue, saturation, luminance, alpha)
+        paramsPanel.setColor(hue, saturation, luminance)
+    }, function () {
         closePalette()
         closeFile()
         enableBrush()
@@ -1003,13 +1006,23 @@ function ParamsPanel (brushSize, changeListener, closeListener) {
 
     updatePreview()
 
+    var colorChanged = false
+
     return {
         element: element,
         hide: function () {
             slider.abortTouch()
             contentElement.classList.remove('visible')
         },
+        setColor: function (hue, saturation, luminance) {
+            previewC.fillStyle = 'hsl(' + hue + ', ' + saturation + '%, ' + luminance + '%)'
+            colorChanged = true
+        },
         show: function () {
+            if (colorChanged) {
+                updatePreview()
+                colorChanged = false
+            }
             contentElement.classList.add('visible')
         },
     }

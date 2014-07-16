@@ -38,13 +38,23 @@ function ParamsPanel (brushSize, changeListener, closeListener) {
 
     updatePreview()
 
+    var colorChanged = false
+
     return {
         element: element,
         hide: function () {
             slider.abortTouch()
             contentElement.classList.remove('visible')
         },
+        setColor: function (hue, saturation, luminance) {
+            previewC.fillStyle = 'hsl(' + hue + ', ' + saturation + '%, ' + luminance + '%)'
+            colorChanged = true
+        },
         show: function () {
+            if (colorChanged) {
+                updatePreview()
+                colorChanged = false
+            }
             contentElement.classList.add('visible')
         },
     }
