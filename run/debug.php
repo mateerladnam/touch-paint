@@ -7,6 +7,7 @@ echo_html(
     .'<link rel="stylesheet" type="text/css" href="js/Canvas.css" />'
     .'<link rel="stylesheet" type="text/css" href="js/ColorButtonsPanel.css" />'
     .'<link rel="stylesheet" type="text/css" href="js/Slider.css" />'
+    .'<link rel="stylesheet" type="text/css" href="js/AlphaSlider.css" />'
     .'<link rel="stylesheet" type="text/css" href="js/SaturationSlider.css" />'
     .'<link rel="stylesheet" type="text/css" href="js/LuminanceSlider.css" />'
     .'<link rel="stylesheet" type="text/css" href="js/EditColorPanel.css" />'
@@ -17,7 +18,8 @@ echo_html(
     .'<link rel="stylesheet" type="text/css" href="js/PalettePanel.css" />'
     .'<link rel="stylesheet" type="text/css" href="js/ParamsPanel.css" />'
     .'<link rel="stylesheet" type="text/css" href="js/UndoButton.css" />',
-    '<script type="text/javascript" src="js/BarButton.js"></script>'
+    '<script type="text/javascript" src="js/AlphaSlider.js"></script>'
+    .'<script type="text/javascript" src="js/BarButton.js"></script>'
     .'<script type="text/javascript" src="js/BrushTool.js"></script>'
     .'<script type="text/javascript" src="js/Canvas.js"></script>'
     .'<script type="text/javascript" src="js/ColorButton.js"></script>'

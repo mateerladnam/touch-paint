@@ -1,23 +1,23 @@
-.LuminanceSlider .Slide-bar {
+.AlphaSlider .Slide-bar {
     box-shadow: none;
     background: none;
 }
 
-.LuminanceSlider-portraitBar,
-.LuminanceSlider-landscapeBar {
+.AlphaSlider-portraitBar,
+.AlphaSlider-landscapeBar {
     border-radius: 4px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4) inset;
 }
 
 @media (orientation:portrait) {
 
-    .LuminanceSlider {
-        top: 104px;
+    .AlphaSlider {
+        top: 152px;
         left: 8px;
         right: 8px;
     }
 
-    .LuminanceSlider-portraitBar {
+    .AlphaSlider-portraitBar {
         position: absolute;
         top: 0;
         right: 0;
@@ -29,13 +29,13 @@
 
 @media (orientation:landscape) {
 
-    .LuminanceSlider {
+    .AlphaSlider {
         top: 8px;
         bottom: 8px;
-        left: 104px;
+        left: 152px;
     }
 
-    .LuminanceSlider-landscapeBar {
+    .AlphaSlider-landscapeBar {
         position: absolute;
         top: 0;
         right: 0;
