@@ -1,4 +1,4 @@
-function Slider (ratio, changeListener, endListener) {
+function Slider (changeListener, endListener) {
 
     function change (touch) {
 
@@ -58,6 +58,7 @@ function Slider (ratio, changeListener, endListener) {
     var classPrefix = 'Slider'
 
     var identifier = null
+    var ratio = 0
 
     var handleElement = Div(classPrefix + '-handle')
 

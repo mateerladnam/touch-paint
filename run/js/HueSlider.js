@@ -1,6 +1,6 @@
 function HueSlider (changeListener, endListener) {
 
-    var slider = Slider(0, function (ratio) {
+    var slider = Slider(function (ratio) {
         changeListener(ratio * 360)
     }, endListener)
     slider.addClass('HueSlider')

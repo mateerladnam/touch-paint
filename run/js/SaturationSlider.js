@@ -20,7 +20,7 @@ function SaturationSlider (changeListener, endListener) {
 
     var landscapeBarElement = Div(classPrefix + '-landscapeBar')
 
-    var slider = Slider(0, function (ratio) {
+    var slider = Slider(function (ratio) {
         changeListener(ratio * 100)
     }, endListener)
     slider.addClass(classPrefix)

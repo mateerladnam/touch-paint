@@ -12,9 +12,7 @@ function ParamsPanel (brushSize, changeListener, closeListener) {
 
     var classPrefix = 'ParamsPanel'
 
-    var minBrushSize = 1,
-        maxBrushSize = 48,
-        initialRatio = (brushSize - minBrushSize) / (maxBrushSize - minBrushSize)
+    var minBrushSize = 1, maxBrushSize = 48
 
     var previewCanvas = document.createElement('canvas')
     previewCanvas.width = previewCanvas.height = maxBrushSize + 4
@@ -22,11 +20,12 @@ function ParamsPanel (brushSize, changeListener, closeListener) {
 
     var previewC = previewCanvas.getContext('2d')
 
-    var slider = Slider(initialRatio, function (ratio) {
+    var slider = Slider(function (ratio) {
         brushSize = minBrushSize + ratio * maxBrushSize
         changeListener(brushSize)
         updatePreview()
     }, closeListener)
+    slider.setRatio((brushSize - minBrushSize) / (maxBrushSize - minBrushSize))
     slider.addClass(classPrefix + '-slider')
 
     var contentElement = Div(classPrefix + '-content')

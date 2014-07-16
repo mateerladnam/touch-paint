@@ -21,10 +21,11 @@ function AlphaSlider (changeListener, endListener) {
 
     var hue = 0, saturation = 0, luminance = 0
 
-    var slider = Slider(1, function (ratio) {
+    var slider = Slider(function (ratio) {
         changeListener(ratio)
         update()
     }, endListener)
+    slider.setRatio(1)
     slider.addClass(classPrefix)
     slider.barElement.appendChild(portraitBarElement)
     slider.barElement.appendChild(landscapeBarElement)
