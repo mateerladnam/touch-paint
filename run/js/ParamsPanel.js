@@ -3,7 +3,7 @@ function ParamsPanel (brushSize, changeListener, closeListener) {
     var classPrefix = 'ParamsPanel'
 
     var minBrushSize = 1,
-        maxBrushSize = 24,
+        maxBrushSize = 32,
         initialRatio = (brushSize - minBrushSize) / (maxBrushSize - minBrushSize)
 
     var slider = Slider(initialRatio, function (ratio) {
