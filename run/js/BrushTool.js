@@ -1,37 +1,14 @@
 function BrushTool (size, canvas) {
 
-    var activeTouches = {}
-    var halfSize = size / 2
-    var enabled = false
-    var canvasElement = canvas.canvas
-
-    canvasElement.addEventListener('touchstart', function (e) {
-        if (!enabled) return
+    function touchEnd (e) {
         e.preventDefault()
-        var rect = canvasElement.getBoundingClientRect()
         var touches = e.changedTouches
         for (var i = 0; i < touches.length; i++) {
-
-            var touch = touches[i],
-                x = touch.clientX - rect.left,
-                y = touch.clientY - rect.top
-
-            ;(function (size, hsl, halfSize) {
-                canvas.operate(function (c) {
-                    c.lineWidth = size
-                    c.strokeStyle = c.fillStyle = hsl
-                    c.beginPath()
-                    c.arc(x, y, halfSize, 0, Math.PI * 2)
-                    c.fill()
-                })
-            })(size, hsl, halfSize)
-
-            activeTouches[touch.identifier] = { x: x, y: y }
-
+            delete activeTouches[touches[i].identifier]
         }
-    })
-    canvasElement.addEventListener('touchmove', function (e) {
-        if (!enabled) return
+    }
+
+    function touchMove (e) {
         e.preventDefault()
         var rect = canvasElement.getBoundingClientRect()
         var touches = e.changedTouches
@@ -59,24 +36,57 @@ function BrushTool (size, canvas) {
 
             }
         }
-    })
-    canvasElement.addEventListener('touchend', function (e) {
+    }
+
+    function touchStart (e) {
         e.preventDefault()
+        var rect = canvasElement.getBoundingClientRect()
         var touches = e.changedTouches
         for (var i = 0; i < touches.length; i++) {
-            delete activeTouches[touches[i].identifier]
+
+            var touch = touches[i],
+                x = touch.clientX - rect.left,
+                y = touch.clientY - rect.top
+
+            ;(function (size, hsl, halfSize) {
+                canvas.operate(function (c) {
+                    c.lineWidth = size
+                    c.strokeStyle = c.fillStyle = hsl
+                    c.beginPath()
+                    c.arc(x, y, halfSize, 0, Math.PI * 2)
+                    c.fill()
+                })
+            })(size, hsl, halfSize)
+
+            activeTouches[touch.identifier] = { x: x, y: y }
+
         }
-    })
+    }
+
+    var activeTouches = {}
+    var halfSize = size / 2
+    var enabled = false
+    var canvasElement = canvas.canvas
 
     var hue = 0, saturation = 0, luminance = 0, alpha = 1
     var hsl = 'hsla(0, 0%, 0%, 1)'
 
     return {
         disable: function () {
-            enabled = false
+            if (enabled) {
+                canvasElement.removeEventListener('touchstart', touchStart)
+                canvasElement.removeEventListener('touchmove', touchMove)
+                canvasElement.removeEventListener('touchend', touchEnd)
+                enabled = false
+            }
         },
         enable: function () {
-            enabled = true
+            if (!enabled) {
+                canvasElement.addEventListener('touchstart', touchStart)
+                canvasElement.addEventListener('touchmove', touchMove)
+                canvasElement.addEventListener('touchend', touchEnd)
+                enabled = true
+            }
         },
         setColor: function (_hue, _saturation, _luminance, _alpha) {
             hue = _hue
