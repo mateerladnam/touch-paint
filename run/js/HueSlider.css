@@ -1,0 +1,22 @@
+.HueSlider {
+    top: 8px;
+    left: 8px;
+}
+
+@media (orientation:portrait) {
+    .HueSlider {
+        right: 8px;
+    }
+    .HueSlider .Slider-bar {
+        background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.1)), linear-gradient(90deg, hsl(0, 100%, 50%) 8px, hsl(60, 100%, 50%), hsl(120, 100%, 50%), hsl(180, 100%, 50%), hsl(240, 100%, 50%), hsl(300, 100%, 50%), hsl(360, 100%, 50%) calc(100 - 8px));
+    }
+}
+
+@media (orientation:landscape) {
+    .HueSlider {
+        bottom: 8px;
+    }
+    .HueSlider .Slider-bar {
+        background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.1)), linear-gradient(hsl(360, 100%, 50%), hsl(300, 100%, 50%), hsl(240, 100%, 50%), hsl(180, 100%, 50%), hsl(120, 100%, 50%), hsl(60, 100%, 50%), hsl(0, 100%, 50%));
+    }
+}

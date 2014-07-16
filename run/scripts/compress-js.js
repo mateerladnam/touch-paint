@@ -17,6 +17,7 @@ var files = [
     'js/EraserTool.js',
     'js/FileButton.js',
     'js/FilePanel.js',
+    'js/HueSlider.js',
     'js/LuminanceSlider.js',
     'js/MainPanel.js',
     'js/PalettePanel.js',

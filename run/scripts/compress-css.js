@@ -17,6 +17,7 @@ var files = [
     'js/EditColorPanel.css',
     'js/FileButton.css',
     'js/FilePanel.css',
+    'js/HueSlider.css',
     'js/MainPanel.css',
     'js/PalettePanel.css',
     'js/ParamsPanel.css',

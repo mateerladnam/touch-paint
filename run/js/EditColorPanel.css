@@ -9,11 +9,6 @@
     opacity: 1;
 }
 
-.EditColorPanel-hueSlider {
-    top: 8px;
-    left: 8px;
-}
-
 @media (orientation:portrait) {
 
     .EditColorPanel {
