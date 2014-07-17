@@ -56,19 +56,24 @@ function AlphaSlider (changeListener, endListener) {
 ;
 function BarButton (icon, clickListener) {
 
-    var contentElement = Div('Button-content')
-    contentElement.style.backgroundImage = 'url(images/' + icon + '.svg)'
-
-    var element = Div('Button')
-    element.appendChild(contentElement)
-    element.addEventListener('touchstart', function (e) {
-        e.preventDefault()
+    function click () {
         clickListener()
         classList.add('active')
         clearTimeout(activeTimeout)
         activeTimeout = setTimeout(function () {
             classList.remove('active')
         }, 100)
+    }
+
+    var contentElement = Div('Button-content')
+    contentElement.style.backgroundImage = 'url(images/' + icon + '.svg)'
+
+    var element = Div('Button')
+    element.appendChild(contentElement)
+    element.addEventListener('mousedown', click)
+    element.addEventListener('touchstart', function (e) {
+        e.preventDefault()
+        click()
     })
 
     var activeTimeout
@@ -304,6 +309,15 @@ function Canvas () {
 ;
 function ColorButton (hue, saturation, luminance, alpha, clickListener) {
 
+    function click () {
+        clickListener()
+        classList.add('active')
+        clearTimeout(activeTimeout)
+        activeTimeout = setTimeout(function () {
+            classList.remove('active')
+        }, 100)
+    }
+
     function setColor (hue, saturation, luminance, alpha) {
         var hsl = 'hsla(' + hue + ', ' + saturation + '%, ' + luminance + '%, ' + alpha + ')'
         colorElement.style.backgroundColor = hsl
@@ -319,14 +333,10 @@ function ColorButton (hue, saturation, luminance, alpha, clickListener) {
 
     var element = Div('Button')
     element.appendChild(contentElement)
+    element.addEventListener('mousedown', click)
     element.addEventListener('touchstart', function (e) {
         e.preventDefault()
-        clickListener()
-        classList.add('active')
-        clearTimeout(activeTimeout)
-        activeTimeout = setTimeout(function () {
-            classList.remove('active')
-        }, 100)
+        click()
     })
 
     var activeTimeout
