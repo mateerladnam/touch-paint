@@ -9,6 +9,10 @@
     -moz-box-sizing: border-box;
 }
 
+body {
+    background: #fff;
+}
+
 .Main-loadBar {
     position: absolute;
     right: 16px;
