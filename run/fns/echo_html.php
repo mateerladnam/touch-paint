@@ -1,9 +1,9 @@
 <?php
 
-function echo_html ($links, $scripts) {
+function echo_html ($htmlTag, $links, $scripts) {
     header('Content-Type: text/html; charset=UTF-8');
     echo '<!DOCTYPE html>'
-        .'<html>'
+        .$htmlTag
             .'<head>'
                 .'<title>Touch Paint</title>'
                 .'<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />'
