@@ -39,7 +39,7 @@ h2 {
     padding-bottom: 8px;
 }
 
-#installButton {
+.button {
     margin-top: 32px;
     padding: 8px;
     font-weight: bold;
@@ -48,10 +48,14 @@ h2 {
     background-color: #ccc;
     background-image: linear-gradient(rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0.1));
 }
-#installButton:active {
+.button:active {
     background-color: #777;
     background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.1));
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5) inset;
+}
+
+#installButton {
+    margin-left: 8px;
 }
 
 #description {
