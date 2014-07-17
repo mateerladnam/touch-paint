@@ -1,18 +1,23 @@
 function BarButton (icon, clickListener) {
 
-    var contentElement = Div('Button-content')
-    contentElement.style.backgroundImage = 'url(images/' + icon + '.svg)'
-
-    var element = Div('Button')
-    element.appendChild(contentElement)
-    element.addEventListener('touchstart', function (e) {
-        e.preventDefault()
+    function click () {
         clickListener()
         classList.add('active')
         clearTimeout(activeTimeout)
         activeTimeout = setTimeout(function () {
             classList.remove('active')
         }, 100)
+    }
+
+    var contentElement = Div('Button-content')
+    contentElement.style.backgroundImage = 'url(images/' + icon + '.svg)'
+
+    var element = Div('Button')
+    element.appendChild(contentElement)
+    element.addEventListener('mousedown', click)
+    element.addEventListener('touchstart', function (e) {
+        e.preventDefault()
+        click()
     })
 
     var activeTimeout
