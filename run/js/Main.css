@@ -8,3 +8,22 @@
     box-sizing: border-box;
     -moz-box-sizing: border-box;
 }
+
+.Main-loadBar {
+    position: absolute;
+    right: 16px;
+    bottom: 80px;
+    left: 16px;
+    height: 4px;
+    background: #eee;
+    border-radius: 2px;
+}
+
+.Main-progress {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    background: #333;
+    border-radius: 2px;
+}
