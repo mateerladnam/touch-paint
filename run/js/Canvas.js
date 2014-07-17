@@ -17,14 +17,6 @@ function Canvas () {
     var centerElement = Div(classPrefix + '-center')
     centerElement.appendChild(canvas)
 
-    var undoCanvas = document.createElement('canvas')
-    undoCanvas.width = undoCanvas.height = size
-
-    var undoC = undoCanvas.getContext('2d')
-    undoC.lineCap = 'round'
-    undoC.fillStyle = '#fff'
-    undoC.fillRect(0, 0, size, size)
-
     var element = Div(classPrefix)
     element.appendChild(centerElement)
 
@@ -32,6 +24,9 @@ function Canvas () {
 
     var undoAvailableListener
     var undoUnavailableListener
+
+    var undoSize = 128
+    undoCanvases = []
 
     return {
         canvas: canvas,
@@ -43,20 +38,63 @@ function Canvas () {
             undoUnavailableListener = listener
         },
         operate: function (operation) {
+
             operations.push(operation)
             if (operations.length == 1) undoAvailableListener()
             operation(c)
-            if (operations.length > 1024) operations.shift()(undoC)
+
+            var operationIndex = operations.length - undoSize
+            if (operationIndex < 0) return
+
+            var canvasIndex = Math.floor(operationIndex / undoSize)
+
+            if (undoCanvases[canvasIndex]) return
+
+            var undoCanvas = document.createElement('canvas')
+            undoCanvas.width = undoCanvas.height = size
+
+            var undoC = undoCanvas.getContext('2d')
+            undoC.lineCap = 'round'
+
+            if (canvasIndex) {
+                undoC.drawImage(undoCanvases[canvasIndex - 1], 0, 0)
+            } else {
+                undoC.fillStyle = '#fff'
+                undoC.fillRect(0, 0, size, size)
+            }
+
+            undoCanvases.push(undoCanvas)
+
+            for (var i = operationIndex; i < operationIndex + undoSize; i++) {
+                operations[i](undoC)
+            }
+
         },
         undo: function () {
-            c.drawImage(undoCanvas, 0, 0)
-            if (operations.length) {
-                operations.pop()
-                operations.forEach(function (operation) {
-                    operation(c)
-                })
-                if (!operations.length) undoUnavailableListener()
+
+            if (undoCanvases.length) {
+                c.drawImage(undoCanvases[undoCanvases.length - 1], 0, 0)
+            } else {
+                c.fillStyle = '#fff'
+                c.fillRect(0, 0, size, size)
             }
+
+            if (operations.length) {
+
+                operations.pop()
+                var startIndex = undoCanvases.length * undoSize
+                for (var i = startIndex; i < operations.length; i++) {
+                    operations[i](c)
+                }
+
+                if (undoCanvases.length * undoSize > operations.length) {
+                    undoCanvases.pop()
+                }
+
+                if (!operations.length) undoUnavailableListener()
+
+            }
+
         },
     }
 
