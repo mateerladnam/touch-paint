@@ -23,7 +23,7 @@ function EraserTool (size, canvas) {
                 ;(function (size, oldX, oldY, x, y) {
                     canvas.operate(function (c) {
                         c.lineWidth = size
-                        c.strokeStyle = c.fillStyle = color
+                        c.strokeStyle = color
                         c.beginPath()
                         c.moveTo(oldX, oldY)
                         c.lineTo(x, y)
@@ -50,7 +50,7 @@ function EraserTool (size, canvas) {
             ;(function (size, halfSize) {
                 canvas.operate(function (c) {
                     c.lineWidth = size
-                    c.strokeStyle = c.fillStyle = color
+                    c.fillStyle = color
                     c.beginPath()
                     c.arc(x, y, halfSize, 0, Math.PI * 2)
                     c.fill()

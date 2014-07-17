@@ -23,7 +23,7 @@ function BrushTool (size, canvas) {
                 ;(function (size, hsl, oldX, oldY, x, y) {
                     canvas.operate(function (c) {
                         c.lineWidth = size
-                        c.strokeStyle = c.fillStyle = hsl
+                        c.strokeStyle = hsl
                         c.beginPath()
                         c.moveTo(oldX, oldY)
                         c.lineTo(x, y)
@@ -51,7 +51,7 @@ function BrushTool (size, canvas) {
             ;(function (size, hsl, halfSize) {
                 canvas.operate(function (c) {
                     c.lineWidth = size
-                    c.strokeStyle = c.fillStyle = hsl
+                    c.fillStyle = hsl
                     c.beginPath()
                     c.arc(x, y, halfSize, 0, Math.PI * 2)
                     c.fill()
