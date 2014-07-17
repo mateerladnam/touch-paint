@@ -20,7 +20,7 @@ function EraserTool (size, canvas) {
                 var x = touch.clientX - rect.left,
                     y = touch.clientY - rect.top
 
-                ;(function (size, oldX, oldY) {
+                ;(function (size, oldX, oldY, x, y) {
                     canvas.operate(function (c) {
                         c.lineWidth = size
                         c.strokeStyle = c.fillStyle = color
@@ -29,7 +29,7 @@ function EraserTool (size, canvas) {
                         c.lineTo(x, y)
                         c.stroke()
                     })
-                })(size, activeTouch.x, activeTouch.y)
+                })(size, activeTouch.x, activeTouch.y, x, y)
 
                 activeTouch.x = x
                 activeTouch.y = y

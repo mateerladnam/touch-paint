@@ -24,7 +24,7 @@ function UndoButton (undoListener) {
             identifier = e.changedTouches[0].identifier
             classList.add('active')
             addEventListener('touchend', touchEnd)
-            repeatInterval = setInterval(undoListener, 60)
+            repeatInterval = setInterval(undoListener, 50)
             undoListener()
         }
 

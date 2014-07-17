@@ -20,7 +20,7 @@ function BrushTool (size, canvas) {
                 var x = touch.clientX - rect.left,
                     y = touch.clientY - rect.top
 
-                ;(function (size, hsl, oldX, oldY) {
+                ;(function (size, hsl, oldX, oldY, x, y) {
                     canvas.operate(function (c) {
                         c.lineWidth = size
                         c.strokeStyle = c.fillStyle = hsl
@@ -29,7 +29,7 @@ function BrushTool (size, canvas) {
                         c.lineTo(x, y)
                         c.stroke()
                     })
-                })(size, hsl, activeTouch.x, activeTouch.y)
+                })(size, hsl, activeTouch.x, activeTouch.y, x, y)
 
                 activeTouch.x = x
                 activeTouch.y = y
