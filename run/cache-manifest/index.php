@@ -2,12 +2,14 @@
 
 header('Content-Type: text/cache-manifest');
 
-include_once '../fns/get_revision.php';
+include_once '../fns/get_revisions.php';
+$revisions = get_revisions();
+
 echo
     "CACHE MANIFEST\n"
     ."# v1\n"
-    .'../compressed.css?'.get_revision('compressed.css')."\n"
-    .'../compressed.js?'.get_revision('compressed.js')."\n"
+    .'../compressed.css?'.$revisions['compressed.css']."\n"
+    .'../compressed.js?'.$revisions['compressed.js']."\n"
     ."../images/burger.svg\n"
     ."../images/color-background.svg\n"
     ."../images/eraser.svg\n"

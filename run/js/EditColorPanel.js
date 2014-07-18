@@ -1,5 +1,11 @@
 function EditColorPanel (updateListener) {
 
+    function abortTouches () {
+        hueSlider.abortTouch()
+        saturationSlider.abortTouch()
+        luminanceSlider.abortTouch()
+    }
+
     function update () {
         updateListener(hue, saturation, luminance, alpha)
     }
@@ -44,13 +50,13 @@ function EditColorPanel (updateListener) {
     return {
         element: element,
         hide: function () {
-            hueSlider.abortTouch()
-            saturationSlider.abortTouch()
-            luminanceSlider.abortTouch()
+            abortTouches()
             alphaSlider.abortTouch()
             element.classList.remove('visible')
         },
         setColor: function (_hue, _saturation, _luminance, _alpha) {
+
+            abortTouches()
 
             hue = _hue
             saturation = _saturation
