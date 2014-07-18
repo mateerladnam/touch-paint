@@ -20,30 +20,16 @@ function BrushTool (size, canvas) {
                 var x = touch.clientX - rect.left,
                     y = touch.clientY - rect.top
 
-                ;(function (size, halfSize, hsl, oldX, oldY, x, y) {
+                ;(function (size, hsl, oldX, oldY, x, y) {
                     canvas.operate(function (c) {
-
-                        var dx = x - oldX
-                        var dy = y - oldY
-                        var steps = Math.max(Math.abs(Math.ceil(dx)), Math.abs(Math.ceil(dy)))
-                        var stepX = dx / steps
-                        var stepY = dy / steps
-
-                        c.fillStyle = hsl
-
-                        c.save()
-                        c.translate(oldX, oldY)
-                        c.globalAlpha = 1 / Math.pow(size, 0.8)
-                        for (var i = 0; i < steps; i++) {
-                            c.translate(stepX, stepY)
-                            c.beginPath()
-                            c.arc(0, 0, halfSize, 0, Math.PI * 2)
-                            c.fill()
-                        }
-                        c.restore()
-
+                        c.lineWidth = size
+                        c.strokeStyle = hsl
+                        c.beginPath()
+                        c.moveTo(oldX, oldY)
+                        c.lineTo(x, y)
+                        c.stroke()
                     })
-                })(size, halfSize, hsl, activeTouch.x, activeTouch.y, x, y)
+                })(size, hsl, activeTouch.x, activeTouch.y, x, y)
 
                 activeTouch.x = x
                 activeTouch.y = y
@@ -65,7 +51,6 @@ function BrushTool (size, canvas) {
             ;(function (size, halfSize, hsl) {
                 canvas.operate(function (c) {
                     c.lineWidth = size
-                    c.globalAlpha = 1 / Math.pow(size, 0.8)
                     c.fillStyle = hsl
                     c.beginPath()
                     c.arc(x, y, halfSize, 0, Math.PI * 2)
