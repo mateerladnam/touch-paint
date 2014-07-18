@@ -910,6 +910,7 @@ function MainPanel () {
         canvas.operate(function (c) {
             var size = c.canvas.width
             c.fillStyle = '#fff'
+            c.globalAlpha = 1
             c.fillRect(0, 0, size, size)
         })
         brushOrEraserListener()
@@ -918,6 +919,7 @@ function MainPanel () {
             var size = c.canvas.width
             var x = (size - image.width) / 2
             var y = (size - image.height) / 2
+            c.globalAlpha = 1
             c.drawImage(image, x, y)
         })
         brushOrEraserListener()
