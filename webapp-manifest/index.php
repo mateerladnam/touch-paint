@@ -6,6 +6,7 @@ echo json_encode([
     'name' => 'Touch Paint',
     'description' => 'A program to draw with your finger.',
     'launch_path' => '/run/',
+    'appcache_path' => '/run/cache-manifest/',
     'fullscreen' => 'true',
     'developer' => [
         'name' => 'Qliavi Team',
