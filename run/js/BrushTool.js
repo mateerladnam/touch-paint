@@ -33,7 +33,7 @@ function BrushTool (size, canvas) {
 
                         c.save()
                         c.translate(oldX, oldY)
-                        c.globalAlpha = 1 / Math.sqrt(size)
+                        c.globalAlpha = 1 / Math.pow(size, 0.8)
                         for (var i = 0; i < steps; i++) {
                             c.translate(stepX, stepY)
                             c.beginPath()
@@ -65,7 +65,7 @@ function BrushTool (size, canvas) {
             ;(function (size, halfSize, hsl) {
                 canvas.operate(function (c) {
                     c.lineWidth = size
-                    c.globalAlpha = 1 / Math.sqrt(size)
+                    c.globalAlpha = 1 / Math.pow(size, 0.8)
                     c.fillStyle = hsl
                     c.beginPath()
                     c.arc(x, y, halfSize, 0, Math.PI * 2)
