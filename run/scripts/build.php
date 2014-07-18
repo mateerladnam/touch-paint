@@ -9,8 +9,8 @@ $compressedCssFile = '../compressed.css';
 $compressedJsFile = '../compressed.js';
 $get_revisions_file = '../fns/get_revisions.php';
 
-$compressedCss = file_get_contents($compressedJsFile);
-$compressedJs = file_get_contents($compressedCssFile);
+$compressedCss = file_get_contents($compressedCssFile);
+$compressedJs = file_get_contents($compressedJsFile);
 
 include_once $get_revisions_file;
 $revisions = get_revisions();
