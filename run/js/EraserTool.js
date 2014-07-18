@@ -20,7 +20,7 @@ function EraserTool (size, canvas) {
                 var x = touch.clientX - rect.left,
                     y = touch.clientY - rect.top
 
-                ;(function (size, oldX, oldY, x, y) {
+                ;(function (size, halfSize, oldX, oldY, x, y) {
                     canvas.operate(function (c) {
 
                         var dx = x - oldX
@@ -43,7 +43,7 @@ function EraserTool (size, canvas) {
                         c.restore()
 
                     })
-                })(size, activeTouch.x, activeTouch.y, x, y)
+                })(size, halfSize, activeTouch.x, activeTouch.y, x, y)
 
                 activeTouch.x = x
                 activeTouch.y = y

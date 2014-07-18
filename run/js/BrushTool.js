@@ -20,7 +20,7 @@ function BrushTool (size, canvas) {
                 var x = touch.clientX - rect.left,
                     y = touch.clientY - rect.top
 
-                ;(function (size, hsl, oldX, oldY, x, y) {
+                ;(function (size, halfSize, hsl, oldX, oldY, x, y) {
                     canvas.operate(function (c) {
 
                         var dx = x - oldX
@@ -43,7 +43,7 @@ function BrushTool (size, canvas) {
                         c.restore()
 
                     })
-                })(size, hsl, activeTouch.x, activeTouch.y, x, y)
+                })(size, halfSize, hsl, activeTouch.x, activeTouch.y, x, y)
 
                 activeTouch.x = x
                 activeTouch.y = y
@@ -62,7 +62,7 @@ function BrushTool (size, canvas) {
                 x = touch.clientX - rect.left,
                 y = touch.clientY - rect.top
 
-            ;(function (size, hsl, halfSize) {
+            ;(function (size, halfSize, hsl) {
                 canvas.operate(function (c) {
                     c.lineWidth = size
                     c.globalAlpha = 1 / Math.sqrt(size)
@@ -71,7 +71,7 @@ function BrushTool (size, canvas) {
                     c.arc(x, y, halfSize, 0, Math.PI * 2)
                     c.fill()
                 })
-            })(size, hsl, halfSize)
+            })(size, halfSize, hsl)
 
             activeTouches[touch.identifier] = { x: x, y: y }
 
