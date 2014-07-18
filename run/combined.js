@@ -1364,7 +1364,7 @@ function UndoButton (undoListener) {
         image.onload = image.onerror = image.onabort = function () {
             finished++
             progressElement.style.width = finished / icons.length * 100 + '%'
-            if (finished == icons.length - 1) {
+            if (finished == icons.length) {
                 var mainPanel = MainPanel()
                 document.body.removeChild(loadBarElement)
                 document.body.appendChild(mainPanel.element)
