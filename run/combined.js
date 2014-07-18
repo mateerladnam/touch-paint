@@ -130,7 +130,7 @@ function BrushTool (size, canvas) {
 
                         c.save()
                         c.translate(oldX, oldY)
-                        c.globalAlpha = 1 / Math.sqrt(size)
+                        c.globalAlpha = 1 / Math.pow(size, 0.8)
                         for (var i = 0; i < steps; i++) {
                             c.translate(stepX, stepY)
                             c.beginPath()
@@ -162,7 +162,7 @@ function BrushTool (size, canvas) {
             ;(function (size, halfSize, hsl) {
                 canvas.operate(function (c) {
                     c.lineWidth = size
-                    c.globalAlpha = 1 / Math.sqrt(size)
+                    c.globalAlpha = 1 / Math.pow(size, 0.8)
                     c.fillStyle = hsl
                     c.beginPath()
                     c.arc(x, y, halfSize, 0, Math.PI * 2)
@@ -243,7 +243,7 @@ function Canvas () {
     var undoUnavailableListener
 
     var undoSize = 128
-    undoCanvases = []
+    var undoCanvases = []
 
     return {
         canvas: canvas,
@@ -289,10 +289,10 @@ function Canvas () {
         },
         undo: function () {
 
+            c.globalAlpha = 1
             if (undoCanvases.length) {
                 c.drawImage(undoCanvases[undoCanvases.length - 1], 0, 0)
             } else {
-                c.globalAlpha = 1
                 c.fillStyle = '#fff'
                 c.fillRect(0, 0, size, size)
             }
@@ -599,7 +599,7 @@ function EraserTool (size, canvas) {
 
                         c.save()
                         c.translate(oldX, oldY)
-                        c.globalAlpha = 1 / Math.sqrt(size)
+                        c.globalAlpha = 1 / Math.pow(size, 0.8)
                         for (var i = 0; i < steps; i++) {
                             c.translate(stepX, stepY)
                             c.beginPath()
@@ -630,7 +630,7 @@ function EraserTool (size, canvas) {
             ;(function (size, halfSize) {
                 canvas.operate(function (c) {
                     c.lineWidth = size
-                    c.globalAlpha = 1 / Math.sqrt(size)
+                    c.globalAlpha = 1 / Math.pow(size, 0.8)
                     c.fillStyle = color
                     c.beginPath()
                     c.arc(x, y, halfSize, 0, Math.PI * 2)

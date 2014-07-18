@@ -26,7 +26,7 @@ function Canvas () {
     var undoUnavailableListener
 
     var undoSize = 128
-    undoCanvases = []
+    var undoCanvases = []
 
     return {
         canvas: canvas,
@@ -72,10 +72,10 @@ function Canvas () {
         },
         undo: function () {
 
+            c.globalAlpha = 1
             if (undoCanvases.length) {
                 c.drawImage(undoCanvases[undoCanvases.length - 1], 0, 0)
             } else {
-                c.globalAlpha = 1
                 c.fillStyle = '#fff'
                 c.fillRect(0, 0, size, size)
             }
