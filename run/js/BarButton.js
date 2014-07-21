@@ -17,11 +17,8 @@ function BarButton (icon, clickListener) {
     var element = Div('Button')
     element.appendChild(contentElement)
     element.addEventListener('mousedown', function (e) {
-        if (touched) {
-            touched = false
-            return
-        }
-        click()
+        if (touched) touched = false
+        else click()
     })
     element.addEventListener('touchstart', function (e) {
         touched = true
