@@ -1,9 +1,20 @@
 function ColorButton (hue, saturation, luminance, alpha, clickListener) {
 
+    function click () {
+        clickListener()
+        classList.add('active')
+        clearTimeout(activeTimeout)
+        activeTimeout = setTimeout(function () {
+            classList.remove('active')
+        }, 100)
+    }
+
     function setColor (hue, saturation, luminance, alpha) {
         var hsl = 'hsla(' + hue + ', ' + saturation + '%, ' + luminance + '%, ' + alpha + ')'
         colorElement.style.backgroundColor = hsl
     }
+
+    var touched = false
 
     var classPrefix = 'ColorButton'
 
@@ -15,14 +26,17 @@ function ColorButton (hue, saturation, luminance, alpha, clickListener) {
 
     var element = Div('Button')
     element.appendChild(contentElement)
+    element.addEventListener('mousedown', function (e) {
+        if (touched) {
+            touched = false
+            return
+        }
+        click()
+    })
     element.addEventListener('touchstart', function (e) {
+        touched = true
         e.preventDefault()
-        clickListener()
-        classList.add('active')
-        clearTimeout(activeTimeout)
-        activeTimeout = setTimeout(function () {
-            classList.remove('active')
-        }, 100)
+        click()
     })
 
     var activeTimeout
