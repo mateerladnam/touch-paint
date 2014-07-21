@@ -2,6 +2,7 @@
     margin: 0;
     padding: 0;
     border: 0;
+    outline: 0;
     background: transparent;
     cursor: default;
     font: inherit;
@@ -38,7 +39,15 @@ h2 {
     padding-bottom: 8px;
 }
 
+a {
+    color: #04c;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
 .button {
+    color: #333;
+    text-decoration: none;
     margin-top: 32px;
     padding: 8px;
     font-weight: bold;
