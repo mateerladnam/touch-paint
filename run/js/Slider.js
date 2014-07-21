@@ -1,53 +1,84 @@
 function Slider (changeListener, endListener) {
 
-    function change (touch) {
+    function beginSlide (e) {
 
-        var rect = handleWrapperElement.getBoundingClientRect()
-        var handleSize = handleElement.offsetHeight
+        function change (e) {
 
-        if (innerWidth > innerHeight) {
-            var wrapperHeight = handleWrapperElement.offsetHeight
-            ratio = 1 - (touch.clientY - rect.top - handleSize / 2) / wrapperHeight
-        } else {
-            var wrapperWidth = handleWrapperElement.offsetWidth
-            ratio = (touch.clientX - rect.left - handleSize / 2) / wrapperWidth
+            var rect = handleWrapperElement.getBoundingClientRect()
+            var handleSize = handleElement.offsetHeight
+
+            if (innerWidth > innerHeight) {
+                var wrapperHeight = handleWrapperElement.offsetHeight
+                ratio = 1 - (e.clientY - rect.top - handleSize / 2) / wrapperHeight
+            } else {
+                var wrapperWidth = handleWrapperElement.offsetWidth
+                ratio = (e.clientX - rect.left - handleSize / 2) / wrapperWidth
+            }
+
+            ratio = Math.max(0, Math.min(1, ratio))
+            updateHandle()
+            changeListener(ratio)
+
         }
 
-        ratio = Math.max(0, Math.min(1, ratio))
-        updateHandle()
-        changeListener(ratio)
+        function end () {
+            endSlide()
+            endListener()
+        }
 
-    }
+        function mouseMove (e) {
+            if (touched) touched = false
+            else change(e)
+        }
 
-    function finishTouch () {
-        identifier = null
-        handleElement.classList.remove('active')
-        removeEventListener('touchmove', touchMove)
-        removeEventListener('touchend', touchEnd)
-    }
+        function mouseUp (e) {
+            if (touched) touched = false
+            else end()
+        }
 
-    function touchEnd (e) {
-        var touches = e.changedTouches
-        for (var i = 0; i < touches.length; i++) {
-            if (touches[i].identifier === identifier) {
-                e.preventDefault()
-                finishTouch()
-                endListener()
-                break
+        function touchEnd (e) {
+            touched = true
+            var touches = e.changedTouches
+            for (var i = 0; i < touches.length; i++) {
+                if (touches[i].identifier === identifier) {
+                    e.preventDefault()
+                    end()
+                    break
+                }
             }
         }
-    }
 
-    function touchMove (e) {
-        var touches = e.changedTouches
-        for (var i = 0; i < touches.length; i++) {
-            var touch = touches[i]
-            if (touch.identifier === identifier) {
-                e.preventDefault()
-                change(touch)
-                break
+        function touchMove (e) {
+            touched = true
+            var touches = e.changedTouches
+            for (var i = 0; i < touches.length; i++) {
+                var touch = touches[i]
+                if (touch.identifier === identifier) {
+                    e.preventDefault()
+                    change(touch)
+                    break
+                }
             }
         }
+
+        endSlide = function () {
+            sliding = false
+            identifier = null
+            handleClassList.remove('active')
+            removeEventListener('mousemove', mouseMove)
+            removeEventListener('mouseup', mouseUp)
+            removeEventListener('touchmove', touchMove)
+            removeEventListener('touchend', touchEnd)
+        }
+
+        sliding = true
+        change(e)
+        handleClassList.add('active')
+        addEventListener('mousemove', mouseMove)
+        addEventListener('mouseup', mouseUp)
+        addEventListener('touchmove', touchMove)
+        addEventListener('touchend', touchEnd)
+
     }
 
     function updateHandle () {
@@ -55,12 +86,15 @@ function Slider (changeListener, endListener) {
         handleElement.style.left = ratio * 100 + '%'
     }
 
+    var sliding = false
     var classPrefix = 'Slider'
-
+    var touched = false
     var identifier = null
     var ratio = 0
 
     var handleElement = Div(classPrefix + '-handle')
+
+    var handleClassList = handleElement.classList
 
     var handleWrapperElement = Div(classPrefix + '-handleWrapper')
     handleWrapperElement.appendChild(handleElement)
@@ -70,19 +104,17 @@ function Slider (changeListener, endListener) {
     var element = Div(classPrefix)
     element.appendChild(barElement)
     element.appendChild(handleWrapperElement)
+    element.addEventListener('mousedown', function (e) {
+        if (touched) touched = false
+        else beginSlide(e)
+    })
     element.addEventListener('touchstart', function (e) {
+        touched = true
         if (identifier === null) {
-
             e.preventDefault()
             var touch = e.changedTouches[0]
             identifier = touch.identifier
-            handleElement.classList.add('active')
-
-            change(touch)
-
-            addEventListener('touchmove', touchMove)
-            addEventListener('touchend', touchEnd)
-
+            beginSlide(touch)
         }
     })
 
@@ -92,7 +124,7 @@ function Slider (changeListener, endListener) {
         barElement: barElement,
         element: element,
         abortTouch: function () {
-            if (identifier !== null) finishTouch()
+            if (sliding) endSlide()
         },
         addClass: function (className) {
             element.classList.add(className)
