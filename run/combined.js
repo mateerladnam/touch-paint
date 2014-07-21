@@ -56,19 +56,30 @@ function AlphaSlider (changeListener, endListener) {
 ;
 function BarButton (icon, clickListener) {
 
-    var contentElement = Div('Button-content')
-    contentElement.style.backgroundImage = 'url(images/' + icon + '.svg)'
-
-    var element = Div('Button')
-    element.appendChild(contentElement)
-    element.addEventListener('touchstart', function (e) {
-        e.preventDefault()
+    function click () {
         clickListener()
         classList.add('active')
         clearTimeout(activeTimeout)
         activeTimeout = setTimeout(function () {
             classList.remove('active')
         }, 100)
+    }
+
+    var touched = false
+
+    var contentElement = Div('Button-content')
+    contentElement.style.backgroundImage = 'url(images/' + icon + '.svg)'
+
+    var element = Div('Button')
+    element.appendChild(contentElement)
+    element.addEventListener('mousedown', function () {
+        if (touched) touched = false
+        else click()
+    })
+    element.addEventListener('touchstart', function (e) {
+        touched = true
+        e.preventDefault()
+        click()
     })
 
     var activeTimeout
@@ -97,7 +108,61 @@ function BarButton (icon, clickListener) {
 ;
 function BrushTool (size, canvas) {
 
+    function beginBrush (x, y) {
+        ;(function (size, halfSize, hsl) {
+            canvas.operate(function (c) {
+                c.lineWidth = size
+                c.fillStyle = hsl
+                c.beginPath()
+                c.arc(x, y, halfSize, 0, Math.PI * 2)
+                c.fill()
+            })
+        })(size, halfSize, hsl)
+    }
+
+    function mouseDown (e) {
+        if (touched) touched = false
+        else {
+            isMouseDown = true
+            var rect = canvasElement.getBoundingClientRect()
+            mouseX = e.clientX - rect.left
+            mouseY = e.clientY - rect.top
+            beginBrush(mouseX, mouseY)
+        }
+    }
+
+    function mouseUp () {
+        if (touched) touched = false
+        else isMouseDown = false
+    }
+
+    function mouseMove (e) {
+        if (touched) touched = false
+        else if (isMouseDown) {
+            var rect = canvasElement.getBoundingClientRect()
+            var x = e.clientX - rect.left,
+                y = e.clientY - rect.top
+            moveBrush(mouseX, mouseY, x, y)
+            mouseX = x
+            mouseY = y
+        }
+    }
+
+    function moveBrush (oldX, oldY, x, y) {
+        ;(function (size, hsl) {
+            canvas.operate(function (c) {
+                c.lineWidth = size
+                c.strokeStyle = hsl
+                c.beginPath()
+                c.moveTo(oldX, oldY)
+                c.lineTo(x, y)
+                c.stroke()
+            })
+        })(size, hsl)
+    }
+
     function touchEnd (e) {
+        touched = true
         e.preventDefault()
         var touches = e.changedTouches
         for (var i = 0; i < touches.length; i++) {
@@ -106,6 +171,7 @@ function BrushTool (size, canvas) {
     }
 
     function touchMove (e) {
+        touched = true
         e.preventDefault()
         var rect = canvasElement.getBoundingClientRect()
         var touches = e.changedTouches
@@ -113,64 +179,44 @@ function BrushTool (size, canvas) {
             var touch = touches[i]
             var activeTouch = activeTouches[touch.identifier]
             if (activeTouch) {
-
                 var x = touch.clientX - rect.left,
                     y = touch.clientY - rect.top
-
-                ;(function (size, hsl, oldX, oldY, x, y) {
-                    canvas.operate(function (c) {
-                        c.lineWidth = size
-                        c.strokeStyle = hsl
-                        c.beginPath()
-                        c.moveTo(oldX, oldY)
-                        c.lineTo(x, y)
-                        c.stroke()
-                    })
-                })(size, hsl, activeTouch.x, activeTouch.y, x, y)
-
+                moveBrush(activeTouch.x, activeTouch.y, x, y)
                 activeTouch.x = x
                 activeTouch.y = y
-
             }
         }
     }
 
     function touchStart (e) {
+        touched = true
         e.preventDefault()
         var rect = canvasElement.getBoundingClientRect()
         var touches = e.changedTouches
         for (var i = 0; i < touches.length; i++) {
-
             var touch = touches[i],
                 x = touch.clientX - rect.left,
                 y = touch.clientY - rect.top
-
-            ;(function (size, halfSize, hsl) {
-                canvas.operate(function (c) {
-                    c.lineWidth = size
-                    c.fillStyle = hsl
-                    c.beginPath()
-                    c.arc(x, y, halfSize, 0, Math.PI * 2)
-                    c.fill()
-                })
-            })(size, halfSize, hsl)
-
+            beginBrush(x, y)
             activeTouches[touch.identifier] = { x: x, y: y }
-
         }
     }
 
+    var mouseX, mouseY, isMouseDown = false
+    var touched = false
     var activeTouches = {}
     var halfSize = size / 2
     var enabled = false
     var canvasElement = canvas.canvas
-
     var hue = 0, saturation = 0, luminance = 0, alpha = 1
     var hsl = 'hsla(0, 0%, 0%, 1)'
 
     return {
         disable: function () {
             if (enabled) {
+                canvasElement.removeEventListener('mousedown', mouseDown)
+                canvasElement.removeEventListener('mousemove', mouseMove)
+                canvasElement.removeEventListener('mouseup', mouseUp)
                 canvasElement.removeEventListener('touchstart', touchStart)
                 canvasElement.removeEventListener('touchmove', touchMove)
                 canvasElement.removeEventListener('touchend', touchEnd)
@@ -179,6 +225,9 @@ function BrushTool (size, canvas) {
         },
         enable: function () {
             if (!enabled) {
+                canvasElement.addEventListener('mousedown', mouseDown)
+                canvasElement.addEventListener('mousemove', mouseMove)
+                canvasElement.addEventListener('mouseup', mouseUp)
                 canvasElement.addEventListener('touchstart', touchStart)
                 canvasElement.addEventListener('touchmove', touchMove)
                 canvasElement.addEventListener('touchend', touchEnd)
@@ -305,10 +354,21 @@ function Canvas () {
 ;
 function ColorButton (hue, saturation, luminance, alpha, clickListener) {
 
+    function click () {
+        clickListener()
+        classList.add('active')
+        clearTimeout(activeTimeout)
+        activeTimeout = setTimeout(function () {
+            classList.remove('active')
+        }, 100)
+    }
+
     function setColor (hue, saturation, luminance, alpha) {
         var hsl = 'hsla(' + hue + ', ' + saturation + '%, ' + luminance + '%, ' + alpha + ')'
         colorElement.style.backgroundColor = hsl
     }
+
+    var touched = false
 
     var classPrefix = 'ColorButton'
 
@@ -320,14 +380,14 @@ function ColorButton (hue, saturation, luminance, alpha, clickListener) {
 
     var element = Div('Button')
     element.appendChild(contentElement)
+    element.addEventListener('mousedown', function () {
+        if (touched) touched = false
+        else click()
+    })
     element.addEventListener('touchstart', function (e) {
+        touched = true
         e.preventDefault()
-        clickListener()
-        classList.add('active')
-        clearTimeout(activeTimeout)
-        activeTimeout = setTimeout(function () {
-            classList.remove('active')
-        }, 100)
+        click()
     })
 
     var activeTimeout
@@ -551,7 +611,61 @@ function EditColorPanel (updateListener) {
 ;
 function EraserTool (size, canvas) {
 
+    function beginEraser (x, y) {
+        ;(function (size, halfSize) {
+            canvas.operate(function (c) {
+                c.lineWidth = size
+                c.fillStyle = color
+                c.beginPath()
+                c.arc(x, y, halfSize, 0, Math.PI * 2)
+                c.fill()
+            })
+        })(size, halfSize)
+    }
+
+    function mouseDown (e) {
+        if (touched) touched = false
+        else {
+            isMouseDown = true
+            var rect = canvasElement.getBoundingClientRect()
+            mouseX = e.clientX - rect.left
+            mouseY = e.clientY - rect.top
+            beginEraser(mouseX, mouseY)
+        }
+    }
+
+    function mouseUp () {
+        if (touched) touched = false
+        else isMouseDown = false
+    }
+
+    function mouseMove (e) {
+        if (touched) touched = false
+        else if (isMouseDown) {
+            var rect = canvasElement.getBoundingClientRect()
+            var x = e.clientX - rect.left,
+                y = e.clientY - rect.top
+            moveEraser(mouseX, mouseY, x, y)
+            mouseX = x
+            mouseY = y
+        }
+    }
+
+    function moveEraser (oldX, oldY, x, y) {
+        ;(function (size) {
+            canvas.operate(function (c) {
+                c.lineWidth = size
+                c.strokeStyle = color
+                c.beginPath()
+                c.moveTo(oldX, oldY)
+                c.lineTo(x, y)
+                c.stroke()
+            })
+        })(size)
+    }
+
     function touchEnd (e) {
+        touched = true
         e.preventDefault()
         var touches = e.changedTouches
         for (var i = 0; i < touches.length; i++) {
@@ -560,6 +674,7 @@ function EraserTool (size, canvas) {
     }
 
     function touchMove (e) {
+        touched = true
         e.preventDefault()
         var rect = canvasElement.getBoundingClientRect()
         var touches = e.changedTouches
@@ -567,21 +682,9 @@ function EraserTool (size, canvas) {
             var touch = touches[i]
             var activeTouch = activeTouches[touch.identifier]
             if (activeTouch) {
-
                 var x = touch.clientX - rect.left,
                     y = touch.clientY - rect.top
-
-                ;(function (size, oldX, oldY, x, y) {
-                    canvas.operate(function (c) {
-                        c.lineWidth = size
-                        c.strokeStyle = color
-                        c.beginPath()
-                        c.moveTo(oldX, oldY)
-                        c.lineTo(x, y)
-                        c.stroke()
-                    })
-                })(size, activeTouch.x, activeTouch.y, x, y)
-
+                moveEraser(activeTouch.x, activeTouch.y, x, y)
                 activeTouch.x = x
                 activeTouch.y = y
             }
@@ -589,39 +692,33 @@ function EraserTool (size, canvas) {
     }
 
     function touchStart (e) {
+        touched = true
         e.preventDefault()
         var rect = canvasElement.getBoundingClientRect()
         var touches = e.changedTouches
         for (var i = 0; i < touches.length; i++) {
-
             var touch = touches[i],
                 x = touch.clientX - rect.left,
                 y = touch.clientY - rect.top
-
-            ;(function (size, halfSize) {
-                canvas.operate(function (c) {
-                    c.lineWidth = size
-                    c.fillStyle = color
-                    c.beginPath()
-                    c.arc(x, y, halfSize, 0, Math.PI * 2)
-                    c.fill()
-                })
-            })(size, halfSize)
-
+            beginEraser(x, y)
             activeTouches[touch.identifier] = { x: x, y: y }
-
         }
     }
 
-    var color = '#fff'
+    var mouseX, mouseY, isMouseDown = false
+    var touched = false
     var activeTouches = {}
     var halfSize = size / 2
     var enabled = false
     var canvasElement = canvas.canvas
+    var color = '#fff'
 
     return {
         disable: function () {
             if (enabled) {
+                canvasElement.removeEventListener('mousedown', mouseDown)
+                canvasElement.removeEventListener('mousemove', mouseMove)
+                canvasElement.removeEventListener('mouseup', mouseUp)
                 canvasElement.removeEventListener('touchstart', touchStart)
                 canvasElement.removeEventListener('touchmove', touchMove)
                 canvasElement.removeEventListener('touchend', touchEnd)
@@ -630,16 +727,18 @@ function EraserTool (size, canvas) {
         },
         enable: function () {
             if (!enabled) {
-                enabled = true
+                canvasElement.addEventListener('mousedown', mouseDown)
+                canvasElement.addEventListener('mousemove', mouseMove)
+                canvasElement.addEventListener('mouseup', mouseUp)
                 canvasElement.addEventListener('touchstart', touchStart)
                 canvasElement.addEventListener('touchmove', touchMove)
                 canvasElement.addEventListener('touchend', touchEnd)
+                enabled = true
             }
         },
         setSize: function (_size) {
             size = _size
             halfSize = size / 2
-            if (enabled) enable()
         },
     }
 
@@ -1173,54 +1272,85 @@ function SaturationSlider (changeListener, endListener) {
 ;
 function Slider (changeListener, endListener) {
 
-    function change (touch) {
+    function beginSlide (e) {
 
-        var rect = handleWrapperElement.getBoundingClientRect()
-        var handleSize = handleElement.offsetHeight
+        function change (e) {
 
-        if (innerWidth > innerHeight) {
-            var wrapperHeight = handleWrapperElement.offsetHeight
-            ratio = 1 - (touch.clientY - rect.top - handleSize / 2) / wrapperHeight
-        } else {
-            var wrapperWidth = handleWrapperElement.offsetWidth
-            ratio = (touch.clientX - rect.left - handleSize / 2) / wrapperWidth
+            var rect = handleWrapperElement.getBoundingClientRect()
+            var handleSize = handleElement.offsetHeight
+
+            if (innerWidth > innerHeight) {
+                var wrapperHeight = handleWrapperElement.offsetHeight
+                ratio = 1 - (e.clientY - rect.top - handleSize / 2) / wrapperHeight
+            } else {
+                var wrapperWidth = handleWrapperElement.offsetWidth
+                ratio = (e.clientX - rect.left - handleSize / 2) / wrapperWidth
+            }
+
+            ratio = Math.max(0, Math.min(1, ratio))
+            updateHandle()
+            changeListener(ratio)
+
         }
 
-        ratio = Math.max(0, Math.min(1, ratio))
-        updateHandle()
-        changeListener(ratio)
+        function end () {
+            endSlide()
+            endListener()
+        }
 
-    }
+        function mouseMove (e) {
+            if (touched) touched = false
+            else change(e)
+        }
 
-    function finishTouch () {
-        identifier = null
-        handleElement.classList.remove('active')
-        removeEventListener('touchmove', touchMove)
-        removeEventListener('touchend', touchEnd)
-    }
+        function mouseUp () {
+            if (touched) touched = false
+            else end()
+        }
 
-    function touchEnd (e) {
-        var touches = e.changedTouches
-        for (var i = 0; i < touches.length; i++) {
-            if (touches[i].identifier === identifier) {
-                e.preventDefault()
-                finishTouch()
-                endListener()
-                break
+        function touchEnd (e) {
+            touched = true
+            var touches = e.changedTouches
+            for (var i = 0; i < touches.length; i++) {
+                if (touches[i].identifier === identifier) {
+                    e.preventDefault()
+                    end()
+                    break
+                }
             }
         }
-    }
 
-    function touchMove (e) {
-        var touches = e.changedTouches
-        for (var i = 0; i < touches.length; i++) {
-            var touch = touches[i]
-            if (touch.identifier === identifier) {
-                e.preventDefault()
-                change(touch)
-                break
+        function touchMove (e) {
+            touched = true
+            var touches = e.changedTouches
+            for (var i = 0; i < touches.length; i++) {
+                var touch = touches[i]
+                if (touch.identifier === identifier) {
+                    e.preventDefault()
+                    change(touch)
+                    break
+                }
             }
         }
+
+        endSlide = function () {
+            sliding = false
+            identifier = null
+            handleClassList.remove('active')
+            removeEventListener('mousemove', mouseMove)
+            removeEventListener('mouseup', mouseUp)
+            removeEventListener('touchmove', touchMove)
+            removeEventListener('touchend', touchEnd)
+        }
+
+        sliding = true
+        change(e)
+        handleClassList.add('active')
+        addEventListener('mousemove', mouseMove)
+        addEventListener('mouseup', mouseUp)
+        addEventListener('touchmove', touchMove)
+        addEventListener('touchend', touchEnd)
+
     }
 
     function updateHandle () {
@@ -1228,12 +1358,15 @@ function Slider (changeListener, endListener) {
         handleElement.style.left = ratio * 100 + '%'
     }
 
+    var sliding = false
     var classPrefix = 'Slider'
-
+    var touched = false
     var identifier = null
     var ratio = 0
 
     var handleElement = Div(classPrefix + '-handle')
+
+    var handleClassList = handleElement.classList
 
     var handleWrapperElement = Div(classPrefix + '-handleWrapper')
     handleWrapperElement.appendChild(handleElement)
@@ -1243,19 +1376,17 @@ function Slider (changeListener, endListener) {
     var element = Div(classPrefix)
     element.appendChild(barElement)
     element.appendChild(handleWrapperElement)
+    element.addEventListener('mousedown', function (e) {
+        if (touched) touched = false
+        else beginSlide(e)
+    })
     element.addEventListener('touchstart', function (e) {
+        touched = true
         if (identifier === null) {
-
             e.preventDefault()
             var touch = e.changedTouches[0]
             identifier = touch.identifier
-            handleElement.classList.add('active')
-
-            change(touch)
-
-            addEventListener('touchmove', touchMove)
-            addEventListener('touchend', touchEnd)
-
+            beginSlide(touch)
         }
     })
 
@@ -1265,7 +1396,7 @@ function Slider (changeListener, endListener) {
         barElement: barElement,
         element: element,
         abortTouch: function () {
-            if (identifier !== null) finishTouch()
+            if (sliding) endSlide()
         },
         addClass: function (className) {
             element.classList.add(className)
@@ -1280,36 +1411,60 @@ function Slider (changeListener, endListener) {
 ;
 function UndoButton (undoListener) {
 
+    function beginUndo () {
+
+        function endUndo () {
+            removeEventListener('mouseup', mouseUp)
+            removeEventListener('touchend', touchEnd)
+            classList.remove('active')
+            clearInterval(repeatInterval)
+        }
+
+        function mouseUp () {
+            if (touched) touched = false
+            else endUndo()
+        }
+
+        function touchEnd (e) {
+            touched = true
+            var touches = e.changedTouches
+            for (var i = 0; i < touches.length; i++) {
+                if (touches[i].identifier === identifier) {
+                    identifier = null
+                    endUndo()
+                }
+            }
+        }
+
+        var touched = false
+
+        addEventListener('touchend', touchEnd)
+        addEventListener('mouseup', mouseUp)
+        classList.add('active')
+        repeatInterval = setInterval(undoListener, 50)
+        undoListener()
+
+    }
+
     var contentElement = Div('Button-content')
     contentElement.style.backgroundImage = 'url(images/undo.svg)'
 
     var element = Div('Button UndoButton disabled')
     element.appendChild(contentElement)
+    element.addEventListener('mousedown', function () {
+        if (touched) touched = false
+        else beginUndo()
+    })
     element.addEventListener('touchstart', function (e) {
-
-        function touchEnd (e) {
-            var touches = e.changedTouches
-            for (var i = 0; i < touches.length; i++) {
-                if (touches[i].identifier === identifier) {
-                    identifier = null
-                    classList.remove('active')
-                    removeEventListener('touchend', touchEnd)
-                    clearInterval(repeatInterval)
-                }
-            }
-        }
-
+        touched = true
         if (identifier === null) {
             e.preventDefault()
             identifier = e.changedTouches[0].identifier
-            classList.add('active')
-            addEventListener('touchend', touchEnd)
-            repeatInterval = setInterval(undoListener, 50)
-            undoListener()
+            beginUndo()
         }
-
     })
 
+    var touched = false
     var identifier = null
     var repeatInterval
     var classList = element.classList

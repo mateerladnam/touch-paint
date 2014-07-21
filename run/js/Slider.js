@@ -31,7 +31,7 @@ function Slider (changeListener, endListener) {
             else change(e)
         }
 
-        function mouseUp (e) {
+        function mouseUp () {
             if (touched) touched = false
             else end()
         }

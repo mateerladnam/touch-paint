@@ -40,7 +40,7 @@ function UndoButton (undoListener) {
 
     var element = Div('Button UndoButton disabled')
     element.appendChild(contentElement)
-    element.addEventListener('mousedown', function (e) {
+    element.addEventListener('mousedown', function () {
         if (touched) touched = false
         else beginUndo()
     })
