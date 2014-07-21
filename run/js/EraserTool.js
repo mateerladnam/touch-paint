@@ -13,6 +13,7 @@ function EraserTool (size, canvas) {
     }
 
     function mouseDown (e) {
+        e.preventDefault()
         if (touched) touched = false
         else {
             isMouseDown = true

@@ -26,7 +26,8 @@ function ColorButton (hue, saturation, luminance, alpha, clickListener) {
 
     var element = Div('Button')
     element.appendChild(contentElement)
-    element.addEventListener('mousedown', function () {
+    element.addEventListener('mousedown', function (e) {
+        e.preventDefault()
         if (touched) touched = false
         else click()
     })

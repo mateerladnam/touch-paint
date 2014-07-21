@@ -105,6 +105,7 @@ function Slider (changeListener, endListener) {
     element.appendChild(barElement)
     element.appendChild(handleWrapperElement)
     element.addEventListener('mousedown', function (e) {
+        e.preventDefault()
         if (touched) touched = false
         else beginSlide(e)
     })
