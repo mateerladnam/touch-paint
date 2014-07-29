@@ -2,7 +2,7 @@
 
 header('Content-Type: text/cache-manifest');
 
-include_once '../fns/get_revisions.php';
+include_once '../../fns/get_revisions.php';
 $revisions = get_revisions();
 
 echo
