@@ -7,7 +7,7 @@ $revisions = get_revisions();
 
 echo
     "CACHE MANIFEST\n"
-    ."# v1\n"
+    ."# v2\n"
     .'../compressed.css?'.$revisions['compressed.css']."\n"
     .'../compressed.js?'.$revisions['compressed.js']."\n"
     ."../images/burger.svg\n"

@@ -7,7 +7,7 @@ header('Content-Type: application/x-web-app-manifest+json');
 
 echo json_encode([
     'name' => 'Touch Paint',
-    'version' => '1.1',
+    'version' => '1.2',
     'description' => 'A program to draw with your finger.',
     'launch_path' => '/run/',
     'appcache_path' => '/run/cache-manifest/',
@@ -19,9 +19,9 @@ echo json_encode([
     'icons' => [
         '16' => '/images/icons/16.png?'.$revisions['images/icons/16.png'],
         '32' => '/images/icons/32.png?'.$revisions['images/icons/32.png'],
-        '90' => '/images/icons/90.png?1',
-        '120' => '/images/icons/120.png?1',
+        '90' => '/images/icons/90.png?2',
+        '120' => '/images/icons/120.png?2',
         '128' => '/images/icons/128.png?'.$revisions['images/icons/128.png'],
-        '256' => '/images/icons/256.png?1',
+        '256' => '/images/icons/256.png?2',
     ],
 ]);
