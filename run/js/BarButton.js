@@ -43,9 +43,15 @@ function BarButton (icon, clickListener) {
         isChecked: function () {
             return checked
         },
+        mark: function () {
+            classList.add('marked')
+        },
         uncheck: function () {
             classList.remove('checked')
             checked = false
+        },
+        unmark: function () {
+            classList.remove('marked')
         },
     }
 

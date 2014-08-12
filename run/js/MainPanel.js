@@ -7,6 +7,8 @@ function MainPanel () {
         disableEraser()
         enableBrush()
         paramsPanel.setSize(brushSize)
+        brushButton.mark()
+        eraserButton.unmark()
         brushOrEraserListener = brushListener
     }
 
@@ -52,6 +54,8 @@ function MainPanel () {
         disableBrush()
         enableEraser()
         paramsPanel.setSize(eraserSize)
+        eraserButton.mark()
+        brushButton.unmark()
         brushOrEraserListener = eraserListener
     }
 
