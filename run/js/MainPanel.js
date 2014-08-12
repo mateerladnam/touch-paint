@@ -78,7 +78,7 @@ function MainPanel () {
         enableBrush()
     })
 
-    var paramsPanel = ParamsPanel(brushSize, function (size) {
+    var paramsPanel = ParamsPanel(function (size) {
         if (brushOrEraserListener == brushListener) {
             brushSize = size
             brushTool.setSize(size)
@@ -89,6 +89,7 @@ function MainPanel () {
     }, function () {
         brushOrEraserListener()
     })
+    paramsPanel.setSize(brushSize)
 
     var filePanel = FilePanel(function () {
         canvas.operate(function (c) {

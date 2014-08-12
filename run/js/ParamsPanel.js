@@ -1,4 +1,4 @@
-function ParamsPanel (size, changeListener, closeListener) {
+function ParamsPanel (changeListener, closeListener) {
 
     function updatePreview () {
         previewC.clearRect(0, 0, previewCanvas.width, previewCanvas.height)
@@ -22,7 +22,6 @@ function ParamsPanel (size, changeListener, closeListener) {
         changeListener(size)
         updatePreview()
     }, closeListener)
-    slider.setRatio((size - minSize) / (maxSize - minSize))
     slider.addClass(classPrefix + '-slider')
 
     var contentElement = Div(classPrefix + '-content')
@@ -32,9 +31,9 @@ function ParamsPanel (size, changeListener, closeListener) {
     var element = Div(classPrefix)
     element.appendChild(contentElement)
 
-    updatePreview()
-
     var previewChanged = false
+
+    var size = minSize
 
     return {
         element: element,
