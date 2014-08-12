@@ -6,6 +6,7 @@ function MainPanel () {
         closeFile()
         disableEraser()
         enableBrush()
+        paramsPanel.setSize(brushSize)
         brushOrEraserListener = brushListener
     }
 
@@ -50,6 +51,7 @@ function MainPanel () {
         closeFile()
         disableBrush()
         enableEraser()
+        paramsPanel.setSize(eraserSize)
         brushOrEraserListener = eraserListener
     }
 

@@ -1,28 +1,28 @@
-function ParamsPanel (brushSize, changeListener, closeListener) {
+function ParamsPanel (size, changeListener, closeListener) {
 
     function updatePreview () {
         previewC.clearRect(0, 0, previewCanvas.width, previewCanvas.height)
         previewC.beginPath()
-        previewC.arc(previewCanvas.width / 2, previewCanvas.height / 2, (brushSize + 1) / 2, 0, Math.PI * 2)
+        previewC.arc(previewCanvas.width / 2, previewCanvas.height / 2, (size + 1) / 2, 0, Math.PI * 2)
         previewC.fill()
     }
 
     var classPrefix = 'ParamsPanel'
 
-    var minBrushSize = 1, maxBrushSize = 48
+    var minSize = 1, maxSize = 48
 
     var previewCanvas = document.createElement('canvas')
-    previewCanvas.width = previewCanvas.height = maxBrushSize + 4
+    previewCanvas.width = previewCanvas.height = maxSize + 4
     previewCanvas.className = classPrefix + '-previewCanvas'
 
     var previewC = previewCanvas.getContext('2d')
 
     var slider = Slider(function (ratio) {
-        brushSize = minBrushSize + ratio * maxBrushSize
-        changeListener(brushSize)
+        size = minSize + ratio * maxSize
+        changeListener(size)
         updatePreview()
     }, closeListener)
-    slider.setRatio((brushSize - minBrushSize) / (maxBrushSize - minBrushSize))
+    slider.setRatio((size - minSize) / (maxSize - minSize))
     slider.addClass(classPrefix + '-slider')
 
     var contentElement = Div(classPrefix + '-content')
@@ -34,7 +34,7 @@ function ParamsPanel (brushSize, changeListener, closeListener) {
 
     updatePreview()
 
-    var colorChanged = false
+    var previewChanged = false
 
     return {
         element: element,
@@ -44,12 +44,17 @@ function ParamsPanel (brushSize, changeListener, closeListener) {
         },
         setColor: function (hue, saturation, luminance) {
             previewC.fillStyle = 'hsl(' + hue + ', ' + saturation + '%, ' + luminance + '%)'
-            colorChanged = true
+            previewChanged = true
+        },
+        setSize: function (_size) {
+            size = _size
+            previewChanged = true
         },
         show: function () {
-            if (colorChanged) {
+            if (previewChanged) {
                 updatePreview()
-                colorChanged = false
+                previewChanged = false
+                slider.setRatio((size - minSize) / (maxSize - minSize))            
             }
             contentElement.classList.add('visible')
         },
