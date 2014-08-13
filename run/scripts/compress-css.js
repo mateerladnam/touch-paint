@@ -20,9 +20,12 @@ var files = [
     'js/FileButton.css',
     'js/FilePanel.css',
     'js/HueSlider.css',
+    'js/MainBar.css',
     'js/MainPanel.css',
     'js/PalettePanel.css',
     'js/ParamsPanel.css',
+    'js/PickButton.css',
+    'js/PickPanel.css',
     'js/ToolButton.css',
     'js/UndoButton.css',
 ]

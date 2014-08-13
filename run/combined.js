@@ -637,6 +637,19 @@ function LuminanceSlider (changeListener, endListener) {
 
 }
 ;
+function MainBar () {
+
+    var element = Div('MainBar')
+
+    return {
+        element: element,
+        addButton: function (button) {
+            element.appendChild(button.element)
+        },
+    }
+
+}
+;
 function MainPanel () {
 
     function closeAllPanels () {
@@ -762,6 +775,8 @@ function MainPanel () {
             button.mark()
 
         }
+    }, function () {
+        console.log('pick')
     })
 
     var pencilTool = PencilTool(pencilSize, canvas)
@@ -862,23 +877,26 @@ function MainPanel () {
     })
     fileButton.addClass(classPrefix + '-fileButton')
 
+    var pickPanel = PickPanel()
+
     var contentElement = Div(classPrefix + '-content')
     contentElement.appendChild(canvas.element)
     contentElement.appendChild(palettePanel.element)
     contentElement.appendChild(paramsPanel.element)
     contentElement.appendChild(filePanel.element)
 
-    var barElement = Div(classPrefix + '-bar')
-    barElement.appendChild(pencilButton.element)
-    barElement.appendChild(eraserButton.element)
-    barElement.appendChild(paletteButton.element)
-    barElement.appendChild(paramsButton.element)
-    barElement.appendChild(undoButton.element)
-    barElement.appendChild(fileButton.element)
+    var mainBar = MainBar()
+    mainBar.addButton(pencilButton)
+    mainBar.addButton(pencilButton)
+    mainBar.addButton(eraserButton)
+    mainBar.addButton(paletteButton)
+    mainBar.addButton(paramsButton)
+    mainBar.addButton(undoButton)
+    mainBar.addButton(fileButton)
 
     var element = Div(classPrefix)
     element.appendChild(contentElement)
-    element.appendChild(barElement)
+    element.appendChild(mainBar.element)
 
     return { element: element }
 
@@ -906,7 +924,7 @@ function OpenImage (c, image, visibleWidth, visibleHeight) {
 
 }
 ;
-function PalettePanel (colorListener, closeListener, buttonListener) {
+function PalettePanel (colorListener, closeListener, buttonListener, pickListener) {
 
     function selectColor (color) {
         var hue = color.hue,
@@ -948,9 +966,12 @@ function PalettePanel (colorListener, closeListener, buttonListener) {
         colorListener(hue, saturation, luminance, alpha, activeButton)
     })
 
+    var pickButton = PickButton(pickListener)
+
     var secondLayerElement = Div(classPrefix + '-secondLayer')
     secondLayerElement.appendChild(colorButtonsPanel.element)
     secondLayerElement.appendChild(previewButton.element)
+    secondLayerElement.appendChild(pickButton.element)
 
     var contentElement = Div(classPrefix + '-content')
     contentElement.appendChild(editColorPanel.element)
@@ -1187,6 +1208,25 @@ function PencilTool (size, canvas) {
             size = _size
             halfSize = size / 2
         },
+    }
+
+}
+;
+function PickButton (clickListener) {
+    var button = BarButton('pick', clickListener)
+    button.addClass('PickButton')
+    return button
+}
+;
+function PickPanel (pickListener) {
+
+    var colorButton = ColorButton(pickListener)
+
+    var element = Div('PickPanel')
+    element.appendChild(colorButton.element)
+
+    return {
+        element: element,
     }
 
 }
