@@ -1,11 +1,17 @@
-function PalettePanel (colorListener, closeListener) {
+function PalettePanel (colorListener, closeListener, buttonListener) {
 
     var classPrefix = 'PalettePanel'
 
-    var colorButtonsPanel = ColorButtonsPanel(function (hue, saturation, luminance, alpha) {
+    var colorButtonsPanel = ColorButtonsPanel(function (button) {
+        var color = button.color,
+            hue = color.hue,
+            saturation = color.saturation,
+            luminance = color.luminance,
+            alpha = color.alpha
         previewButton.setColor(hue, saturation, luminance, alpha)
         editColorPanel.setColor(hue, saturation, luminance, alpha)
         colorListener(hue, saturation, luminance, alpha)
+        buttonListener(button)
         if (!previewButton.isChecked()) closeListener()
     })
 

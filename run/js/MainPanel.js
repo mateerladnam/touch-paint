@@ -81,6 +81,12 @@ function MainPanel () {
         closePalette()
         closeFile()
         pencilOrEraserListener()
+    }, function (button) {
+        if (pencilOrEraserListener == pencilListener) {
+            pencilTool.colorButton = button
+        } else {
+            eraserTool.colorButton = button
+        }
     })
 
     var pencilTool = PencilTool(pencilSize, canvas)
