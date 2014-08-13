@@ -33,6 +33,7 @@ echo_html(
     .'<script type="text/javascript" src="js/HueSlider.js"></script>'
     .'<script type="text/javascript" src="js/LuminanceSlider.js"></script>'
     .'<script type="text/javascript" src="js/MainPanel.js"></script>'
+    .'<script type="text/javascript" src="js/OpenImage.js"></script>'
     .'<script type="text/javascript" src="js/PalettePanel.js"></script>'
     .'<script type="text/javascript" src="js/ParamsPanel.js"></script>'
     .'<script type="text/javascript" src="js/PencilTool.js"></script>'

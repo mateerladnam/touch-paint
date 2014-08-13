@@ -783,11 +783,8 @@ function MainPanel () {
         pencilOrEraserListener()
     }, function (image) {
         canvas.operate(function (c) {
-            var size = c.canvas.width
-            var x = (size - image.width) / 2
-            var y = (size - image.height) / 2
-            c.globalAlpha = 1
-            c.drawImage(image, x, y)
+            var canvasElement = canvas.element
+            OpenImage(c, image, canvasElement.offsetWidth, canvasElement.offsetHeight)
         })
         pencilOrEraserListener()
     }, function () {
@@ -873,6 +870,28 @@ function MainPanel () {
     element.appendChild(barElement)
 
     return { element: element }
+
+}
+;
+function OpenImage (c, image, visibleWidth, visibleHeight) {
+
+    var canvas = c.canvas,
+        visibleRatio = visibleWidth / visibleHeight,
+        imageRatio = image.width / image.height,
+        targetWidth, targetHeight
+
+    if (visibleRatio > imageRatio) {
+        targetWidth = visibleWidth
+        targetHeight = targetWidth / imageRatio
+    } else {
+        targetHeight = visibleHeight
+        targetWidth = targetHeight * imageRatio
+    }
+
+    var x = (canvas.width - targetWidth) / 2,
+        y = (canvas.height - targetHeight) / 2
+    c.globalAlpha = 1
+    c.drawImage(image, x, y, targetWidth, targetHeight)
 
 }
 ;

@@ -19,6 +19,7 @@ var files = [
     'js/HueSlider.js',
     'js/LuminanceSlider.js',
     'js/MainPanel.js',
+    'js/OpenImage.js',
     'js/PalettePanel.js',
     'js/ParamsPanel.js',
     'js/PencilTool.js',
