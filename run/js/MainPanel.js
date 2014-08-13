@@ -66,8 +66,12 @@ function MainPanel () {
     function updateToolColor (tool) {
         var colorButton = tool.colorButton
         palettePanel.selectButton(colorButton)
-        var color = colorButton.color
-        tool.setColor(color.hue, color.saturation, color.luminance, color.alpha)
+        var color = colorButton.color,
+            hue = color.hue,
+            saturation = color.saturation,
+            luminance = color.luminance
+        tool.setColor(hue, saturation, luminance, color.alpha)
+        paramsPanel.setColor(hue, saturation, luminance)
     }
 
     var pencilSize = 4,
