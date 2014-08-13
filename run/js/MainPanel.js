@@ -76,12 +76,16 @@ function MainPanel () {
     eraserTool.setColor(0, 0, 100, 1)
 
     var palettePanel = PalettePanel(function (hue, saturation, luminance, alpha) {
-        pencilTool.setColor(hue, saturation, luminance, alpha)
+        if (pencilOrEraserListener == pencilListener) {
+            pencilTool.setColor(hue, saturation, luminance, alpha)
+        } else {
+            eraserTool.setColor(hue, saturation, luminance, alpha)
+        }
         paramsPanel.setColor(hue, saturation, luminance)
     }, function () {
         closePalette()
         closeFile()
-        enablePencil()
+        pencilOrEraserListener()
     })
 
     var paramsPanel = ParamsPanel(function (size) {
