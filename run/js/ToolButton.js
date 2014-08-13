@@ -4,7 +4,10 @@ function ToolButton (icon, clickListener) {
 
     var classPrefix = 'ToolButton'
 
+    var opaqueElement = Div(classPrefix + '-opaque')
+
     var colorElement = Div(classPrefix + '-color')
+    colorElement.appendChild(opaqueElement)
 
     var transparencyElement = Div(classPrefix + '-transparency')
     transparencyElement.style.backgroundImage = 'url(images/color-background.svg)'
@@ -26,8 +29,15 @@ function ToolButton (icon, clickListener) {
             classList.add('marked')
         },
         setColor: function (hue, saturation, luminance, alpha) {
-            var hsl = 'hsla(' + hue + ', ' + saturation + '%, ' + luminance + '%, ' + alpha + ')'
-            colorElement.style.background = hsl
+
+            var hslPart = hue + ', ' + saturation + '%, ' + luminance + '%'
+
+            var hsla = 'hsla(' + hslPart + ', ' + alpha + ')'
+            colorElement.style.background = hsla
+
+            var hsl = 'hsl(' + hslPart + ')'
+            opaqueElement.style.background = hsl
+
         },
         unmark: function () {
             classList.remove('marked')

@@ -10,5 +10,14 @@
 
 .ToolButton-color {
     height: 100%;
+    position: relative;
     border-radius: 2px;
+}
+
+.ToolButton-opaque {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 50%;
 }
