@@ -16,6 +16,7 @@ function ColorButtonsPanel (selectListener) {
         activeButton.uncheck()
         button.check()
         activeButton = button
+        that.setColor = button.setColor
     }
 
     var buttons = []
@@ -68,14 +69,14 @@ function ColorButtonsPanel (selectListener) {
     element.appendChild(pinkButton.element)
     element.appendChild(whiteButton.element)
 
-    return {
+    var that = {
         blackButton: blackButton,
         element: element,
         select: select,
         whiteButton: whiteButton,
-        setColor: function (hue, saturation, luminance, alpha) {
-            activeButton.setColor(hue, saturation, luminance, alpha)
-        },
+        setColor: activeButton.setColor,
     }
+
+    return that
 
 }
