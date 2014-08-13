@@ -1,15 +1,15 @@
 function MainPanel () {
 
-    function brushListener () {
+    function pencilListener () {
         closePalette()
         closeParams()
         closeFile()
         disableEraser()
-        enableBrush()
-        paramsPanel.setSize(brushSize)
-        brushButton.mark()
+        enablePencil()
+        paramsPanel.setSize(pencilSize)
+        pencilButton.mark()
         eraserButton.unmark()
-        brushOrEraserListener = brushListener
+        pencilOrEraserListener = pencilListener
     }
 
     function closePalette () {
@@ -27,9 +27,9 @@ function MainPanel () {
         fileButton.uncheck()
     }
 
-    function disableBrush () {
-        brushButton.uncheck()
-        brushTool.disable()
+    function disablePencil () {
+        pencilButton.uncheck()
+        pencilTool.disable()
     }
 
     function disableEraser () {
@@ -37,9 +37,9 @@ function MainPanel () {
         eraserTool.disable()
     }
 
-    function enableBrush () {
-        brushButton.check()
-        brushTool.enable()
+    function enablePencil () {
+        pencilButton.check()
+        pencilTool.enable()
     }
 
     function enableEraser () {
@@ -51,49 +51,51 @@ function MainPanel () {
         closePalette()
         closeParams()
         closeFile()
-        disableBrush()
+        disablePencil()
         enableEraser()
         paramsPanel.setSize(eraserSize)
         eraserButton.mark()
-        brushButton.unmark()
-        brushOrEraserListener = eraserListener
+        pencilButton.unmark()
+        pencilOrEraserListener = eraserListener
     }
 
-    var brushSize = 4,
+    var pencilSize = 4,
         eraserSize = 8
 
     var classPrefix = 'MainPanel'
 
     var canvas = Canvas()
 
-    var brushOrEraserListener = brushListener
+    var pencilOrEraserListener = pencilListener
 
-    var brushTool = BrushTool(brushSize, canvas)
-    brushTool.enable()
+    var pencilTool = PencilTool(pencilSize, canvas)
+    pencilTool.setColor(0, 0, 0, 1)
+    pencilTool.enable()
 
-    var eraserTool = EraserTool(eraserSize, canvas)
+    var eraserTool = PencilTool(eraserSize, canvas)
+    eraserTool.setColor(0, 0, 100, 1)
 
     var palettePanel = PalettePanel(function (hue, saturation, luminance, alpha) {
-        brushTool.setColor(hue, saturation, luminance, alpha)
+        pencilTool.setColor(hue, saturation, luminance, alpha)
         paramsPanel.setColor(hue, saturation, luminance)
     }, function () {
         closePalette()
         closeFile()
-        enableBrush()
+        enablePencil()
     })
 
     var paramsPanel = ParamsPanel(function (size) {
-        if (brushOrEraserListener == brushListener) {
-            brushSize = size
-            brushTool.setSize(size)
+        if (pencilOrEraserListener == pencilListener) {
+            pencilSize = size
+            pencilTool.setSize(size)
         } else {
             eraserSize = size
             eraserTool.setSize(size)
         }
     }, function () {
-        brushOrEraserListener()
+        pencilOrEraserListener()
     })
-    paramsPanel.setSize(brushSize)
+    paramsPanel.setSize(pencilSize)
 
     var filePanel = FilePanel(function () {
         canvas.operate(function (c) {
@@ -102,7 +104,7 @@ function MainPanel () {
             c.globalAlpha = 1
             c.fillRect(0, 0, size, size)
         })
-        brushOrEraserListener()
+        pencilOrEraserListener()
     }, function (image) {
         canvas.operate(function (c) {
             var size = c.canvas.width
@@ -111,28 +113,28 @@ function MainPanel () {
             c.globalAlpha = 1
             c.drawImage(image, x, y)
         })
-        brushOrEraserListener()
+        pencilOrEraserListener()
     }, function () {
         var width = canvas.element.offsetWidth
         var height = canvas.element.offsetHeight
         SaveCanvas(canvas.canvas, width, height)
-        brushOrEraserListener()
+        pencilOrEraserListener()
     })
 
-    var brushButton = BarButton('pencil', brushListener)
-    brushButton.addClass(classPrefix + '-brushButton')
-    brushButton.check()
+    var pencilButton = BarButton('pencil', pencilListener)
+    pencilButton.addClass(classPrefix + '-pencilButton')
+    pencilButton.check()
 
     var eraserButton = BarButton('eraser', eraserListener)
     eraserButton.addClass(classPrefix + '-eraserButton')
 
     var paletteButton = BarButton('palette', function () {
         if (paletteButton.isChecked()) {
-            brushOrEraserListener()
+            pencilOrEraserListener()
         } else {
             closeParams()
             closeFile()
-            disableBrush()
+            disablePencil()
             disableEraser()
             palettePanel.show()
             paletteButton.check()
@@ -142,11 +144,11 @@ function MainPanel () {
 
     var paramsButton = BarButton('params', function () {
         if (paramsButton.isChecked()) {
-            brushOrEraserListener()
+            pencilOrEraserListener()
         } else {
             closePalette()
             closeFile()
-            disableBrush()
+            disablePencil()
             disableEraser()
             paramsPanel.show()
             paramsButton.check()
@@ -161,11 +163,11 @@ function MainPanel () {
 
     var fileButton = BarButton('burger', function () {
         if (fileButton.isChecked()) {
-            brushOrEraserListener()
+            pencilOrEraserListener()
         } else {
             closePalette()
             closeParams()
-            disableBrush()
+            disablePencil()
             disableEraser()
             filePanel.show()
             fileButton.check()
@@ -180,7 +182,7 @@ function MainPanel () {
     contentElement.appendChild(filePanel.element)
 
     var barElement = Div(classPrefix + '-bar')
-    barElement.appendChild(brushButton.element)
+    barElement.appendChild(pencilButton.element)
     barElement.appendChild(eraserButton.element)
     barElement.appendChild(paletteButton.element)
     barElement.appendChild(paramsButton.element)

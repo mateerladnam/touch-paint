@@ -37,7 +37,7 @@
         bottom: 64px;
     }
 
-    .MainPanel-brushButton,
+    .MainPanel-pencilButton,
     .MainPanel-eraserButton,
     .MainPanel-paletteButton,
     .MainPanel-paramsButton,
@@ -45,7 +45,7 @@
         top: 8px;
     }
 
-    .MainPanel-brushButton {
+    .MainPanel-pencilButton {
         left: 8px;
     }
     .MainPanel-eraserButton {
@@ -79,7 +79,7 @@
         bottom: 0;
     }
 
-    .MainPanel-brushButton,
+    .MainPanel-pencilButton,
     .MainPanel-eraserButton,
     .MainPanel-paletteButton,
     .MainPanel-paramsButton,
@@ -88,7 +88,7 @@
         left: 8px;
     }
 
-    .MainPanel-brushButton {
+    .MainPanel-pencilButton {
         bottom: 8px;
     }
     .MainPanel-eraserButton {

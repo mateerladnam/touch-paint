@@ -1,15 +1,15 @@
-function EraserTool (size, canvas) {
+function PencilTool (size, canvas) {
 
-    function beginEraser (x, y) {
-        ;(function (size, halfSize) {
+    function beginTool (x, y) {
+        ;(function (size, halfSize, hsl) {
             canvas.operate(function (c) {
                 c.lineWidth = size
-                c.fillStyle = color
+                c.fillStyle = hsl
                 c.beginPath()
                 c.arc(x, y, halfSize, 0, Math.PI * 2)
                 c.fill()
             })
-        })(size, halfSize)
+        })(size, halfSize, hsl)
     }
 
     function mouseDown (e) {
@@ -20,7 +20,7 @@ function EraserTool (size, canvas) {
             var rect = canvasElement.getBoundingClientRect()
             mouseX = e.clientX - rect.left
             mouseY = e.clientY - rect.top
-            beginEraser(mouseX, mouseY)
+            beginTool(mouseX, mouseY)
         }
     }
 
@@ -35,23 +35,23 @@ function EraserTool (size, canvas) {
             var rect = canvasElement.getBoundingClientRect()
             var x = e.clientX - rect.left,
                 y = e.clientY - rect.top
-            moveEraser(mouseX, mouseY, x, y)
+            moveTool(mouseX, mouseY, x, y)
             mouseX = x
             mouseY = y
         }
     }
 
-    function moveEraser (oldX, oldY, x, y) {
-        ;(function (size) {
+    function moveTool (oldX, oldY, x, y) {
+        ;(function (size, hsl) {
             canvas.operate(function (c) {
                 c.lineWidth = size
-                c.strokeStyle = color
+                c.strokeStyle = hsl
                 c.beginPath()
                 c.moveTo(oldX, oldY)
                 c.lineTo(x, y)
                 c.stroke()
             })
-        })(size)
+        })(size, hsl)
     }
 
     function touchEnd (e) {
@@ -74,7 +74,7 @@ function EraserTool (size, canvas) {
             if (activeTouch) {
                 var x = touch.clientX - rect.left,
                     y = touch.clientY - rect.top
-                moveEraser(activeTouch.x, activeTouch.y, x, y)
+                moveTool(activeTouch.x, activeTouch.y, x, y)
                 activeTouch.x = x
                 activeTouch.y = y
             }
@@ -90,7 +90,7 @@ function EraserTool (size, canvas) {
             var touch = touches[i],
                 x = touch.clientX - rect.left,
                 y = touch.clientY - rect.top
-            beginEraser(x, y)
+            beginTool(x, y)
             activeTouches[touch.identifier] = { x: x, y: y }
         }
     }
@@ -101,7 +101,8 @@ function EraserTool (size, canvas) {
     var halfSize = size / 2
     var enabled = false
     var canvasElement = canvas.canvas
-    var color = '#fff'
+    var hue = 0, saturation = 0, luminance = 0, alpha = 1
+    var hsl = 'hsla(0, 0%, 0%, 1)'
 
     return {
         disable: function () {
@@ -125,6 +126,13 @@ function EraserTool (size, canvas) {
                 canvasElement.addEventListener('touchend', touchEnd)
                 enabled = true
             }
+        },
+        setColor: function (_hue, _saturation, _luminance, _alpha) {
+            hue = _hue
+            saturation = _saturation
+            luminance = _luminance
+            alpha = _alpha
+            hsl = 'hsla(' + hue + ', ' + saturation + '%, ' + luminance + '%, ' + alpha + ')'
         },
         setSize: function (_size) {
             size = _size
