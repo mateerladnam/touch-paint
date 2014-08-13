@@ -6,6 +6,11 @@ function MainPanel () {
         closeFile()
     }
 
+    function closeFile () {
+        filePanel.hide()
+        fileButton.uncheck()
+    }
+
     function closePalette () {
         palettePanel.hide()
         paletteButton.uncheck()
@@ -16,19 +21,14 @@ function MainPanel () {
         paramsButton.uncheck()
     }
 
-    function closeFile () {
-        filePanel.hide()
-        fileButton.uncheck()
+    function disableEraser () {
+        eraserButton.uncheck()
+        eraserTool.disable()
     }
 
     function disablePencil () {
         pencilButton.uncheck()
         pencilTool.disable()
-    }
-
-    function disableEraser () {
-        eraserButton.uncheck()
-        eraserTool.disable()
     }
 
     function enableEraser () {
