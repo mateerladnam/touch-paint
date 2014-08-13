@@ -123,6 +123,8 @@ function MainPanel () {
             button.mark()
 
         }
+    }, function () {
+        console.log('pick')
     })
 
     var pencilTool = PencilTool(pencilSize, canvas)

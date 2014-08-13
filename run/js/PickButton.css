@@ -1,0 +1,30 @@
+.PickButton {
+    right: 8px;
+    width: auto;
+    height: auto;
+}
+
+.PickButton .Button-content {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+}
+
+@media (orientation:portrait) {
+    .PickButton {
+        top: 50%;
+        bottom: 8px;
+        left: 200px;
+    }
+}
+
+@media (orientation:landscape) {
+    .PickButton {
+        top: 8px;
+        bottom: 200px;
+        left: 50%;
+    }
+}

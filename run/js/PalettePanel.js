@@ -1,4 +1,4 @@
-function PalettePanel (colorListener, closeListener, buttonListener) {
+function PalettePanel (colorListener, closeListener, buttonListener, pickListener) {
 
     function selectColor (color) {
         var hue = color.hue,
@@ -40,9 +40,12 @@ function PalettePanel (colorListener, closeListener, buttonListener) {
         colorListener(hue, saturation, luminance, alpha, activeButton)
     })
 
+    var pickButton = PickButton(pickListener)
+
     var secondLayerElement = Div(classPrefix + '-secondLayer')
     secondLayerElement.appendChild(colorButtonsPanel.element)
     secondLayerElement.appendChild(previewButton.element)
+    secondLayerElement.appendChild(pickButton.element)
 
     var contentElement = Div(classPrefix + '-content')
     contentElement.appendChild(editColorPanel.element)
