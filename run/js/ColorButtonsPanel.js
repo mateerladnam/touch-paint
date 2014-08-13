@@ -1,37 +1,22 @@
 function ColorButtonsPanel (selectListener) {
 
     function createColorButton (hue, saturation, luminance, alpha) {
-
         var button = ColorButton(function () {
-            items.forEach(function (item) {
-                item.uncheck()
+            buttons.forEach(function (button) {
+                button.uncheck()
             })
             button.check()
-            activeItem = item
-            selectListener(hue, saturation, luminance, alpha)
+            activeButton = button
+            var color = button.color
+            selectListener(color.hue, color.saturation, color.luminance, color.alpha)
         })
         button.setColor(hue, saturation, luminance, alpha)
         button.addClass(classPrefix + '-colorButton')
-        items.push(button)
-
-        var item = {
-            addClass: button.addClass,
-            check: button.check,
-            element: button.element,
-            setColor: function (_hue, _saturation, _luminance, _alpha) {
-                hue = _hue
-                saturation = _saturation
-                luminance = _luminance
-                alpha = _alpha
-                button.setColor(hue, saturation, luminance, alpha)
-            },
-        }
-
-        return item
-
+        buttons.push(button)
+        return button
     }
 
-    var items = []
+    var buttons = []
 
     var classPrefix = 'ColorButtonsPanel'
 
@@ -75,7 +60,7 @@ function ColorButtonsPanel (selectListener) {
     var whiteButton = createColorButton(0, 0, 100, 1)
     whiteButton.addClass(classPrefix + '-whiteButton')
 
-    var activeItem = blackButton
+    var activeButton = blackButton
 
     var element = Div(classPrefix)
     element.appendChild(blackButton.element)
@@ -97,7 +82,7 @@ function ColorButtonsPanel (selectListener) {
         whiteButton: whiteButton,
         element: element,
         setColor: function (hue, saturation, luminance, alpha) {
-            activeItem.setColor(hue, saturation, luminance, alpha)
+            activeButton.setColor(hue, saturation, luminance, alpha)
         },
     }
 
