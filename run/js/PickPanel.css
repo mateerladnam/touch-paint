@@ -1,0 +1,23 @@
+.PickPanel {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.PickPanel-colorButton {
+    left: 8px;
+    right: 8px;
+    width: auto;
+}
+
+@media (orientation:portrait) {
+    .PickPanel-colorButton {
+        top: 8px;
+    }
+}
+
+@media (orientation:landscape) {
+    .PickPanel-colorButton {
+        bottom: 8px;
+    }
+}
