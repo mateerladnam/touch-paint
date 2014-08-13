@@ -231,17 +231,18 @@ function MainPanel () {
     contentElement.appendChild(paramsPanel.element)
     contentElement.appendChild(filePanel.element)
 
-    var barElement = Div(classPrefix + '-bar')
-    barElement.appendChild(pencilButton.element)
-    barElement.appendChild(eraserButton.element)
-    barElement.appendChild(paletteButton.element)
-    barElement.appendChild(paramsButton.element)
-    barElement.appendChild(undoButton.element)
-    barElement.appendChild(fileButton.element)
+    var mainBar = MainBar()
+    mainBar.addButton(pencilButton)
+    mainBar.addButton(pencilButton)
+    mainBar.addButton(eraserButton)
+    mainBar.addButton(paletteButton)
+    mainBar.addButton(paramsButton)
+    mainBar.addButton(undoButton)
+    mainBar.addButton(fileButton)
 
     var element = Div(classPrefix)
     element.appendChild(contentElement)
-    element.appendChild(barElement)
+    element.appendChild(mainBar.element)
 
     return { element: element }
 

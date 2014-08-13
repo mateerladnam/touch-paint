@@ -1,0 +1,22 @@
+.MainBar {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    background: #ddd;
+}
+
+@media (orientation:portrait) {
+    .MainBar {
+        left: 0;
+        height: 64px;
+        background-image: linear-gradient(#ddd, #bbb);
+    }
+}
+
+@media (orientation:landscape) {
+    .MainBar {
+        top: 0;
+        width: 64px;
+        background-image: linear-gradient(90deg, #ddd, #bbb);
+    }
+}
