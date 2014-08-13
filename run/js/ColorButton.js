@@ -51,6 +51,9 @@ function ColorButton (clickListener) {
         isChecked: function () {
             return checked
         },
+        mark: function () {
+            classList.add('marked')
+        },
         setColor: function (hue, saturation, luminance, alpha) {
             color.hue = hue
             color.saturation = saturation
@@ -62,6 +65,9 @@ function ColorButton (clickListener) {
         uncheck: function () {
             classList.remove('checked')
             checked = false
+        },
+        unmark: function () {
+            classList.remove('marked')
         },
     }
 

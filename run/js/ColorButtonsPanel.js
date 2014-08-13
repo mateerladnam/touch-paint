@@ -26,6 +26,7 @@ function ColorButtonsPanel (selectListener) {
     var blackButton = createButton(0, 0, 0, 1)
     blackButton.addClass(classPrefix + '-blackButton')
     blackButton.check()
+    blackButton.mark()
 
     var redButton = createButton(4, 100, 47, 1)
     redButton.addClass(classPrefix + '-redButton')
@@ -62,6 +63,7 @@ function ColorButtonsPanel (selectListener) {
 
     var whiteButton = createButton(0, 0, 100, 1)
     whiteButton.addClass(classPrefix + '-whiteButton')
+    whiteButton.mark()
 
     var activeButton = blackButton
 

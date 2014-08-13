@@ -92,9 +92,21 @@ function MainPanel () {
         pencilOrEraserListener()
     }, function (button) {
         if (pencilOrEraserListener == pencilListener) {
+
+            var oldButton = pencilTool.colorButton
+            if (oldButton != eraserTool.colorButton) oldButton.unmark()
+
             pencilTool.colorButton = button
+            button.mark()
+
         } else {
+
+            var oldButton = eraserTool.colorButton
+            if (oldButton != pencilTool.colorButton) oldButton.unmark()
+
             eraserTool.colorButton = button
+            button.mark()
+
         }
     })
 
