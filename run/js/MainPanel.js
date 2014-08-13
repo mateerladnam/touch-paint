@@ -93,10 +93,11 @@ function MainPanel () {
 
     var pencilOrEraserListener = pencilListener
 
-    var palettePanel = PalettePanel(function (hue, saturation, luminance, alpha) {
-        if (pencilOrEraserListener == pencilListener) {
+    var palettePanel = PalettePanel(function (hue, saturation, luminance, alpha, button) {
+        if (button == pencilTool.colorButton) {
             setPencilColor(hue, saturation, luminance, alpha)
-        } else {
+        }
+        if (button == eraserTool.colorButton) {
             setEraserColor(hue, saturation, luminance, alpha)
         }
         paramsPanel.setColor(hue, saturation, luminance)

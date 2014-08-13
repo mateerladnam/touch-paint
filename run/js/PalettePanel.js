@@ -12,10 +12,11 @@ function PalettePanel (colorListener, closeListener, buttonListener) {
     var classPrefix = 'PalettePanel'
 
     var colorButtonsPanel = ColorButtonsPanel(function (button) {
+        activeButton = button
+        buttonListener(button)
         var color = button.color
         selectColor(color)
-        colorListener(color.hue, color.saturation, color.luminance, color.alpha)
-        buttonListener(button)
+        colorListener(color.hue, color.saturation, color.luminance, color.alpha, button)
         if (!previewButton.isChecked()) closeListener()
     })
 
@@ -36,7 +37,7 @@ function PalettePanel (colorListener, closeListener, buttonListener) {
     var editColorPanel = EditColorPanel(function (hue, saturation, luminance, alpha) {
         previewButton.setColor(hue, saturation, luminance, alpha)
         colorButtonsPanel.setColor(hue, saturation, luminance, alpha)
-        colorListener(hue, saturation, luminance, alpha)
+        colorListener(hue, saturation, luminance, alpha, activeButton)
     })
 
     var secondLayerElement = Div(classPrefix + '-secondLayer')
@@ -51,6 +52,8 @@ function PalettePanel (colorListener, closeListener, buttonListener) {
     element.appendChild(contentElement)
 
     var editVisible = false
+
+    var activeButton = colorButtonsPanel.blackButton
 
     return {
         blackButton: colorButtonsPanel.blackButton,
