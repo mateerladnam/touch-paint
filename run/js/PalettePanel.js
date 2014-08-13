@@ -1,16 +1,20 @@
 function PalettePanel (colorListener, closeListener, buttonListener) {
 
-    var classPrefix = 'PalettePanel'
-
-    var colorButtonsPanel = ColorButtonsPanel(function (button) {
-        var color = button.color,
-            hue = color.hue,
+    function selectColor (color) {
+        var hue = color.hue,
             saturation = color.saturation,
             luminance = color.luminance,
             alpha = color.alpha
         previewButton.setColor(hue, saturation, luminance, alpha)
         editColorPanel.setColor(hue, saturation, luminance, alpha)
-        colorListener(hue, saturation, luminance, alpha)
+    }
+
+    var classPrefix = 'PalettePanel'
+
+    var colorButtonsPanel = ColorButtonsPanel(function (button) {
+        var color = button.color
+        selectColor(color)
+        colorListener(color.hue, color.saturation, color.luminance, color.alpha)
         buttonListener(button)
         if (!previewButton.isChecked()) closeListener()
     })
@@ -51,11 +55,15 @@ function PalettePanel (colorListener, closeListener, buttonListener) {
     return {
         blackButton: colorButtonsPanel.blackButton,
         element: element,
-        selectButton: colorButtonsPanel.selectButton,
         whiteButton: colorButtonsPanel.whiteButton,
         hide: function () {
             editColorPanel.hide()
             contentElement.classList.remove('visible')
+        },
+        selectButton: function (button) {
+            console.log('button', button)
+            colorButtonsPanel.selectButton(button)
+            selectColor(button.color)
         },
         show: function () {
             if (editVisible) editColorPanel.show()
