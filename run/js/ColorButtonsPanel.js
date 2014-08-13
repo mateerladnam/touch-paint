@@ -12,9 +12,7 @@ function ColorButtonsPanel (selectListener) {
     }
 
     function select (button) {
-        buttons.forEach(function (button) {
-            button.uncheck()
-        })
+        activeButton.uncheck()
         button.check()
         activeButton = button
     }
