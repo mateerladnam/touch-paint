@@ -65,7 +65,7 @@ function MainPanel () {
 
     function updateToolColor (tool) {
         var colorButton = tool.colorButton
-        palettePanel.selectButton(colorButton)
+        palettePanel.select(colorButton)
         var color = colorButton.color,
             hue = color.hue,
             saturation = color.saturation,

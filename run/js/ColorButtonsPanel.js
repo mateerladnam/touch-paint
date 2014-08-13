@@ -2,7 +2,7 @@ function ColorButtonsPanel (selectListener) {
 
     function createButton (hue, saturation, luminance, alpha) {
         var button = ColorButton(function () {
-            selectButton(button)
+            select(button)
             selectListener(button)
         })
         button.setColor(hue, saturation, luminance, alpha)
@@ -11,7 +11,7 @@ function ColorButtonsPanel (selectListener) {
         return button
     }
 
-    function selectButton (button) {
+    function select (button) {
         buttons.forEach(function (button) {
             button.uncheck()
         })
@@ -85,7 +85,7 @@ function ColorButtonsPanel (selectListener) {
     return {
         blackButton: blackButton,
         element: element,
-        selectButton: selectButton,
+        select: select,
         whiteButton: whiteButton,
         setColor: function (hue, saturation, luminance, alpha) {
             activeButton.setColor(hue, saturation, luminance, alpha)

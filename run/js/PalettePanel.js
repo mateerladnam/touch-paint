@@ -60,8 +60,8 @@ function PalettePanel (colorListener, closeListener, buttonListener) {
             editColorPanel.hide()
             contentElement.classList.remove('visible')
         },
-        selectButton: function (button) {
-            colorButtonsPanel.selectButton(button)
+        select: function (button) {
+            colorButtonsPanel.select(button)
             selectColor(button.color)
         },
         show: function () {
