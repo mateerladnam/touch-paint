@@ -7,7 +7,7 @@ header('Content-Type: application/x-web-app-manifest+json');
 
 echo json_encode([
     'name' => 'Touch Paint',
-    'version' => '2.0',
+    'version' => '2.1',
     'description' => 'A program to draw with your finger.',
     'launch_path' => '/run/',
     'appcache_path' => '/run/cache-manifest/',

@@ -25,24 +25,27 @@
     }
 
     .ColorButtonsPanel-blackButton,
-    .ColorButtonsPanel-greyButton,
-    .ColorButtonsPanel-blueButton,
-    .ColorButtonsPanel-skyBlueButton {
+    .ColorButtonsPanel-darkGreyButton,
+    .ColorButtonsPanel-lightGreyButton,
+    .ColorButtonsPanel-whiteButton {
         top: 0;
     }
+    .ColorButtonsPanel-blueButton,
+    .ColorButtonsPanel-skyBlueButton,
     .ColorButtonsPanel-darkGreenButton,
-    .ColorButtonsPanel-greenButton,
-    .ColorButtonsPanel-yellowButton,
-    .ColorButtonsPanel-redButton {
+    .ColorButtonsPanel-greenButton {
         top: 48px;
     }
+    .ColorButtonsPanel-yellowButton,
+    .ColorButtonsPanel-redButton,
     .ColorButtonsPanel-brownButton,
-    .ColorButtonsPanel-orangeButton,
-    .ColorButtonsPanel-violetButton,
-    .ColorButtonsPanel-pinkButton {
+    .ColorButtonsPanel-orangeButton {
         top: 96px;
     }
-    .ColorButtonsPanel-whiteButton {
+    .ColorButtonsPanel-violetButton,
+    .ColorButtonsPanel-pinkButton,
+    .ColorButtonsPanel-darkSkinButton,
+    .ColorButtonsPanel-lightSkinButton {
         top: 144px;
     }
 
@@ -70,24 +73,27 @@
     }
 
     .ColorButtonsPanel-blackButton,
-    .ColorButtonsPanel-greyButton,
-    .ColorButtonsPanel-blueButton,
-    .ColorButtonsPanel-skyBlueButton {
+    .ColorButtonsPanel-darkGreyButton,
+    .ColorButtonsPanel-lightGreyButton,
+    .ColorButtonsPanel-whiteButton {
         left: 0;
     }
+    .ColorButtonsPanel-blueButton,
+    .ColorButtonsPanel-skyBlueButton,
     .ColorButtonsPanel-darkGreenButton,
-    .ColorButtonsPanel-greenButton,
-    .ColorButtonsPanel-yellowButton,
-    .ColorButtonsPanel-redButton {
+    .ColorButtonsPanel-greenButton {
         left: 48px;
     }
+    .ColorButtonsPanel-yellowButton,
+    .ColorButtonsPanel-redButton,
     .ColorButtonsPanel-brownButton,
-    .ColorButtonsPanel-orangeButton,
-    .ColorButtonsPanel-violetButton,
-    .ColorButtonsPanel-pinkButton {
+    .ColorButtonsPanel-orangeButton {
         left: 96px;
     }
-    .ColorButtonsPanel-whiteButton {
+    .ColorButtonsPanel-violetButton,
+    .ColorButtonsPanel-pinkButton,
+    .ColorButtonsPanel-darkSkinButton,
+    .ColorButtonsPanel-lightSkinButton {
         left: 144px;
     }
 

@@ -27,21 +27,26 @@ function ColorButtonsPanel (selectListener) {
     blackButton.check()
     blackButton.mark()
 
-    var redButton = createButton(4, 100, 47, 'red')
+    var darkGreyButton = createButton(0, 0, 40, 'darkGrey')
 
-    var greenButton = createButton(115, 87, 50, 'green')
+    var lightGreyButton = createButton(0, 0, 70, 'lightGrey')
+
+    var whiteButton = createButton(0, 0, 100, 'white')
+    whiteButton.mark()
 
     var blueButton = createButton(232, 100, 50, 'blue')
 
-    var greyButton = createButton(0, 0, 53, 'grey')
-
-    var brownButton = createButton(30, 100, 33, 'brown')
+    var skyBlueButton = createButton(210, 100, 80, 'skyBlue')
 
     var darkGreenButton = createButton(114, 100, 33, 'darkGreen')
 
-    var skyBlueButton = createButton(210, 100, 80, 'skyBlue')
+    var greenButton = createButton(115, 87, 50, 'green')
+
+    var redButton = createButton(4, 100, 47, 'red')
 
     var yellowButton = createButton(60, 100, 50, 'yellow')
+
+    var brownButton = createButton(30, 100, 33, 'brown')
 
     var orangeButton = createButton(32, 100, 50, 'orange')
 
@@ -49,14 +54,17 @@ function ColorButtonsPanel (selectListener) {
 
     var pinkButton = createButton(312, 100, 83, 'pink')
 
-    var whiteButton = createButton(0, 0, 100, 'white')
-    whiteButton.mark()
+    var darkSkinButton = createButton(30, 55, 65, 'darkSkin')
+
+    var lightSkinButton = createButton(31, 55, 75, 'lightSkin')
 
     var activeButton = blackButton
 
     var element = Div(classPrefix)
     element.appendChild(blackButton.element)
-    element.appendChild(greyButton.element)
+    element.appendChild(darkGreyButton.element)
+    element.appendChild(lightGreyButton.element)
+    element.appendChild(whiteButton.element)
     element.appendChild(blueButton.element)
     element.appendChild(skyBlueButton.element)
     element.appendChild(darkGreenButton.element)
@@ -67,7 +75,8 @@ function ColorButtonsPanel (selectListener) {
     element.appendChild(orangeButton.element)
     element.appendChild(violetButton.element)
     element.appendChild(pinkButton.element)
-    element.appendChild(whiteButton.element)
+    element.appendChild(darkSkinButton.element)
+    element.appendChild(lightSkinButton.element)
 
     var that = {
         blackButton: blackButton,
