@@ -63,6 +63,16 @@ function MainPanel () {
         pencilOrEraserListener = pencilListener
     }
 
+    function setEraserColor (hue, saturation, luminance, alpha) {
+        eraserTool.setColor(hue, saturation, luminance, alpha)
+        eraserButton.setColor(hue, saturation, luminance, alpha)
+    }
+
+    function setPencilColor (hue, saturation, luminance, alpha) {
+        pencilTool.setColor(hue, saturation, luminance, alpha)
+        pencilButton.setColor(hue, saturation, luminance, alpha)
+    }
+
     function updateToolColor (tool) {
         var colorButton = tool.colorButton
         palettePanel.select(colorButton)
@@ -85,9 +95,9 @@ function MainPanel () {
 
     var palettePanel = PalettePanel(function (hue, saturation, luminance, alpha) {
         if (pencilOrEraserListener == pencilListener) {
-            pencilTool.setColor(hue, saturation, luminance, alpha)
+            setPencilColor(hue, saturation, luminance, alpha)
         } else {
-            eraserTool.setColor(hue, saturation, luminance, alpha)
+            setEraserColor(hue, saturation, luminance, alpha)
         }
         paramsPanel.setColor(hue, saturation, luminance)
     }, function () {
@@ -116,12 +126,10 @@ function MainPanel () {
 
     var pencilTool = PencilTool(pencilSize, canvas)
     pencilTool.colorButton = palettePanel.blackButton
-    pencilTool.setColor(0, 0, 0, 1)
     pencilTool.enable()
 
     var eraserTool = PencilTool(eraserSize, canvas)
     eraserTool.colorButton = palettePanel.whiteButton
-    eraserTool.setColor(0, 0, 100, 1)
 
     var paramsPanel = ParamsPanel(function (size) {
         if (pencilOrEraserListener == pencilListener) {
@@ -160,12 +168,15 @@ function MainPanel () {
         pencilOrEraserListener()
     })
 
-    var pencilButton = BarButton('pencil', pencilListener)
+    var pencilButton = ToolButton('pencil', pencilListener)
     pencilButton.addClass(classPrefix + '-pencilButton')
     pencilButton.check()
 
-    var eraserButton = BarButton('eraser', eraserListener)
+    var eraserButton = ToolButton('eraser', eraserListener)
     eraserButton.addClass(classPrefix + '-eraserButton')
+
+    setEraserColor(0, 0, 100, 1)
+    setPencilColor(0, 0, 0, 1)
 
     var paletteButton = BarButton('palette', function () {
         if (paletteButton.isChecked()) {

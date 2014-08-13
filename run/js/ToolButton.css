@@ -1,0 +1,12 @@
+.ToolButton-transparency {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 16px;
+    height: 16px;
+    border-radius: 2px;
+}
+
+.ToolButton-color {
+    height: 100%;
+}

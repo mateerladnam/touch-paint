@@ -23,6 +23,7 @@ var files = [
     'js/MainPanel.css',
     'js/PalettePanel.css',
     'js/ParamsPanel.css',
+    'js/ToolButton.css',
     'js/UndoButton.css',
 ]
 

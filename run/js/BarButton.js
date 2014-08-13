@@ -32,6 +32,7 @@ function BarButton (icon, clickListener) {
     var classList = element.classList
 
     return {
+        contentElement: contentElement,
         element: element,
         addClass: function (className) {
             classList.add(className)
@@ -43,15 +44,9 @@ function BarButton (icon, clickListener) {
         isChecked: function () {
             return checked
         },
-        mark: function () {
-            classList.add('marked')
-        },
         uncheck: function () {
             classList.remove('checked')
             checked = false
-        },
-        unmark: function () {
-            classList.remove('marked')
         },
     }
 

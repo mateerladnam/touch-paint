@@ -25,6 +25,7 @@ var files = [
     'js/SaveCanvas.js',
     'js/SaturationSlider.js',
     'js/Slider.js',
+    'js/ToolButton.js',
     'js/UndoButton.js',
     'js/Main.js',
 ]
