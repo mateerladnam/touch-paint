@@ -226,7 +226,10 @@ function ColorButton (clickListener) {
 
     var classPrefix = 'ColorButton'
 
+    var opaqueElement = Div(classPrefix + '-opaque')
+
     var colorElement = Div(classPrefix + '-color')
+    colorElement.appendChild(opaqueElement)
 
     var contentElement = Div(classPrefix + '-transparency Button-content')
     contentElement.appendChild(colorElement)
@@ -268,12 +271,20 @@ function ColorButton (clickListener) {
             classList.add('marked')
         },
         setColor: function (hue, saturation, luminance, alpha) {
+
             color.hue = hue
             color.saturation = saturation
             color.luminance = luminance
             color.alpha = alpha
-            var hsl = 'hsla(' + hue + ', ' + saturation + '%, ' + luminance + '%, ' + alpha + ')'
-            colorElement.style.backgroundColor = hsl
+
+            var hslPart = hue + ', ' + saturation + '%, ' + luminance + '%'
+
+            var hsla = 'hsla(' + hslPart + ', ' + alpha + ')'
+            colorElement.style.backgroundColor = hsla
+
+            var hsl = 'hsl(' + hslPart + ')'
+            opaqueElement.style.backgroundColor = hsl
+
         },
         uncheck: function () {
             classList.remove('checked')
@@ -1398,7 +1409,10 @@ function ToolButton (icon, clickListener) {
 
     var classPrefix = 'ToolButton'
 
+    var opaqueElement = Div(classPrefix + '-opaque')
+
     var colorElement = Div(classPrefix + '-color')
+    colorElement.appendChild(opaqueElement)
 
     var transparencyElement = Div(classPrefix + '-transparency')
     transparencyElement.style.backgroundImage = 'url(images/color-background.svg)'
@@ -1420,8 +1434,15 @@ function ToolButton (icon, clickListener) {
             classList.add('marked')
         },
         setColor: function (hue, saturation, luminance, alpha) {
-            var hsl = 'hsla(' + hue + ', ' + saturation + '%, ' + luminance + '%, ' + alpha + ')'
-            colorElement.style.background = hsl
+
+            var hslPart = hue + ', ' + saturation + '%, ' + luminance + '%'
+
+            var hsla = 'hsla(' + hslPart + ', ' + alpha + ')'
+            colorElement.style.background = hsla
+
+            var hsl = 'hsl(' + hslPart + ')'
+            opaqueElement.style.background = hsl
+
         },
         unmark: function () {
             classList.remove('marked')
