@@ -43,7 +43,10 @@ function PalettePanel (colorListener, closeListener) {
     var editVisible = false
 
     return {
+        blackButton: colorButtonsPanel.blackButton,
         element: element,
+        selectButton: colorButtonsPanel.selectButton,
+        whiteButton: colorButtonsPanel.whiteButton,
         hide: function () {
             editColorPanel.hide()
             contentElement.classList.remove('visible')
