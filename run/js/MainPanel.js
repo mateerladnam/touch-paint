@@ -225,8 +225,6 @@ function MainPanel () {
     })
     fileButton.addClass(classPrefix + '-fileButton')
 
-    var pickPanel = PickPanel()
-
     var contentElement = Div(classPrefix + '-content')
     contentElement.appendChild(canvas.element)
     contentElement.appendChild(palettePanel.element)
