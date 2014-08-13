@@ -46,11 +46,11 @@
 
     .PalettePanel-content {
         right: 0;
-        height: 160px;
+        height: 208px;
         transition: ease-in-out 0.2s top, ease-in-out 0.2s opacity;
     }
     .PalettePanel-content.visible {
-        top: -160px;
+        top: -208px;
     }
 
     .PalettePanel-secondLayer {
@@ -72,11 +72,11 @@
 
     .PalettePanel-content {
         bottom: 0;
-        width: 160px;
+        width: 208px;
         transition: ease-in-out 0.2s left, ease-in-out 0.2s opacity;
     }
     .PalettePanel-content.visible {
-        left: -160px;
+        left: -208px;
     }
 
     .PalettePanel-secondLayer {

@@ -71,6 +71,9 @@ function ColorButtonsPanel (selectListener) {
     var pinkButton = createColorButton(312, 100, 83, 1)
     pinkButton.addClass(classPrefix + '-pinkButton')
 
+    var whiteButton = createColorButton(0, 0, 100, 1)
+    whiteButton.addClass(classPrefix + '-whiteButton')
+
     var activeItem = blackButton
 
     var element = Div(classPrefix)
@@ -86,8 +89,11 @@ function ColorButtonsPanel (selectListener) {
     element.appendChild(orangeButton.element)
     element.appendChild(violetButton.element)
     element.appendChild(pinkButton.element)
+    element.appendChild(whiteButton.element)
 
     return {
+        blackButton: blackButton,
+        whiteButton: whiteButton,
         element: element,
         setColor: function (hue, saturation, luminance, alpha) {
             activeItem.setColor(hue, saturation, luminance, alpha)
