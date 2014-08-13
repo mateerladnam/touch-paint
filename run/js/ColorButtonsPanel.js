@@ -2,7 +2,7 @@ function ColorButtonsPanel (selectListener) {
 
     function createColorButton (hue, saturation, luminance, alpha) {
 
-        var button = ColorButton(hue, saturation, luminance, alpha, function () {
+        var button = ColorButton(function () {
             items.forEach(function (item) {
                 item.uncheck()
             })
@@ -10,6 +10,7 @@ function ColorButtonsPanel (selectListener) {
             activeItem = item
             selectListener(hue, saturation, luminance, alpha)
         })
+        button.setColor(hue, saturation, luminance, alpha)
         button.addClass(classPrefix + '-colorButton')
         items.push(button)
 

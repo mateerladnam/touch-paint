@@ -9,7 +9,7 @@ function PalettePanel (colorListener, closeListener) {
         if (!previewButton.isChecked()) closeListener()
     })
 
-    var previewButton = ColorButton(0, 0, 0, 1, function () {
+    var previewButton = ColorButton(function () {
         if (previewButton.isChecked()) {
             editColorPanel.hide()
             previewButton.uncheck()
@@ -20,6 +20,7 @@ function PalettePanel (colorListener, closeListener) {
             editVisible = true
         }
     })
+    previewButton.setColor(0, 0, 0, 1)
     previewButton.addClass(classPrefix + '-previewButton')
 
     var editColorPanel = EditColorPanel(function (hue, saturation, luminance, alpha) {

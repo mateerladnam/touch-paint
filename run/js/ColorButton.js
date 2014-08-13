@@ -1,4 +1,4 @@
-function ColorButton (hue, saturation, luminance, alpha, clickListener) {
+function ColorButton (clickListener) {
 
     function click () {
         clickListener()
@@ -7,11 +7,6 @@ function ColorButton (hue, saturation, luminance, alpha, clickListener) {
         activeTimeout = setTimeout(function () {
             classList.remove('active')
         }, 100)
-    }
-
-    function setColor (hue, saturation, luminance, alpha) {
-        var hsl = 'hsla(' + hue + ', ' + saturation + '%, ' + luminance + '%, ' + alpha + ')'
-        colorElement.style.backgroundColor = hsl
     }
 
     var touched = false
@@ -41,11 +36,11 @@ function ColorButton (hue, saturation, luminance, alpha, clickListener) {
     var checked = false
     var classList = element.classList
 
-    setColor(hue, saturation, luminance, alpha)
+    var color = {}
 
     return {
+        color: color,
         element: element,
-        setColor: setColor,
         addClass: function (className) {
             classList.add(className)
         },
@@ -55,6 +50,14 @@ function ColorButton (hue, saturation, luminance, alpha, clickListener) {
         },
         isChecked: function () {
             return checked
+        },
+        setColor: function (hue, saturation, luminance, alpha) {
+            color.hue = hue
+            color.saturation = saturation
+            color.luminance = luminance
+            color.alpha = alpha
+            var hsl = 'hsla(' + hue + ', ' + saturation + '%, ' + luminance + '%, ' + alpha + ')'
+            colorElement.style.backgroundColor = hsl
         },
         uncheck: function () {
             classList.remove('checked')
