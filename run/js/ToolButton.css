@@ -2,11 +2,13 @@
     position: absolute;
     right: 0;
     bottom: 0;
-    width: 16px;
-    height: 16px;
+    width: 10px;
+    height: 10px;
+    background-size: 10px;
     border-radius: 2px;
 }
 
 .ToolButton-color {
     height: 100%;
+    border-radius: 2px;
 }
