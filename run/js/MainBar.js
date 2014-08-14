@@ -2,11 +2,14 @@ function MainBar (pickPanel) {
 
     var classPrefix = 'MainBar'
 
+    var alternativeBarElement = Div(classPrefix + '-alternativeBar')
+    alternativeBarElement.appendChild(pickPanel.element)
+
     var barElement = Div(classPrefix + '-bar')
 
     var scrollElement = Div(classPrefix + '-scroll')
     scrollElement.appendChild(barElement)
-    scrollElement.appendChild(pickPanel.element)
+    scrollElement.appendChild(alternativeBarElement)
 
     var element = Div(classPrefix)
     element.appendChild(scrollElement)
