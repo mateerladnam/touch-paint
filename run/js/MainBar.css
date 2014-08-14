@@ -12,6 +12,10 @@
 
 .MainBar-bar {
     position: absolute;
+    transition: ease-in-out 0.2s opacity;
+}
+.slide > .MainBar-bar {
+    opacity: 0;
 }
 
 @media (orientation:portrait) {
