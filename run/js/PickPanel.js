@@ -5,7 +5,7 @@ function PickPanel (pickListener, cancelListener) {
     var colorButton = ColorButton(pickListener, cancelListener)
     colorButton.addClass(classPrefix + '-colorButton')
 
-    var cancelButton = BarButton('pick', cancelListener)
+    var cancelButton = BarButton('cancel', cancelListener)
     cancelButton.addClass(classPrefix + '-cancelButton')
 
     var element = Div(classPrefix)

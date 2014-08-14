@@ -4,6 +4,7 @@ function MainPanel () {
         closePalette()
         closeParams()
         closeFile()
+        unslideMainBar()
     }
 
     function closeFile () {
@@ -124,7 +125,8 @@ function MainPanel () {
 
         }
     }, function () {
-        console.log('pick')
+        palettePanel.hide()
+        mainBar.slide()
     })
 
     var pencilTool = PencilTool(pencilSize, canvas)
@@ -182,12 +184,16 @@ function MainPanel () {
         if (paletteButton.isChecked()) {
             pencilOrEraserListener()
         } else {
-            closeParams()
-            closeFile()
+
             disablePencil()
             disableEraser()
+            closeParams()
+            closeFile()
+            unslideMainBar()
+
             palettePanel.show()
             paletteButton.check()
+
         }
     })
     paletteButton.addClass(classPrefix + '-paletteButton')
@@ -196,12 +202,16 @@ function MainPanel () {
         if (paramsButton.isChecked()) {
             pencilOrEraserListener()
         } else {
-            closePalette()
-            closeFile()
+
             disablePencil()
             disableEraser()
+            closePalette()
+            closeFile()
+            unslideMainBar()
+
             paramsPanel.show()
             paramsButton.check()
+
         }
     })
     paramsButton.addClass(classPrefix + '-paramsButton')
@@ -215,12 +225,16 @@ function MainPanel () {
         if (fileButton.isChecked()) {
             pencilOrEraserListener()
         } else {
-            closePalette()
-            closeParams()
+
             disablePencil()
             disableEraser()
+            closePalette()
+            closeParams()
+            unslideMainBar()
+
             filePanel.show()
             fileButton.check()
+
         }
     })
     fileButton.addClass(classPrefix + '-fileButton')
@@ -234,7 +248,8 @@ function MainPanel () {
     var pickPanel = PickPanel(function () {
         console.log('pick')
     }, function () {
-        console.log('cancel')
+        unslideMainBar()
+        palettePanel.show()
     })
 
     var mainBar = MainBar(pickPanel)
@@ -245,6 +260,8 @@ function MainPanel () {
     mainBar.addButton(paramsButton)
     mainBar.addButton(undoButton)
     mainBar.addButton(fileButton)
+
+    var unslideMainBar = mainBar.unslide
 
     var element = Div(classPrefix)
     element.appendChild(contentElement)
