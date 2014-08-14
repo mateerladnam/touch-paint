@@ -27,5 +27,9 @@ function rgb2hsl (r, g, b) {
     h = Math.floor(h * 360)
     s = Math.floor(s * 100)
     l = Math.floor(l * 100)
-    return { h: h, s: s, l: l }
+    return {
+        hue: h,
+        saturation: s,
+        luminance: l,
+    }
 }

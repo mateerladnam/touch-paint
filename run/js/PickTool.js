@@ -7,7 +7,7 @@ function PickTool (canvas, pickListener) {
             imageData = c.getImageData(x, y, 1, 1),
             data = imageData.data,
             hsl = rgb2hsl(data[0], data[1], data[2])
-        pickListener(hsl.h, hsl.s, hsl.l)
+        pickListener(hsl.hue, hsl.saturation, hsl.luminance)
     }
 
     function touchStart (e) {
