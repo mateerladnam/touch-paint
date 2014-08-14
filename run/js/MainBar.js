@@ -18,11 +18,11 @@ function MainBar (pickPanel) {
         addButton: function (button) {
             barElement.appendChild(button.element)
         },
-        hide: function () {
-            classList.add('hidden')
+        slide: function () {
+            classList.add('slide')
         },
-        show: function () {
-            classList.remove('hidden')
+        unslide: function () {
+            classList.remove('slide')
         },
     }
 
