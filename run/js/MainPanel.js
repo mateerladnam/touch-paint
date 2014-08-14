@@ -64,6 +64,16 @@ function MainPanel () {
         pencilOrEraserListener = pencilListener
     }
 
+    function setCurrentToolColor (hue, saturation, luminance, alpha, button) {
+        if (button == pencilTool.colorButton) {
+            setPencilColor(hue, saturation, luminance, alpha)
+        }
+        if (button == eraserTool.colorButton) {
+            setEraserColor(hue, saturation, luminance, alpha)
+        }
+        paramsPanel.setColor(hue, saturation, luminance)
+    }
+
     function setEraserColor (hue, saturation, luminance, alpha) {
         eraserTool.setColor(hue, saturation, luminance, alpha)
         eraserButton.setColor(hue, saturation, luminance, alpha)
@@ -94,15 +104,7 @@ function MainPanel () {
 
     var pencilOrEraserListener = pencilListener
 
-    var palettePanel = PalettePanel(function (hue, saturation, luminance, alpha, button) {
-        if (button == pencilTool.colorButton) {
-            setPencilColor(hue, saturation, luminance, alpha)
-        }
-        if (button == eraserTool.colorButton) {
-            setEraserColor(hue, saturation, luminance, alpha)
-        }
-        paramsPanel.setColor(hue, saturation, luminance)
-    }, function () {
+    var palettePanel = PalettePanel(setCurrentToolColor, function () {
         closePalette()
         closeFile()
         pencilOrEraserListener()
@@ -144,6 +146,7 @@ function MainPanel () {
 
     var pickTool = PickTool(canvas, function (hue, saturation, luminance) {
         pickPanel.setColor(hue, saturation, luminance, 1)
+        setCurrentToolColor (hue, saturation, luminance, 1, palettePanel.getActiveButton())
     })
 
     var paramsPanel = ParamsPanel(function (size) {

@@ -66,6 +66,9 @@ function PalettePanel (colorListener, closeListener, buttonListener, pickListene
         blackButton: colorButtonsPanel.blackButton,
         element: element,
         whiteButton: colorButtonsPanel.whiteButton,
+        getActiveButton: function () {
+            return activeButton
+        },
         hide: function () {
             if (visible) {
                 editColorPanel.hide()
@@ -82,7 +85,6 @@ function PalettePanel (colorListener, closeListener, buttonListener, pickListene
             var alpha = previewButton.color.alpha
             previewButton.setColor(hue, saturation, luminance, alpha)
             colorButtonsPanel.setColor(hue, saturation, luminance, alpha)
-            colorListener(hue, saturation, luminance, alpha)
         },
         show: function () {
             if (!visible) {
