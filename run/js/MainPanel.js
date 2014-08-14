@@ -251,8 +251,8 @@ function MainPanel () {
     contentElement.appendChild(paramsPanel.element)
     contentElement.appendChild(filePanel.element)
 
-    var pickPanel = PickPanel(function () {
-        console.log('pick')
+    var pickPanel = PickPanel(function (hue, saturation, luminance) {
+        palettePanel.pickColor(hue, saturation, luminance)
     }, function () {
         pickTool.disable()
         unslideMainBar()

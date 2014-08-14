@@ -78,6 +78,12 @@ function PalettePanel (colorListener, closeListener, buttonListener, pickListene
             colorButtonsPanel.select(button)
             selectColor(button.color)
         },
+        pickColor: function (hue, saturation, luminance) {
+            var alpha = previewButton.color.alpha
+            previewButton.setColor(hue, saturation, luminance, alpha)
+            colorButtonsPanel.setColor(hue, saturation, luminance, alpha)
+            colorListener(hue, saturation, luminance, alpha)
+        },
         show: function () {
             if (!visible) {
                 if (editVisible) editColorPanel.show()
