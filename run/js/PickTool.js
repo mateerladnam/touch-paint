@@ -22,11 +22,11 @@ function PickTool (canvas, pickListener) {
 
     function pick (e) {
         var rect = canvasElement.getBoundingClientRect(),
-            x = e.clientX - rect.left,
-            y = e.clientY - rect.top,
-            imageData = c.getImageData(x, y, 1, 1),
+            x = Math.floor(e.clientX - rect.left),
+            y = Math.floor(e.clientY - rect.top),
             data = imageData.data,
-            hsl = rgb2hsl(data[0], data[1], data[2])
+            offset = (x + y * canvasWidth) * 4,
+            hsl = rgb2hsl(data[offset], data[offset + 1], data[offset + 2])
         pickListener(hsl.hue, hsl.saturation, hsl.luminance)
     }
 
@@ -64,11 +64,13 @@ function PickTool (canvas, pickListener) {
         pick(touch)
     }
 
-    var touched = false,
+    var imageData,
+        touched = false,
         identifier = null,
         enabled = false,
         isMouseDown = false,
         canvasElement = canvas.canvas,
+        canvasWidth = canvasElement.width,
         c = canvasElement.getContext('2d')
 
     return {
@@ -91,6 +93,7 @@ function PickTool (canvas, pickListener) {
             canvasElement.addEventListener('touchmove', touchMove)
             canvasElement.addEventListener('touchstart', touchStart)
             enabled = true
+            imageData = c.getImageData(0, 0, canvasWidth, canvasElement.height)
         },
     }
 
