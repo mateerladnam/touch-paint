@@ -125,6 +125,7 @@ function MainPanel () {
 
         }
     }, function (activeButton) {
+        pickTool.enable()
         palettePanel.hide()
         pickPanel.setButton(activeButton)
         mainBar.slide()
@@ -136,6 +137,10 @@ function MainPanel () {
 
     var eraserTool = PencilTool(eraserSize, canvas)
     eraserTool.colorButton = palettePanel.whiteButton
+
+    var pickTool = PickTool(canvas, function (hue, saturation, luminance) {
+        pickPanel.setColor(hue, saturation, luminance, 1)
+    })
 
     var paramsPanel = ParamsPanel(function (size) {
         if (pencilOrEraserListener == pencilListener) {
@@ -249,6 +254,7 @@ function MainPanel () {
     var pickPanel = PickPanel(function () {
         console.log('pick')
     }, function () {
+        pickTool.disable()
         unslideMainBar()
         palettePanel.show()
     })

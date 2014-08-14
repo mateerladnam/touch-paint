@@ -26,6 +26,7 @@ var files = [
     'js/PencilTool.js',
     'js/PickButton.js',
     'js/PickPanel.js',
+    'js/PickTool.js',
     'js/SaveCanvas.js',
     'js/SaturationSlider.js',
     'js/Slider.js',

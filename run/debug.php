@@ -43,6 +43,7 @@ echo_html(
     .'<script type="text/javascript" src="js/PencilTool.js"></script>'
     .'<script type="text/javascript" src="js/PickButton.js"></script>'
     .'<script type="text/javascript" src="js/PickPanel.js"></script>'
+    .'<script type="text/javascript" src="js/PickTool.js"></script>'
     .'<script type="text/javascript" src="js/SaveCanvas.js"></script>'
     .'<script type="text/javascript" src="js/SaturationSlider.js"></script>'
     .'<script type="text/javascript" src="js/Slider.js"></script>'
