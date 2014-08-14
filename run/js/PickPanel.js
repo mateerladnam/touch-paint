@@ -14,6 +14,10 @@ function PickPanel (pickListener, cancelListener) {
 
     return {
         element: element,
+        setButton: function (button) {
+            var color = button.color
+            colorButton.setColor(color.hue, color.saturation, color.luminance, 1)
+        },
     }
 
 }

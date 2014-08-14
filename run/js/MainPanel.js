@@ -124,8 +124,9 @@ function MainPanel () {
             button.mark()
 
         }
-    }, function () {
+    }, function (activeButton) {
         palettePanel.hide()
+        pickPanel.setButton(activeButton)
         mainBar.slide()
     })
 
