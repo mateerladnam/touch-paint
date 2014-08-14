@@ -1,12 +1,16 @@
 function PickTool (canvas, pickListener) {
 
     function pick (e) {
-        console.log('pick', e.clientX, e.clientY)
-        pickListener(10, 40, 50)
+        var rect = canvasElement.getBoundingClientRect(),
+            x = e.clientX - rect.left,
+            y = e.clientY - rect.top,
+            imageData = c.getImageData(x, y, 1, 1),
+            data = imageData.data,
+            hsl = rgb2hsl(data[0], data[1], data[2])
+        pickListener(hsl.h, hsl.s, hsl.l)
     }
 
     function touchStart (e) {
-        console.log('touchStart')
         if (identifier !== null) return
         var touch = e.changedTouches[0]
         identifier = touch.identifier
@@ -14,7 +18,6 @@ function PickTool (canvas, pickListener) {
     }
 
     function touchMove (e) {
-        console.log('touchMove')
         var touches = e.changedTouches
         for (var i = 0; i < touches.length; i++) {
             var touch = touches[i]
@@ -29,15 +32,16 @@ function PickTool (canvas, pickListener) {
         var touches = e.changedTouches
         for (var i = 0; i < touches.length; i++) {
             if (touches[i].identifier === identifier) {
-                identifier === null
+                identifier = null
                 break
             }
         }
     }
 
-    var identifier = null
-    var enabled = false
-    var canvasElement = canvas.canvas
+    var identifier = null,
+        enabled = false,
+        canvasElement = canvas.canvas,
+        c = canvasElement.getContext('2d')
 
     return {
         disable: function () {
