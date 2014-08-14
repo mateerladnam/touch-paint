@@ -69,15 +69,17 @@ function PencilTool (size, canvas) {
         var rect = canvasElement.getBoundingClientRect()
         var touches = e.changedTouches
         for (var i = 0; i < touches.length; i++) {
+
             var touch = touches[i]
             var activeTouch = activeTouches[touch.identifier]
-            if (activeTouch) {
-                var x = touch.clientX - rect.left,
-                    y = touch.clientY - rect.top
-                moveTool(activeTouch.x, activeTouch.y, x, y)
-                activeTouch.x = x
-                activeTouch.y = y
-            }
+            if (!activeTouch) continue
+
+            var x = touch.clientX - rect.left,
+                y = touch.clientY - rect.top
+            moveTool(activeTouch.x, activeTouch.y, x, y)
+            activeTouch.x = x
+            activeTouch.y = y
+
         }
     }
 
@@ -106,26 +108,24 @@ function PencilTool (size, canvas) {
 
     return {
         disable: function () {
-            if (enabled) {
-                canvasElement.removeEventListener('mousedown', mouseDown)
-                canvasElement.removeEventListener('mousemove', mouseMove)
-                canvasElement.removeEventListener('mouseup', mouseUp)
-                canvasElement.removeEventListener('touchstart', touchStart)
-                canvasElement.removeEventListener('touchmove', touchMove)
-                canvasElement.removeEventListener('touchend', touchEnd)
-                enabled = false
-            }
+            if (!enabled) return
+            canvasElement.removeEventListener('mousedown', mouseDown)
+            canvasElement.removeEventListener('mousemove', mouseMove)
+            canvasElement.removeEventListener('mouseup', mouseUp)
+            canvasElement.removeEventListener('touchstart', touchStart)
+            canvasElement.removeEventListener('touchmove', touchMove)
+            canvasElement.removeEventListener('touchend', touchEnd)
+            enabled = false
         },
         enable: function () {
-            if (!enabled) {
-                canvasElement.addEventListener('mousedown', mouseDown)
-                canvasElement.addEventListener('mousemove', mouseMove)
-                canvasElement.addEventListener('mouseup', mouseUp)
-                canvasElement.addEventListener('touchstart', touchStart)
-                canvasElement.addEventListener('touchmove', touchMove)
-                canvasElement.addEventListener('touchend', touchEnd)
-                enabled = true
-            }
+            if (enabled) return
+            canvasElement.addEventListener('mousedown', mouseDown)
+            canvasElement.addEventListener('mousemove', mouseMove)
+            canvasElement.addEventListener('mouseup', mouseUp)
+            canvasElement.addEventListener('touchstart', touchStart)
+            canvasElement.addEventListener('touchmove', touchMove)
+            canvasElement.addEventListener('touchend', touchEnd)
+            enabled = true
         },
         setColor: function (_hue, _saturation, _luminance, _alpha) {
             hue = _hue
