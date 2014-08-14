@@ -1,5 +1,17 @@
 function PickTool (canvas, pickListener) {
 
+    function mouseDown (e) {
+        e.preventDefault()
+        if (touched) touched = false
+        else pick(e)
+    }
+
+    function mouseMove (e) {
+        e.preventDefault()
+        if (touched) touched = false
+        else pick(e)
+    }
+
     function pick (e) {
         var rect = canvasElement.getBoundingClientRect(),
             x = e.clientX - rect.left,
@@ -10,14 +22,21 @@ function PickTool (canvas, pickListener) {
         pickListener(hsl.hue, hsl.saturation, hsl.luminance)
     }
 
-    function touchStart (e) {
-        if (identifier !== null) return
-        var touch = e.changedTouches[0]
-        identifier = touch.identifier
-        pick(touch)
+    function touchEnd (e) {
+        e.preventDefault()
+        touched = true
+        var touches = e.changedTouches
+        for (var i = 0; i < touches.length; i++) {
+            if (touches[i].identifier === identifier) {
+                identifier = null
+                break
+            }
+        }
     }
 
     function touchMove (e) {
+        e.preventDefault()
+        touched = true
         var touches = e.changedTouches
         for (var i = 0; i < touches.length; i++) {
             var touch = touches[i]
@@ -28,17 +47,17 @@ function PickTool (canvas, pickListener) {
         }
     }
 
-    function touchEnd (e) {
-        var touches = e.changedTouches
-        for (var i = 0; i < touches.length; i++) {
-            if (touches[i].identifier === identifier) {
-                identifier = null
-                break
-            }
-        }
+    function touchStart (e) {
+        e.preventDefault()
+        touched = true
+        if (identifier !== null) return
+        var touch = e.changedTouches[0]
+        identifier = touch.identifier
+        pick(touch)
     }
 
-    var identifier = null,
+    var touched = false,
+        identifier = null,
         enabled = false,
         canvasElement = canvas.canvas,
         c = canvasElement.getContext('2d')
@@ -46,17 +65,21 @@ function PickTool (canvas, pickListener) {
     return {
         disable: function () {
             if (enabled) {
-                canvasElement.removeEventListener('touchstart', touchStart)
-                canvasElement.removeEventListener('touchmove', touchMove)
+                canvasElement.removeEventListener('mousedown', mouseDown)
+                canvasElement.removeEventListener('mousemove', mouseMove)
                 canvasElement.removeEventListener('touchend', touchEnd)
+                canvasElement.removeEventListener('touchmove', touchMove)
+                canvasElement.removeEventListener('touchstart', touchStart)
                 enabled = false
             }
         },
         enable: function () {
             if (!enabled) {
-                canvasElement.addEventListener('touchstart', touchStart)
-                canvasElement.addEventListener('touchmove', touchMove)
+                canvasElement.addEventListener('mousedown', mouseDown)
+                canvasElement.addEventListener('mousemove', mouseMove)
                 canvasElement.addEventListener('touchend', touchEnd)
+                canvasElement.addEventListener('touchmove', touchMove)
+                canvasElement.addEventListener('touchstart', touchStart)
                 enabled = true
             }
         },
