@@ -125,10 +125,14 @@ function MainPanel () {
 
         }
     }, function (activeButton) {
+
+        var color = activeButton.color
+        pickPanel.setColor(color.hue, color.saturation, color.luminance, 1)
+
         pickTool.enable()
         palettePanel.hide()
-        pickPanel.setButton(activeButton)
         mainBar.slide()
+
     })
 
     var pencilTool = PencilTool(pencilSize, canvas)

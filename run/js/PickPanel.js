@@ -16,15 +16,9 @@ function PickPanel (pickListener, closeListener) {
     element.appendChild(colorButton.element)
     element.appendChild(cancelButton.element)
 
-    var setColor = colorButton.setColor
-
     return {
         element: element,
-        setColor: setColor,
-        setButton: function (button) {
-            var color = button.color
-            setColor(color.hue, color.saturation, color.luminance, 1)
-        },
+        setColor: colorButton.setColor,
     }
 
 }
