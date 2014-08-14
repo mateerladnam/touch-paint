@@ -1,23 +1,53 @@
 .PickPanel {
     position: absolute;
     top: 0;
-    right: 0;
+    left: 0;
 }
 
 .PickPanel-colorButton {
     left: 8px;
+}
+
+.PickPanel-cancelButton {
+    top: 8px;
     right: 8px;
-    width: auto;
 }
 
 @media (orientation:portrait) {
+
+    .PickPanel {
+        right: 0;
+        height: 64px;
+    }
+
     .PickPanel-colorButton {
         top: 8px;
+        right: 54px;
+        width: auto;
     }
+    .PickPanel-colorButton .Button-content {
+        width: auto;
+        right: 8px;
+    }
+
 }
 
 @media (orientation:landscape) {
+
+    .PickPanel {
+        width: 64px;
+        bottom: 0;
+    }
+
     .PickPanel-colorButton {
+        top: 54px;
+        right: 8px;
+        bottom: 8px;
+        height: auto;
+    }
+    .PickPanel-colorButton .Button-content {
+        height: auto;
         bottom: 8px;
     }
+
 }

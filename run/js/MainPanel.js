@@ -231,7 +231,13 @@ function MainPanel () {
     contentElement.appendChild(paramsPanel.element)
     contentElement.appendChild(filePanel.element)
 
-    var mainBar = MainBar()
+    var pickPanel = PickPanel(function () {
+        console.log('pick')
+    }, function () {
+        console.log('cancel')
+    })
+
+    var mainBar = MainBar(pickPanel)
     mainBar.addButton(pencilButton)
     mainBar.addButton(pencilButton)
     mainBar.addButton(eraserButton)
