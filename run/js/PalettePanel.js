@@ -21,6 +21,7 @@ function PalettePanel (colorListener, closeListener, buttonListener, pickListene
     })
 
     var previewButton = ColorButton(function () {
+        if (!visible) return
         if (previewButton.isChecked()) {
             editColorPanel.hide()
             previewButton.uncheck()
@@ -56,7 +57,8 @@ function PalettePanel (colorListener, closeListener, buttonListener, pickListene
     var element = Div(classPrefix)
     element.appendChild(contentElement)
 
-    var editVisible = false
+    var visible = false,
+        editVisible = false
 
     var activeButton = colorButtonsPanel.blackButton
 
@@ -65,8 +67,11 @@ function PalettePanel (colorListener, closeListener, buttonListener, pickListene
         element: element,
         whiteButton: colorButtonsPanel.whiteButton,
         hide: function () {
-            editColorPanel.hide()
-            contentElement.classList.remove('visible')
+            if (visible) {
+                editColorPanel.hide()
+                contentElement.classList.remove('visible')
+                visible = false
+            }
         },
         select: function (button) {
             activeButton = button
@@ -74,8 +79,11 @@ function PalettePanel (colorListener, closeListener, buttonListener, pickListene
             selectColor(button.color)
         },
         show: function () {
-            if (editVisible) editColorPanel.show()
-            contentElement.classList.add('visible')
+            if (!visible) {
+                if (editVisible) editColorPanel.show()
+                contentElement.classList.add('visible')
+                visible = true
+            }
         },
     }
 
