@@ -10,14 +10,13 @@ function PickTool (canvas, pickListener) {
     }
 
     function mouseMove (e) {
-        if (isMouseDown) {
-            e.preventDefault()
-            if (touched) touched = false
-            else pick(e)
-        }
+        e.preventDefault()
+        if (touched) touched = false
+        else if (isMouseDown) pick(e)
     }
 
     function mouseUp (e) {
+        e.preventDefault()
         isMouseDown = false
     }
 
@@ -74,26 +73,24 @@ function PickTool (canvas, pickListener) {
 
     return {
         disable: function () {
-            if (enabled) {
-                canvasElement.removeEventListener('mousedown', mouseDown)
-                canvasElement.removeEventListener('mousemove', mouseMove)
-                canvasElement.removeEventListener('mouseup', mouseUp)
-                canvasElement.removeEventListener('touchend', touchEnd)
-                canvasElement.removeEventListener('touchmove', touchMove)
-                canvasElement.removeEventListener('touchstart', touchStart)
-                enabled = false
-            }
+            if (!enabled) return
+            canvasElement.removeEventListener('mousedown', mouseDown)
+            canvasElement.removeEventListener('mousemove', mouseMove)
+            canvasElement.removeEventListener('mouseup', mouseUp)
+            canvasElement.removeEventListener('touchend', touchEnd)
+            canvasElement.removeEventListener('touchmove', touchMove)
+            canvasElement.removeEventListener('touchstart', touchStart)
+            enabled = false
         },
         enable: function () {
-            if (!enabled) {
-                canvasElement.addEventListener('mousedown', mouseDown)
-                canvasElement.addEventListener('mousemove', mouseMove)
-                canvasElement.addEventListener('mouseup', mouseUp)
-                canvasElement.addEventListener('touchend', touchEnd)
-                canvasElement.addEventListener('touchmove', touchMove)
-                canvasElement.addEventListener('touchstart', touchStart)
-                enabled = true
-            }
+            if (enabled) return
+            canvasElement.addEventListener('mousedown', mouseDown)
+            canvasElement.addEventListener('mousemove', mouseMove)
+            canvasElement.addEventListener('mouseup', mouseUp)
+            canvasElement.addEventListener('touchend', touchEnd)
+            canvasElement.addEventListener('touchmove', touchMove)
+            canvasElement.addEventListener('touchstart', touchStart)
+            enabled = true
         },
     }
 
