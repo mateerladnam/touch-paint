@@ -139,7 +139,6 @@ function MainPanel () {
 
     var pencilTool = PencilTool(pencilSize, canvas)
     pencilTool.colorButton = palettePanel.blackButton
-    pencilTool.enable()
 
     var eraserTool = PencilTool(eraserSize, canvas)
     eraserTool.colorButton = palettePanel.whiteButton
@@ -185,7 +184,6 @@ function MainPanel () {
 
     var pencilButton = ToolButton('pencil', pencilListener)
     pencilButton.addClass(classPrefix + '-pencilButton')
-    pencilButton.check()
 
     var eraserButton = ToolButton('eraser', eraserListener)
     eraserButton.addClass(classPrefix + '-eraserButton')
@@ -269,7 +267,6 @@ function MainPanel () {
 
     var mainBar = MainBar(pickPanel)
     mainBar.addButton(pencilButton)
-    mainBar.addButton(pencilButton)
     mainBar.addButton(eraserButton)
     mainBar.addButton(paletteButton)
     mainBar.addButton(paramsButton)
@@ -286,7 +283,10 @@ function MainPanel () {
 
     return {
         element: element,
-        show: mainBar.show,
+        show: function () {
+            pencilListener()
+            mainBar.show()
+        },
     }
 
 }
