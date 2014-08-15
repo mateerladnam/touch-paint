@@ -1,9 +1,13 @@
 .MainBar {
     position: absolute;
-    right: 0;
-    bottom: 0;
     background: #ddd;
     overflow: hidden;
+    opacity: 0;
+}
+.MainBar.visible {
+    right: 0;
+    bottom: 0;
+    opacity: 1;
 }
 
 .MainBar-scroll {
@@ -32,9 +36,11 @@
 @media (orientation:portrait) {
 
     .MainBar {
-        left: 0;
-        height: 64px;
         background-image: linear-gradient(#ddd, #bbb);
+        height: 64px;
+        bottom: -64px;
+        left: 0;
+        transition: ease-in-out 0.2s opacity, ease-in-out 0.2s bottom;
     }
 
     .MainBar-scroll {
@@ -65,9 +71,11 @@
 @media (orientation:landscape) {
 
     .MainBar {
-        top: 0;
-        width: 64px;
         background-image: linear-gradient(90deg, #ddd, #bbb);
+        width: 64px;
+        right: -64px;
+        top: 0;
+        transition: ease-in-out 0.2s opacity, ease-in-out 0.2s right;
     }
 
     .MainBar-scroll {

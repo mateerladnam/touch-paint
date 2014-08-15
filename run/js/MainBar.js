@@ -21,6 +21,9 @@ function MainBar (pickPanel) {
         addButton: function (button) {
             barElement.appendChild(button.element)
         },
+        show: function () {
+            element.classList.add('visible')
+        },
         slide: function () {
             classList.add('slide')
         },

@@ -5,7 +5,11 @@
     var loadBarElement = Div('Main-loadBar')
     loadBarElement.appendChild(progressElement)
 
-    document.body.appendChild(loadBarElement)
+    var mainPanel = MainPanel()
+
+    var body = document.body
+    body.appendChild(mainPanel.element)
+    body.appendChild(loadBarElement)
 
     var finished = 0
     var icons = ['pencil', 'eraser', 'palette', 'params', 'undo', 'burger']
@@ -16,11 +20,16 @@
             finished++
             progressElement.style.width = finished / icons.length * 100 + '%'
             if (finished == icons.length) {
-                var mainPanel = MainPanel()
+
+                mainPanel.show()
+
                 setTimeout(function () {
-                    document.body.removeChild(loadBarElement)
-                    document.body.appendChild(mainPanel.element)
-                }, 300)
+                    loadBarElement.classList.add('hidden')
+                    setTimeout(function () {
+                        body.removeChild(loadBarElement)
+                    }, 250)
+                }, 250)
+
             }
         }
     })
