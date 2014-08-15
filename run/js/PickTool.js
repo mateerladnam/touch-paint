@@ -1,11 +1,23 @@
 function PickTool (canvas, pickListener) {
 
+    function beginTool (e) {
+        var xy = getXY(e)
+        pick(xy[0], xy[1])
+    }
+
+    function getXY (e) {
+        var rect = canvasElement.getBoundingClientRect(),
+            x = Math.floor(e.clientX - rect.left),
+            y = Math.floor(e.clientY - rect.top)
+        return [x, y]
+    }
+
     function mouseDown (e) {
 
         function mouseMove (e) {
             e.preventDefault()
             if (touched) touched = false
-            else pick(e)
+            else moveTool(e)
         }
 
         function mouseUp (e) {
@@ -18,18 +30,20 @@ function PickTool (canvas, pickListener) {
         e.preventDefault()
         if (touched) touched = false
         else {
-            pick(e)
+            beginTool(e)
             addEventListener('mousemove', mouseMove)
             addEventListener('mouseup', mouseUp)
         }
     }
 
-    function pick (e) {
-        var rect = canvasElement.getBoundingClientRect(),
-            x = Math.floor(e.clientX - rect.left),
-            y = Math.floor(e.clientY - rect.top),
-            data = imageData.data,
-            offset = (x + y * canvasWidth) * 4,
+    function moveTool (e) {
+        var xy = getXY(e), x = xy[0], y = xy[1]
+        if (x >= 0 && x < canvasWidth &&
+            y >= 0 && y < canvasHeight) pick(x, y)
+    }
+
+    function pick (x, y) {
+        var offset = (x + y * canvasWidth) * 4,
             hsl = rgb2hsl(data[offset], data[offset + 1], data[offset + 2])
         pickListener(hsl.hue, hsl.saturation, hsl.luminance)
     }
@@ -53,7 +67,7 @@ function PickTool (canvas, pickListener) {
         for (var i = 0; i < touches.length; i++) {
             var touch = touches[i]
             if (touch.identifier === identifier) {
-                pick(touch)
+                moveTool(touch)
                 break
             }
         }
@@ -65,34 +79,35 @@ function PickTool (canvas, pickListener) {
         if (identifier !== null) return
         var touch = e.changedTouches[0]
         identifier = touch.identifier
-        pick(touch)
+        beginTool(touch)
     }
 
-    var imageData,
+    var data,
         touched = false,
         identifier = null,
         enabled = false,
         canvasElement = canvas.canvas,
         canvasWidth = canvasElement.width,
+        canvasHeight = canvasElement.height,
         c = canvasElement.getContext('2d')
 
     return {
         disable: function () {
             if (!enabled) return
             canvasElement.removeEventListener('mousedown', mouseDown)
-            canvasElement.removeEventListener('touchend', touchEnd)
-            canvasElement.removeEventListener('touchmove', touchMove)
             canvasElement.removeEventListener('touchstart', touchStart)
+            removeEventListener('touchmove', touchMove)
+            removeEventListener('touchend', touchEnd)
             enabled = false
         },
         enable: function () {
             if (enabled) return
             canvasElement.addEventListener('mousedown', mouseDown)
-            canvasElement.addEventListener('touchend', touchEnd)
-            canvasElement.addEventListener('touchmove', touchMove)
             canvasElement.addEventListener('touchstart', touchStart)
+            addEventListener('touchmove', touchMove)
+            addEventListener('touchend', touchEnd)
             enabled = true
-            imageData = c.getImageData(0, 0, canvasWidth, canvasElement.height)
+            data = c.getImageData(0, 0, canvasWidth, canvasHeight).data
         },
     }
 
