@@ -637,14 +637,34 @@ function LuminanceSlider (changeListener, endListener) {
 
 }
 ;
-function MainBar () {
+function MainBar (pickPanel) {
 
-    var element = Div('MainBar')
+    var classPrefix = 'MainBar'
+
+    var alternativeBarElement = Div(classPrefix + '-alternativeBar')
+    alternativeBarElement.appendChild(pickPanel.element)
+
+    var barElement = Div(classPrefix + '-bar')
+
+    var scrollElement = Div(classPrefix + '-scroll')
+    scrollElement.appendChild(barElement)
+    scrollElement.appendChild(alternativeBarElement)
+
+    var element = Div(classPrefix)
+    element.appendChild(scrollElement)
+
+    var classList = scrollElement.classList
 
     return {
         element: element,
         addButton: function (button) {
-            element.appendChild(button.element)
+            barElement.appendChild(button.element)
+        },
+        slide: function () {
+            classList.add('slide')
+        },
+        unslide: function () {
+            classList.remove('slide')
         },
     }
 
@@ -656,6 +676,7 @@ function MainPanel () {
         closePalette()
         closeParams()
         closeFile()
+        unslideMainBar()
     }
 
     function closeFile () {
@@ -715,6 +736,16 @@ function MainPanel () {
         pencilOrEraserListener = pencilListener
     }
 
+    function setCurrentToolColor (hue, saturation, luminance, alpha, button) {
+        if (button == pencilTool.colorButton) {
+            setPencilColor(hue, saturation, luminance, alpha)
+        }
+        if (button == eraserTool.colorButton) {
+            setEraserColor(hue, saturation, luminance, alpha)
+        }
+        paramsPanel.setColor(hue, saturation, luminance)
+    }
+
     function setEraserColor (hue, saturation, luminance, alpha) {
         eraserTool.setColor(hue, saturation, luminance, alpha)
         eraserButton.setColor(hue, saturation, luminance, alpha)
@@ -745,15 +776,7 @@ function MainPanel () {
 
     var pencilOrEraserListener = pencilListener
 
-    var palettePanel = PalettePanel(function (hue, saturation, luminance, alpha, button) {
-        if (button == pencilTool.colorButton) {
-            setPencilColor(hue, saturation, luminance, alpha)
-        }
-        if (button == eraserTool.colorButton) {
-            setEraserColor(hue, saturation, luminance, alpha)
-        }
-        paramsPanel.setColor(hue, saturation, luminance)
-    }, function () {
+    var palettePanel = PalettePanel(setCurrentToolColor, function () {
         closePalette()
         closeFile()
         pencilOrEraserListener()
@@ -775,8 +798,15 @@ function MainPanel () {
             button.mark()
 
         }
-    }, function () {
-        console.log('pick')
+    }, function (activeButton) {
+
+        var color = activeButton.color
+        pickPanel.setColor(color.hue, color.saturation, color.luminance, 1)
+
+        pickTool.enable()
+        palettePanel.hide()
+        mainBar.slide()
+
     })
 
     var pencilTool = PencilTool(pencilSize, canvas)
@@ -785,6 +815,10 @@ function MainPanel () {
 
     var eraserTool = PencilTool(eraserSize, canvas)
     eraserTool.colorButton = palettePanel.whiteButton
+
+    var pickTool = PickTool(canvas, function (hue, saturation, luminance) {
+        pickPanel.setColor(hue, saturation, luminance, 1)
+    })
 
     var paramsPanel = ParamsPanel(function (size) {
         if (pencilOrEraserListener == pencilListener) {
@@ -834,12 +868,16 @@ function MainPanel () {
         if (paletteButton.isChecked()) {
             pencilOrEraserListener()
         } else {
-            closeParams()
-            closeFile()
+
             disablePencil()
             disableEraser()
+            closeParams()
+            closeFile()
+            unslideMainBar()
+
             palettePanel.show()
             paletteButton.check()
+
         }
     })
     paletteButton.addClass(classPrefix + '-paletteButton')
@@ -848,12 +886,16 @@ function MainPanel () {
         if (paramsButton.isChecked()) {
             pencilOrEraserListener()
         } else {
-            closePalette()
-            closeFile()
+
             disablePencil()
             disableEraser()
+            closePalette()
+            closeFile()
+            unslideMainBar()
+
             paramsPanel.show()
             paramsButton.check()
+
         }
     })
     paramsButton.addClass(classPrefix + '-paramsButton')
@@ -867,17 +909,19 @@ function MainPanel () {
         if (fileButton.isChecked()) {
             pencilOrEraserListener()
         } else {
-            closePalette()
-            closeParams()
+
             disablePencil()
             disableEraser()
+            closePalette()
+            closeParams()
+            unslideMainBar()
+
             filePanel.show()
             fileButton.check()
+
         }
     })
     fileButton.addClass(classPrefix + '-fileButton')
-
-    var pickPanel = PickPanel()
 
     var contentElement = Div(classPrefix + '-content')
     contentElement.appendChild(canvas.element)
@@ -885,7 +929,16 @@ function MainPanel () {
     contentElement.appendChild(paramsPanel.element)
     contentElement.appendChild(filePanel.element)
 
-    var mainBar = MainBar()
+    var pickPanel = PickPanel(function (hue, saturation, luminance) {
+        palettePanel.pickColor(hue, saturation, luminance)
+        setCurrentToolColor(hue, saturation, luminance, 1, palettePanel.getActiveButton())
+    }, function () {
+        pickTool.disable()
+        unslideMainBar()
+        palettePanel.show()
+    })
+
+    var mainBar = MainBar(pickPanel)
     mainBar.addButton(pencilButton)
     mainBar.addButton(pencilButton)
     mainBar.addButton(eraserButton)
@@ -893,6 +946,8 @@ function MainPanel () {
     mainBar.addButton(paramsButton)
     mainBar.addButton(undoButton)
     mainBar.addButton(fileButton)
+
+    var unslideMainBar = mainBar.unslide
 
     var element = Div(classPrefix)
     element.appendChild(contentElement)
@@ -947,6 +1002,7 @@ function PalettePanel (colorListener, closeListener, buttonListener, pickListene
     })
 
     var previewButton = ColorButton(function () {
+        if (!visible) return
         if (previewButton.isChecked()) {
             editColorPanel.hide()
             previewButton.uncheck()
@@ -966,7 +1022,9 @@ function PalettePanel (colorListener, closeListener, buttonListener, pickListene
         colorListener(hue, saturation, luminance, alpha, activeButton)
     })
 
-    var pickButton = PickButton(pickListener)
+    var pickButton = PickButton(function () {
+        pickListener(activeButton)
+    })
 
     var secondLayerElement = Div(classPrefix + '-secondLayer')
     secondLayerElement.appendChild(colorButtonsPanel.element)
@@ -980,7 +1038,8 @@ function PalettePanel (colorListener, closeListener, buttonListener, pickListene
     var element = Div(classPrefix)
     element.appendChild(contentElement)
 
-    var editVisible = false
+    var visible = false,
+        editVisible = false
 
     var activeButton = colorButtonsPanel.blackButton
 
@@ -988,18 +1047,32 @@ function PalettePanel (colorListener, closeListener, buttonListener, pickListene
         blackButton: colorButtonsPanel.blackButton,
         element: element,
         whiteButton: colorButtonsPanel.whiteButton,
+        getActiveButton: function () {
+            return activeButton
+        },
         hide: function () {
-            editColorPanel.hide()
-            contentElement.classList.remove('visible')
+            if (visible) {
+                editColorPanel.hide()
+                contentElement.classList.remove('visible')
+                visible = false
+            }
         },
         select: function (button) {
             activeButton = button
             colorButtonsPanel.select(button)
             selectColor(button.color)
         },
+        pickColor: function (hue, saturation, luminance) {
+            var alpha = previewButton.color.alpha
+            previewButton.setColor(hue, saturation, luminance, alpha)
+            colorButtonsPanel.setColor(hue, saturation, luminance, alpha)
+        },
         show: function () {
-            if (editVisible) editColorPanel.show()
-            contentElement.classList.add('visible')
+            if (!visible) {
+                if (editVisible) editColorPanel.show()
+                contentElement.classList.add('visible')
+                visible = true
+            }
         },
     }
 
@@ -1139,15 +1212,17 @@ function PencilTool (size, canvas) {
         var rect = canvasElement.getBoundingClientRect()
         var touches = e.changedTouches
         for (var i = 0; i < touches.length; i++) {
+
             var touch = touches[i]
             var activeTouch = activeTouches[touch.identifier]
-            if (activeTouch) {
-                var x = touch.clientX - rect.left,
-                    y = touch.clientY - rect.top
-                moveTool(activeTouch.x, activeTouch.y, x, y)
-                activeTouch.x = x
-                activeTouch.y = y
-            }
+            if (!activeTouch) continue
+
+            var x = touch.clientX - rect.left,
+                y = touch.clientY - rect.top
+            moveTool(activeTouch.x, activeTouch.y, x, y)
+            activeTouch.x = x
+            activeTouch.y = y
+
         }
     }
 
@@ -1176,26 +1251,24 @@ function PencilTool (size, canvas) {
 
     return {
         disable: function () {
-            if (enabled) {
-                canvasElement.removeEventListener('mousedown', mouseDown)
-                canvasElement.removeEventListener('mousemove', mouseMove)
-                canvasElement.removeEventListener('mouseup', mouseUp)
-                canvasElement.removeEventListener('touchstart', touchStart)
-                canvasElement.removeEventListener('touchmove', touchMove)
-                canvasElement.removeEventListener('touchend', touchEnd)
-                enabled = false
-            }
+            if (!enabled) return
+            canvasElement.removeEventListener('mousedown', mouseDown)
+            canvasElement.removeEventListener('mousemove', mouseMove)
+            canvasElement.removeEventListener('mouseup', mouseUp)
+            canvasElement.removeEventListener('touchstart', touchStart)
+            canvasElement.removeEventListener('touchmove', touchMove)
+            canvasElement.removeEventListener('touchend', touchEnd)
+            enabled = false
         },
         enable: function () {
-            if (!enabled) {
-                canvasElement.addEventListener('mousedown', mouseDown)
-                canvasElement.addEventListener('mousemove', mouseMove)
-                canvasElement.addEventListener('mouseup', mouseUp)
-                canvasElement.addEventListener('touchstart', touchStart)
-                canvasElement.addEventListener('touchmove', touchMove)
-                canvasElement.addEventListener('touchend', touchEnd)
-                enabled = true
-            }
+            if (enabled) return
+            canvasElement.addEventListener('mousedown', mouseDown)
+            canvasElement.addEventListener('mousemove', mouseMove)
+            canvasElement.addEventListener('mouseup', mouseUp)
+            canvasElement.addEventListener('touchstart', touchStart)
+            canvasElement.addEventListener('touchmove', touchMove)
+            canvasElement.addEventListener('touchend', touchEnd)
+            enabled = true
         },
         setColor: function (_hue, _saturation, _luminance, _alpha) {
             hue = _hue
@@ -1218,15 +1291,128 @@ function PickButton (clickListener) {
     return button
 }
 ;
-function PickPanel (pickListener) {
+function PickPanel (pickListener, closeListener) {
 
-    var colorButton = ColorButton(pickListener)
+    var classPrefix = 'PickPanel'
 
-    var element = Div('PickPanel')
+    var colorButton = ColorButton(function () {
+        var color = colorButton.color
+        pickListener(color.hue, color.saturation, color.luminance)
+        closeListener()
+    })
+    colorButton.addClass(classPrefix + '-colorButton')
+
+    var cancelButton = BarButton('cancel', closeListener)
+    cancelButton.addClass(classPrefix + '-cancelButton')
+
+    var element = Div(classPrefix)
     element.appendChild(colorButton.element)
+    element.appendChild(cancelButton.element)
 
     return {
         element: element,
+        setColor: colorButton.setColor,
+    }
+
+}
+;
+function PickTool (canvas, pickListener) {
+
+    function mouseDown (e) {
+        e.preventDefault()
+        if (touched) touched = false
+        else {
+            isMouseDown = true
+            pick(e)
+        }
+    }
+
+    function mouseMove (e) {
+        e.preventDefault()
+        if (touched) touched = false
+        else if (isMouseDown) pick(e)
+    }
+
+    function mouseUp (e) {
+        e.preventDefault()
+        isMouseDown = false
+    }
+
+    function pick (e) {
+        var rect = canvasElement.getBoundingClientRect(),
+            x = Math.floor(e.clientX - rect.left),
+            y = Math.floor(e.clientY - rect.top),
+            data = imageData.data,
+            offset = (x + y * canvasWidth) * 4,
+            hsl = rgb2hsl(data[offset], data[offset + 1], data[offset + 2])
+        pickListener(hsl.hue, hsl.saturation, hsl.luminance)
+    }
+
+    function touchEnd (e) {
+        e.preventDefault()
+        touched = true
+        var touches = e.changedTouches
+        for (var i = 0; i < touches.length; i++) {
+            if (touches[i].identifier === identifier) {
+                identifier = null
+                break
+            }
+        }
+    }
+
+    function touchMove (e) {
+        e.preventDefault()
+        touched = true
+        var touches = e.changedTouches
+        for (var i = 0; i < touches.length; i++) {
+            var touch = touches[i]
+            if (touch.identifier === identifier) {
+                pick(touch)
+                break
+            }
+        }
+    }
+
+    function touchStart (e) {
+        e.preventDefault()
+        touched = true
+        if (identifier !== null) return
+        var touch = e.changedTouches[0]
+        identifier = touch.identifier
+        pick(touch)
+    }
+
+    var imageData,
+        touched = false,
+        identifier = null,
+        enabled = false,
+        isMouseDown = false,
+        canvasElement = canvas.canvas,
+        canvasWidth = canvasElement.width,
+        c = canvasElement.getContext('2d')
+
+    return {
+        disable: function () {
+            if (!enabled) return
+            canvasElement.removeEventListener('mousedown', mouseDown)
+            canvasElement.removeEventListener('mousemove', mouseMove)
+            canvasElement.removeEventListener('mouseup', mouseUp)
+            canvasElement.removeEventListener('touchend', touchEnd)
+            canvasElement.removeEventListener('touchmove', touchMove)
+            canvasElement.removeEventListener('touchstart', touchStart)
+            enabled = false
+        },
+        enable: function () {
+            if (enabled) return
+            canvasElement.addEventListener('mousedown', mouseDown)
+            canvasElement.addEventListener('mousemove', mouseMove)
+            canvasElement.addEventListener('mouseup', mouseUp)
+            canvasElement.addEventListener('touchend', touchEnd)
+            canvasElement.addEventListener('touchmove', touchMove)
+            canvasElement.addEventListener('touchstart', touchStart)
+            enabled = true
+            imageData = c.getImageData(0, 0, canvasWidth, canvasElement.height)
+        },
     }
 
 }
