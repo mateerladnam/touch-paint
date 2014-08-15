@@ -1,24 +1,27 @@
 function PickTool (canvas, pickListener) {
 
     function mouseDown (e) {
+
+        function mouseMove (e) {
+            e.preventDefault()
+            if (touched) touched = false
+            else pick(e)
+        }
+
+        function mouseUp (e) {
+            e.preventDefault()
+            removeEventListener('mousemove', mouseMove)
+            removeEventListener('mouseup', mouseUp)
+        }
+
         if (e.button !== 0) return
         e.preventDefault()
         if (touched) touched = false
         else {
-            isMouseDown = true
             pick(e)
+            addEventListener('mousemove', mouseMove)
+            addEventListener('mouseup', mouseUp)
         }
-    }
-
-    function mouseMove (e) {
-        e.preventDefault()
-        if (touched) touched = false
-        else if (isMouseDown) pick(e)
-    }
-
-    function mouseUp (e) {
-        e.preventDefault()
-        isMouseDown = false
     }
 
     function pick (e) {
@@ -69,7 +72,6 @@ function PickTool (canvas, pickListener) {
         touched = false,
         identifier = null,
         enabled = false,
-        isMouseDown = false,
         canvasElement = canvas.canvas,
         canvasWidth = canvasElement.width,
         c = canvasElement.getContext('2d')
@@ -78,8 +80,6 @@ function PickTool (canvas, pickListener) {
         disable: function () {
             if (!enabled) return
             canvasElement.removeEventListener('mousedown', mouseDown)
-            canvasElement.removeEventListener('mousemove', mouseMove)
-            canvasElement.removeEventListener('mouseup', mouseUp)
             canvasElement.removeEventListener('touchend', touchEnd)
             canvasElement.removeEventListener('touchmove', touchMove)
             canvasElement.removeEventListener('touchstart', touchStart)
@@ -88,8 +88,6 @@ function PickTool (canvas, pickListener) {
         enable: function () {
             if (enabled) return
             canvasElement.addEventListener('mousedown', mouseDown)
-            canvasElement.addEventListener('mousemove', mouseMove)
-            canvasElement.addEventListener('mouseup', mouseUp)
             canvasElement.addEventListener('touchend', touchEnd)
             canvasElement.addEventListener('touchmove', touchMove)
             canvasElement.addEventListener('touchstart', touchStart)
