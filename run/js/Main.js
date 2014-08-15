@@ -17,8 +17,10 @@
             progressElement.style.width = finished / icons.length * 100 + '%'
             if (finished == icons.length) {
                 var mainPanel = MainPanel()
-                document.body.removeChild(loadBarElement)
-                document.body.appendChild(mainPanel.element)
+                setTimeout(function () {
+                    document.body.removeChild(loadBarElement)
+                    document.body.appendChild(mainPanel.element)
+                }, 300)
             }
         }
     })
