@@ -73,6 +73,7 @@ function BarButton (icon, clickListener) {
     var element = Div('Button')
     element.appendChild(contentElement)
     element.addEventListener('mousedown', function (e) {
+        if (e.button !== 0) return
         e.preventDefault()
         if (touched) touched = false
         else click()
@@ -238,6 +239,7 @@ function ColorButton (clickListener) {
     var element = Div('Button')
     element.appendChild(contentElement)
     element.addEventListener('mousedown', function (e) {
+        if (e.button !== 0) return
         e.preventDefault()
         if (touched) touched = false
         else click()
@@ -1157,6 +1159,7 @@ function PencilTool (size, canvas) {
     }
 
     function mouseDown (e) {
+        if (e.button !== 0) return
         e.preventDefault()
         if (touched) touched = false
         else {
@@ -1320,6 +1323,7 @@ function PickPanel (pickListener, closeListener) {
 function PickTool (canvas, pickListener) {
 
     function mouseDown (e) {
+        if (e.button !== 0) return
         e.preventDefault()
         if (touched) touched = false
         else {
@@ -1633,6 +1637,7 @@ function Slider (changeListener, endListener) {
     element.appendChild(barElement)
     element.appendChild(handleWrapperElement)
     element.addEventListener('mousedown', function (e) {
+        if (e.button !== 0) return
         e.preventDefault()
         if (touched) touched = false
         else beginSlide(e)
@@ -1757,6 +1762,7 @@ function UndoButton (undoListener) {
     var element = Div('Button UndoButton disabled')
     element.appendChild(contentElement)
     element.addEventListener('mousedown', function (e) {
+        if (e.button !== 0) return
         e.preventDefault()
         if (touched) touched = false
         else beginUndo()
