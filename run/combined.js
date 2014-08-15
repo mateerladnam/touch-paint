@@ -662,6 +662,9 @@ function MainBar (pickPanel) {
         addButton: function (button) {
             barElement.appendChild(button.element)
         },
+        show: function () {
+            element.classList.add('visible')
+        },
         slide: function () {
             classList.add('slide')
         },
@@ -813,7 +816,6 @@ function MainPanel () {
 
     var pencilTool = PencilTool(pencilSize, canvas)
     pencilTool.colorButton = palettePanel.blackButton
-    pencilTool.enable()
 
     var eraserTool = PencilTool(eraserSize, canvas)
     eraserTool.colorButton = palettePanel.whiteButton
@@ -859,7 +861,6 @@ function MainPanel () {
 
     var pencilButton = ToolButton('pencil', pencilListener)
     pencilButton.addClass(classPrefix + '-pencilButton')
-    pencilButton.check()
 
     var eraserButton = ToolButton('eraser', eraserListener)
     eraserButton.addClass(classPrefix + '-eraserButton')
@@ -943,7 +944,6 @@ function MainPanel () {
 
     var mainBar = MainBar(pickPanel)
     mainBar.addButton(pencilButton)
-    mainBar.addButton(pencilButton)
     mainBar.addButton(eraserButton)
     mainBar.addButton(paletteButton)
     mainBar.addButton(paramsButton)
@@ -956,7 +956,13 @@ function MainPanel () {
     element.appendChild(contentElement)
     element.appendChild(mainBar.element)
 
-    return { element: element }
+    return {
+        element: element,
+        show: function () {
+            pencilListener()
+            mainBar.show()
+        },
+    }
 
 }
 ;
@@ -1800,7 +1806,11 @@ function UndoButton (undoListener) {
     var loadBarElement = Div('Main-loadBar')
     loadBarElement.appendChild(progressElement)
 
-    document.body.appendChild(loadBarElement)
+    var mainPanel = MainPanel()
+
+    var body = document.body
+    body.appendChild(mainPanel.element)
+    body.appendChild(loadBarElement)
 
     var finished = 0
     var icons = ['pencil', 'eraser', 'palette', 'params', 'undo', 'burger']
@@ -1811,9 +1821,16 @@ function UndoButton (undoListener) {
             finished++
             progressElement.style.width = finished / icons.length * 100 + '%'
             if (finished == icons.length) {
-                var mainPanel = MainPanel()
-                document.body.removeChild(loadBarElement)
-                document.body.appendChild(mainPanel.element)
+
+                mainPanel.show()
+
+                setTimeout(function () {
+                    loadBarElement.classList.add('hidden')
+                    setTimeout(function () {
+                        body.removeChild(loadBarElement)
+                    }, 250)
+                }, 250)
+
             }
         }
     })

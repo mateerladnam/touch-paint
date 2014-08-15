@@ -279,8 +279,6 @@ function MainPanel () {
     element.appendChild(contentElement)
     element.appendChild(mainBar.element)
 
-    var classList = element.classList
-
     return {
         element: element,
         show: function () {
