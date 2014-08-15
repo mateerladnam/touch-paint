@@ -11,6 +11,7 @@ echo
     .'../compressed.css?'.$revisions['compressed.css']."\n"
     .'../compressed.js?'.$revisions['compressed.js']."\n"
     ."../images/burger.svg\n"
+    ."../images/cancel.svg\n"
     ."../images/color-background.svg\n"
     ."../images/eraser.svg\n"
     ."../images/file.svg\n"
