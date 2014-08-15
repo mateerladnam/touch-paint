@@ -13,6 +13,7 @@ function PencilTool (size, canvas) {
     }
 
     function mouseDown (e) {
+        if (e.button !== 0) return
         e.preventDefault()
         if (touched) touched = false
         else {
