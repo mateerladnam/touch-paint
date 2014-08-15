@@ -1073,6 +1073,7 @@ function PalettePanel (colorListener, closeListener, buttonListener, pickListene
         },
         pickColor: function (hue, saturation, luminance) {
             var alpha = previewButton.color.alpha
+            editColorPanel.setColor(hue, saturation, luminance, alpha)
             previewButton.setColor(hue, saturation, luminance, alpha)
             colorButtonsPanel.setColor(hue, saturation, luminance, alpha)
         },
