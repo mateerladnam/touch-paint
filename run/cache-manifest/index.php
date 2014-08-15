@@ -19,5 +19,6 @@ echo
     ."../images/palette.svg\n"
     ."../images/params.svg\n"
     ."../images/pencil.svg\n"
+    ."../images/pick.svg\n"
     ."../images/save.svg\n"
     ."../images/undo.svg\n";
