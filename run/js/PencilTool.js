@@ -13,32 +13,40 @@ function PencilTool (size, canvas) {
     }
 
     function mouseDown (e) {
+
+        function mouseUp () {
+            if (touched) touched = false
+            else {
+                removeEventListener('mousemove', mouseMove)
+                removeEventListener('mouseup', mouseUp)
+            }
+        }
+
+        function mouseMove (e) {
+            if (touched) touched = false
+            else {
+                var rect = canvasElement.getBoundingClientRect(),
+                    x = e.clientX - rect.left,
+                    y = e.clientY - rect.top
+                moveTool(mouseX, mouseY, x, y)
+                mouseX = x
+                mouseY = y
+            }
+        }
+
         if (e.button !== 0) return
         e.preventDefault()
         if (touched) touched = false
         else {
-            isMouseDown = true
-            var rect = canvasElement.getBoundingClientRect()
-            mouseX = e.clientX - rect.left
-            mouseY = e.clientY - rect.top
+
+            var rect = canvasElement.getBoundingClientRect(),
+                mouseX = e.clientX - rect.left,
+                mouseY = e.clientY - rect.top
             beginTool(mouseX, mouseY)
-        }
-    }
 
-    function mouseUp () {
-        if (touched) touched = false
-        else isMouseDown = false
-    }
+            addEventListener('mousemove', mouseMove)
+            addEventListener('mouseup', mouseUp)
 
-    function mouseMove (e) {
-        if (touched) touched = false
-        else if (isMouseDown) {
-            var rect = canvasElement.getBoundingClientRect()
-            var x = e.clientX - rect.left,
-                y = e.clientY - rect.top
-            moveTool(mouseX, mouseY, x, y)
-            mouseX = x
-            mouseY = y
         }
     }
 
@@ -98,7 +106,6 @@ function PencilTool (size, canvas) {
         }
     }
 
-    var mouseX, mouseY, isMouseDown = false
     var touched = false
     var activeTouches = {}
     var halfSize = size / 2
@@ -111,8 +118,6 @@ function PencilTool (size, canvas) {
         disable: function () {
             if (!enabled) return
             canvasElement.removeEventListener('mousedown', mouseDown)
-            canvasElement.removeEventListener('mousemove', mouseMove)
-            canvasElement.removeEventListener('mouseup', mouseUp)
             canvasElement.removeEventListener('touchstart', touchStart)
             canvasElement.removeEventListener('touchmove', touchMove)
             canvasElement.removeEventListener('touchend', touchEnd)
@@ -121,8 +126,6 @@ function PencilTool (size, canvas) {
         enable: function () {
             if (enabled) return
             canvasElement.addEventListener('mousedown', mouseDown)
-            canvasElement.addEventListener('mousemove', mouseMove)
-            canvasElement.addEventListener('mouseup', mouseUp)
             canvasElement.addEventListener('touchstart', touchStart)
             canvasElement.addEventListener('touchmove', touchMove)
             canvasElement.addEventListener('touchend', touchEnd)
