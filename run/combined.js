@@ -939,7 +939,8 @@ function MainPanel () {
     }, function () {
         pickTool.disable()
         unslideMainBar()
-        palettePanel.show()
+        if (palettePanel.isEditVisible()) palettePanel.show()
+        else pencilOrEraserListener()
     })
 
     var mainBar = MainBar(pickPanel)
@@ -1065,6 +1066,9 @@ function PalettePanel (colorListener, closeListener, buttonListener, pickListene
                 contentElement.classList.remove('visible')
                 visible = false
             }
+        },
+        isEditVisible: function () {
+            return editVisible
         },
         select: function (button) {
             activeButton = button

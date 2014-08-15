@@ -262,7 +262,8 @@ function MainPanel () {
     }, function () {
         pickTool.disable()
         unslideMainBar()
-        palettePanel.show()
+        if (palettePanel.isEditVisible()) palettePanel.show()
+        else pencilOrEraserListener()
     })
 
     var mainBar = MainBar(pickPanel)

@@ -76,6 +76,9 @@ function PalettePanel (colorListener, closeListener, buttonListener, pickListene
                 visible = false
             }
         },
+        isEditVisible: function () {
+            return editVisible
+        },
         select: function (button) {
             activeButton = button
             colorButtonsPanel.select(button)
