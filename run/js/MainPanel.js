@@ -146,7 +146,6 @@ function MainPanel () {
 
     var pickTool = PickTool(canvas, function (hue, saturation, luminance) {
         pickPanel.setColor(hue, saturation, luminance, 1)
-        setCurrentToolColor (hue, saturation, luminance, 1, palettePanel.getActiveButton())
     })
 
     var paramsPanel = ParamsPanel(function (size) {
@@ -260,6 +259,7 @@ function MainPanel () {
 
     var pickPanel = PickPanel(function (hue, saturation, luminance) {
         palettePanel.pickColor(hue, saturation, luminance)
+        setCurrentToolColor(hue, saturation, luminance, 1, palettePanel.getActiveButton())
     }, function () {
         pickTool.disable()
         unslideMainBar()
