@@ -848,8 +848,9 @@ function MainPanel () {
         })
         pencilOrEraserListener()
     }, function () {
-        var width = canvas.element.offsetWidth
-        var height = canvas.element.offsetHeight
+        var canvasElement = canvas.element,
+            width = canvasElement.offsetWidth,
+            height = canvasElement.offsetHeight
         SaveCanvas(canvas.canvas, width, height)
         pencilOrEraserListener()
     })
