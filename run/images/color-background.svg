@@ -36,7 +36,7 @@
        y="0"
        transform="translate(0,1036.3622)"
        id="rect3759"
-       style="fill:#cccccc;fill-opacity:1;stroke:none" />
+       style="fill:#aaaaaa;fill-opacity:1;stroke:none" />
     <rect
        width="8"
        height="8"
@@ -45,7 +45,7 @@
        y="8"
        transform="translate(0,1036.3622)"
        id="rect2987"
-       style="fill:#777777;fill-opacity:1;stroke:none" />
+       style="fill:#555555;fill-opacity:1;stroke:none" />
     <use
        transform="translate(8,-8)"
        id="use3757"
