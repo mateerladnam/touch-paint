@@ -9,7 +9,7 @@
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4) inset;
 }
 
-@media (orientation:portrait) {
+@media (orientation: portrait) {
 
     .SaturationSlider {
         top: 56px;
@@ -27,7 +27,7 @@
 
 }
 
-@media (orientation:landscape) {
+@media (orientation: landscape) {
 
     .SaturationSlider {
         top: 8px;

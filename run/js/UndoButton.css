@@ -6,14 +6,14 @@
     box-shadow: none;
 }
 
-@media (orientation:portrait) {
+@media (orientation: portrait) {
     .UndoButton {
         top: 8px;
         left: 200px;
     }
 }
 
-@media (orientation:landscape) {
+@media (orientation: landscape) {
     .UndoButton {
         left: 8px;
         bottom: 200px;

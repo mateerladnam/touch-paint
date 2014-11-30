@@ -36,7 +36,7 @@
     box-shadow: 0 1px 3px #333 inset;
 }
 
-@media (orientation:portrait) {
+@media (orientation: portrait) {
 
     .Slider {
         right: 0;
@@ -53,7 +53,7 @@
 
 }
 
-@media (orientation:landscape) {
+@media (orientation: landscape) {
 
     .Slider {
         bottom: 0;

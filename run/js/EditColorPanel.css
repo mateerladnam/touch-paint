@@ -9,7 +9,7 @@
     opacity: 1;
 }
 
-@media (orientation:portrait) {
+@media (orientation: portrait) {
     .EditColorPanel {
         right: 0;
         height: 208px;
@@ -21,7 +21,7 @@
     }
 }
 
-@media (orientation:landscape) {
+@media (orientation: landscape) {
     .EditColorPanel {
         bottom: 0;
         width: 208px;

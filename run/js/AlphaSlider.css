@@ -11,7 +11,7 @@
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4) inset;
 }
 
-@media (orientation:portrait) {
+@media (orientation: portrait) {
 
     .AlphaSlider {
         top: 152px;
@@ -29,7 +29,7 @@
 
 }
 
-@media (orientation:landscape) {
+@media (orientation: landscape) {
 
     .AlphaSlider {
         top: 8px;

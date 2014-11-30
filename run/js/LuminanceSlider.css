@@ -9,7 +9,7 @@
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4) inset;
 }
 
-@media (orientation:portrait) {
+@media (orientation: portrait) {
 
     .LuminanceSlider {
         top: 104px;
@@ -27,7 +27,7 @@
 
 }
 
-@media (orientation:landscape) {
+@media (orientation: landscape) {
 
     .LuminanceSlider {
         top: 8px;

@@ -3,7 +3,7 @@
     left: 8px;
 }
 
-@media (orientation:portrait) {
+@media (orientation: portrait) {
 
     .ColorButtonsPanel {
         top: 8px;
@@ -51,7 +51,7 @@
 
 }
 
-@media (orientation:landscape) {
+@media (orientation: landscape) {
 
     .ColorButtonsPanel {
         bottom: 8px;

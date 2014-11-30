@@ -37,7 +37,7 @@
     left: 8px;
 }
 
-@media (orientation:portrait) {
+@media (orientation: portrait) {
 
     .PalettePanel {
         left: 0;
@@ -64,7 +64,7 @@
 
 }
 
-@media (orientation:landscape) {
+@media (orientation: landscape) {
 
     .PalettePanel {
         top: 0;

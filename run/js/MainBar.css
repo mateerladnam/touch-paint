@@ -33,7 +33,7 @@
     opacity: 1;
 }
 
-@media (orientation:portrait) {
+@media (orientation: portrait) {
 
     .MainBar {
         background-image: linear-gradient(#ddd, #bbb);
@@ -68,7 +68,7 @@
 
 }
 
-@media (orientation:landscape) {
+@media (orientation: landscape) {
 
     .MainBar {
         background-image: linear-gradient(90deg, #ddd, #bbb);

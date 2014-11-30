@@ -20,7 +20,7 @@
     right: 8px;
 }
 
-@media (orientation:portrait) {
+@media (orientation: portrait) {
 
     .FilePanel {
         left: 0;
@@ -48,7 +48,7 @@
 
 }
 
-@media (orientation:landscape) {
+@media (orientation: landscape) {
 
     .FilePanel {
         top: 0;
