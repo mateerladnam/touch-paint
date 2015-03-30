@@ -1,15 +1,15 @@
-function ToolPanel (brushListener, bucketListener) {
+function ToolPanel (pencilListener, bucketListener) {
 
     var classPrefix = 'ToolPanel'
 
-    var brushButton = BarButton('brush', brushListener)
-    brushButton.addClass(classPrefix + '-brushButton')
+    var pencilButton = BarButton('pencil', pencilListener)
+    pencilButton.addClass(classPrefix + '-pencilButton')
 
     var bucketButton = BarButton('bucket', bucketListener)
     bucketButton.addClass(classPrefix + '-bucketButton')
 
     var contentElement = Div(classPrefix + '-content')
-    contentElement.appendChild(brushButton.element)
+    contentElement.appendChild(pencilButton.element)
     contentElement.appendChild(bucketButton.element)
 
     var element = Div(classPrefix)

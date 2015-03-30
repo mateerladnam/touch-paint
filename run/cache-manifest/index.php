@@ -10,6 +10,7 @@ echo
     ."# v2\n"
     .'../compressed.css?'.$revisions['compressed.css']."\n"
     .'../compressed.js?'.$revisions['compressed.js']."\n"
+    ."../images/bucket.svg\n"
     ."../images/burger.svg\n"
     ."../images/cancel.svg\n"
     ."../images/color-background.svg\n"

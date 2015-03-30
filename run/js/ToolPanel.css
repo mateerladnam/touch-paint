@@ -15,7 +15,7 @@
     opacity: 1;
 }
 
-.ToolPanel-brushButton {
+.ToolPanel-pencilButton {
     left: 8px;
 }
 
@@ -35,7 +35,7 @@
         top: -64px;
     }
 
-    .ToolPanel-brushButton {
+    .ToolPanel-pencilButton {
         top: 8px;
     }
 
@@ -62,7 +62,7 @@
         left: -64px;
     }
 
-    .ToolPanel-brushButton {
+    .ToolPanel-pencilButton {
         bottom: 8px;
     }
 
