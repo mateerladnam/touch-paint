@@ -1,0 +1,74 @@
+.ToolPanel {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+
+.ToolPanel-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #eee;
+    opacity: 0;
+}
+.ToolPanel-content.visible {
+    opacity: 1;
+}
+
+.ToolPanel-brushButton {
+    left: 8px;
+}
+
+@media (orientation: portrait) {
+
+    .ToolPanel {
+        left: 0;
+    }
+
+    .ToolPanel-content {
+        right: 0;
+        height: 64px;
+        background-image: linear-gradient(#ddd, #eee);
+        transition: ease-in-out 0.2s top, ease-in-out 0.2s opacity;
+    }
+    .ToolPanel-content.visible {
+        top: -64px;
+    }
+
+    .ToolPanel-brushButton {
+        top: 8px;
+    }
+
+    .ToolPanel-bucketButton {
+        top: 8px;
+        left: 56px;
+    }
+
+}
+
+@media (orientation: landscape) {
+
+    .ToolPanel {
+        top: 0;
+    }
+
+    .ToolPanel-content {
+        bottom: 0;
+        width: 64px;
+        background-image: linear-gradient(90deg, #ddd, #eee);
+        transition: ease-in-out 0.2s left, ease-in-out 0.2s opacity;
+    }
+    .ToolPanel-content.visible {
+        left: -64px;
+    }
+
+    .ToolPanel-brushButton {
+        bottom: 8px;
+    }
+
+    .ToolPanel-bucketButton {
+        bottom: 56px;
+        left: 8px;
+    }
+
+}

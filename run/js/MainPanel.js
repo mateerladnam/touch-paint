@@ -104,6 +104,11 @@ function MainPanel () {
 
     var pencilOrEraserListener = pencilListener
 
+    var toolPanel = ToolPanel(function () {
+    }, function () {
+    })
+    window.toolPanel = toolPanel
+
     var palettePanel = PalettePanel(setCurrentToolColor, function () {
         closePalette()
         closeFile()
@@ -252,6 +257,7 @@ function MainPanel () {
 
     var contentElement = Div(classPrefix + '-content')
     contentElement.appendChild(canvas.element)
+    contentElement.appendChild(toolPanel.element)
     contentElement.appendChild(palettePanel.element)
     contentElement.appendChild(paramsPanel.element)
     contentElement.appendChild(filePanel.element)

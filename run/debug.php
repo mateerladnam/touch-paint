@@ -23,6 +23,7 @@ echo_html(
     .'<link rel="stylesheet" type="text/css" href="js/PickButton.css" />'
     .'<link rel="stylesheet" type="text/css" href="js/PickPanel.css" />'
     .'<link rel="stylesheet" type="text/css" href="js/ToolButton.css" />'
+    .'<link rel="stylesheet" type="text/css" href="js/ToolPanel.css" />'
     .'<link rel="stylesheet" type="text/css" href="js/UndoButton.css" />',
     '<script type="text/javascript" src="js/AlphaSlider.js"></script>'
     .'<script type="text/javascript" src="js/BarButton.js"></script>'
@@ -49,6 +50,7 @@ echo_html(
     .'<script type="text/javascript" src="js/SaturationSlider.js"></script>'
     .'<script type="text/javascript" src="js/Slider.js"></script>'
     .'<script type="text/javascript" src="js/ToolButton.js"></script>'
+    .'<script type="text/javascript" src="js/ToolPanel.js"></script>'
     .'<script type="text/javascript" src="js/UndoButton.js"></script>'
     .'<script type="text/javascript" src="js/Main.js"></script>'
 );
