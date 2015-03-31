@@ -27,6 +27,7 @@ echo_html(
     .'<link rel="stylesheet" type="text/css" href="js/UndoButton.css" />',
     '<script type="text/javascript" src="js/AlphaSlider.js"></script>'
     .'<script type="text/javascript" src="js/BarButton.js"></script>'
+    .'<script type="text/javascript" src="js/BucketTool.js"></script>'
     .'<script type="text/javascript" src="js/Canvas.js"></script>'
     .'<script type="text/javascript" src="js/ColorButton.js"></script>'
     .'<script type="text/javascript" src="js/ColorButtonsPanel.js"></script>'
