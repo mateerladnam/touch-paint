@@ -2,6 +2,7 @@ function ToolPanel (pencilListener, bucketListener) {
 
     function hide () {
         classList.remove('visible')
+        visible = false
     }
 
     var classPrefix = 'ToolPanel'
@@ -32,11 +33,17 @@ function ToolPanel (pencilListener, bucketListener) {
 
     var classList = contentElement.classList
 
+    var visible = false
+
     return {
         element: element,
         hide: hide,
+        isVisible: function () {
+            return visible
+        },
         show: function () {
             classList.add('visible')
+            visible = true
         },
     }
 

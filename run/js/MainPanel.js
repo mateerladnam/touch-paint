@@ -43,6 +43,7 @@ function MainPanel () {
     }
 
     function eraserListener () {
+        toolPanel.hide()
         closeAllPanels()
         disablePencil()
         enableEraser()
@@ -107,7 +108,6 @@ function MainPanel () {
     var toolPanel = ToolPanel(function () {
     }, function () {
     })
-    window.toolPanel = toolPanel
 
     var palettePanel = PalettePanel(setCurrentToolColor, function () {
         closePalette()
@@ -187,7 +187,13 @@ function MainPanel () {
         pencilOrEraserListener()
     })
 
-    var pencilButton = ToolButton('pencil', pencilListener)
+    var pencilButton = ToolButton('pencil', function () {
+        if (pencilButton.isChecked()) {
+            if (toolPanel.isVisible()) toolPanel.hide()
+            else toolPanel.show()
+        }
+        pencilListener()
+    })
     pencilButton.addClass(classPrefix + '-pencilButton')
 
     var eraserButton = ToolButton('eraser', eraserListener)
@@ -203,6 +209,7 @@ function MainPanel () {
 
             disablePencil()
             disableEraser()
+            toolPanel.hide()
             closeParams()
             closeFile()
             unslideMainBar()
@@ -221,6 +228,7 @@ function MainPanel () {
 
             disablePencil()
             disableEraser()
+            toolPanel.hide()
             closePalette()
             closeFile()
             unslideMainBar()
@@ -244,6 +252,7 @@ function MainPanel () {
 
             disablePencil()
             disableEraser()
+            toolPanel.hide()
             closePalette()
             closeParams()
             unslideMainBar()
