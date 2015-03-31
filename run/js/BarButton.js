@@ -9,10 +9,13 @@ function BarButton (icon, clickListener) {
         }, 100)
     }
 
+    function setIcon (icon) {
+        contentElement.style.backgroundImage = 'url(images/' + icon + '.svg)'
+    }
+
     var touched = false
 
     var contentElement = Div('Button-content')
-    contentElement.style.backgroundImage = 'url(images/' + icon + '.svg)'
 
     var element = Div('Button')
     element.appendChild(contentElement)
@@ -32,9 +35,12 @@ function BarButton (icon, clickListener) {
     var checked = false
     var classList = element.classList
 
+    setIcon(icon)
+
     return {
         contentElement: contentElement,
         element: element,
+        setIcon: setIcon,
         addClass: function (className) {
             classList.add(className)
         },

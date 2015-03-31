@@ -28,7 +28,7 @@ function MainPanel () {
     }
 
     function disablePencil () {
-        pencilButton.uncheck()
+        primaryToolButton.uncheck()
         pencilTool.disable()
     }
 
@@ -38,7 +38,7 @@ function MainPanel () {
     }
 
     function enablePencil () {
-        pencilButton.check()
+        primaryToolButton.check()
         pencilTool.enable()
     }
 
@@ -49,7 +49,7 @@ function MainPanel () {
         enableEraser()
         paramsPanel.setSize(eraserSize)
         eraserButton.mark()
-        pencilButton.unmark()
+        primaryToolButton.unmark()
         updateToolColor(eraserTool)
         pencilOrEraserListener = eraserListener
     }
@@ -59,7 +59,7 @@ function MainPanel () {
         disableEraser()
         enablePencil()
         paramsPanel.setSize(pencilSize)
-        pencilButton.mark()
+        primaryToolButton.mark()
         eraserButton.unmark()
         updateToolColor(pencilTool)
         pencilOrEraserListener = pencilListener
@@ -82,7 +82,7 @@ function MainPanel () {
 
     function setPencilColor (hue, saturation, luminance, alpha) {
         pencilTool.setColor(hue, saturation, luminance, alpha)
-        pencilButton.setColor(hue, saturation, luminance, alpha)
+        primaryToolButton.setColor(hue, saturation, luminance, alpha)
     }
 
     function updateToolColor (tool) {
@@ -106,7 +106,9 @@ function MainPanel () {
     var pencilOrEraserListener = pencilListener
 
     var toolPanel = ToolPanel(function () {
+        primaryToolButton.setIcon('pencil')
     }, function () {
+        primaryToolButton.setIcon('bucket')
     })
 
     var palettePanel = PalettePanel(setCurrentToolColor, function () {
@@ -187,14 +189,14 @@ function MainPanel () {
         pencilOrEraserListener()
     })
 
-    var pencilButton = ToolButton('pencil', function () {
-        if (pencilButton.isChecked()) {
+    var primaryToolButton = ToolButton('pencil', function () {
+        if (primaryToolButton.isChecked()) {
             if (toolPanel.isVisible()) toolPanel.hide()
             else toolPanel.show()
         }
         pencilListener()
     })
-    pencilButton.addClass(classPrefix + '-pencilButton')
+    primaryToolButton.addClass(classPrefix + '-primaryToolButton')
 
     var eraserButton = ToolButton('eraser', eraserListener)
     eraserButton.addClass(classPrefix + '-eraserButton')
@@ -282,7 +284,7 @@ function MainPanel () {
     })
 
     var mainBar = MainBar(pickPanel)
-    mainBar.addButton(pencilButton)
+    mainBar.addButton(primaryToolButton)
     mainBar.addButton(eraserButton)
     mainBar.addButton(paletteButton)
     mainBar.addButton(paramsButton)

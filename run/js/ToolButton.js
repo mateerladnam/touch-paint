@@ -24,6 +24,7 @@ function ToolButton (icon, clickListener) {
         check: barButton.check,
         element: element,
         isChecked: barButton.isChecked,
+        setIcon: barButton.setIcon,
         uncheck: barButton.uncheck,
         mark: function () {
             classList.add('marked')
