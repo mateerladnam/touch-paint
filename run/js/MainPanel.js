@@ -27,9 +27,9 @@ function MainPanel () {
         eraserTool.disable()
     }
 
-    function disablePencil () {
+    function disablePrimaryTool () {
         primaryToolButton.uncheck()
-        pencilTool.disable()
+        primaryTool.disable()
     }
 
     function enableEraser () {
@@ -37,39 +37,39 @@ function MainPanel () {
         eraserTool.enable()
     }
 
-    function enablePencil () {
+    function enablePrimaryTool () {
         primaryToolButton.check()
-        pencilTool.enable()
+        primaryTool.enable()
     }
 
     function eraserListener () {
         toolPanel.hide()
         closeAllPanels()
-        disablePencil()
+        disablePrimaryTool()
         enableEraser()
         paramsPanel.setSize(eraserSize)
         eraserButton.mark()
         primaryToolButton.unmark()
-        updateToolColor(eraserTool)
-        pencilOrEraserListener = eraserListener
+        updateButtonColor(eraserButton, [eraserTool])
+        primaryToolOrEraserListener = eraserListener
     }
 
-    function pencilListener () {
+    function primaryToolListener () {
         closeAllPanels()
         disableEraser()
-        enablePencil()
+        enablePrimaryTool()
         paramsPanel.setSize(pencilSize)
         primaryToolButton.mark()
         eraserButton.unmark()
-        updateToolColor(pencilTool)
-        pencilOrEraserListener = pencilListener
+        updateButtonColor(primaryToolButton, [pencilTool, bucketTool])
+        primaryToolOrEraserListener = primaryToolListener
     }
 
     function setCurrentToolColor (hue, saturation, luminance, alpha, button) {
-        if (button == pencilTool.colorButton) {
-            setPencilColor(hue, saturation, luminance, alpha)
+        if (button == primaryToolButton.colorButton) {
+            setPrimaryToolColor(hue, saturation, luminance, alpha)
         }
-        if (button == eraserTool.colorButton) {
+        if (button == eraserButton.colorButton) {
             setEraserColor(hue, saturation, luminance, alpha)
         }
         paramsPanel.setColor(hue, saturation, luminance)
@@ -80,19 +80,21 @@ function MainPanel () {
         eraserButton.setColor(hue, saturation, luminance, alpha)
     }
 
-    function setPencilColor (hue, saturation, luminance, alpha) {
-        pencilTool.setColor(hue, saturation, luminance, alpha)
+    function setPrimaryToolColor (hue, saturation, luminance, alpha) {
+        primaryTool.setColor(hue, saturation, luminance, alpha)
         primaryToolButton.setColor(hue, saturation, luminance, alpha)
     }
 
-    function updateToolColor (tool) {
-        var colorButton = tool.colorButton
+    function updateButtonColor (button, tools) {
+        var colorButton = button.colorButton
         palettePanel.select(colorButton)
         var color = colorButton.color,
             hue = color.hue,
             saturation = color.saturation,
             luminance = color.luminance
-        tool.setColor(hue, saturation, luminance, color.alpha)
+        tools.forEach(function (tool) {
+            tool.setColor(hue, saturation, luminance, color.alpha)
+        })
         paramsPanel.setColor(hue, saturation, luminance)
     }
 
@@ -103,33 +105,35 @@ function MainPanel () {
 
     var canvas = Canvas()
 
-    var pencilOrEraserListener = pencilListener
+    var primaryToolOrEraserListener = primaryToolListener
 
     var toolPanel = ToolPanel(function () {
         primaryToolButton.setIcon('pencil')
+        primaryTool = pencilTool
     }, function () {
         primaryToolButton.setIcon('bucket')
+        primaryTool = bucketTool
     })
 
     var palettePanel = PalettePanel(setCurrentToolColor, function () {
         closePalette()
         closeFile()
-        pencilOrEraserListener()
+        primaryToolOrEraserListener()
     }, function (button) {
-        if (pencilOrEraserListener == pencilListener) {
+        if (primaryToolOrEraserListener == primaryToolListener) {
 
-            var oldButton = pencilTool.colorButton
-            if (oldButton != eraserTool.colorButton) oldButton.unmark()
+            var oldButton = primaryToolButton.colorButton
+            if (oldButton != eraserButton.colorButton) oldButton.unmark()
 
-            pencilTool.colorButton = button
+            primaryToolButton.colorButton = button
             button.mark()
 
         } else {
 
-            var oldButton = eraserTool.colorButton
-            if (oldButton != pencilTool.colorButton) oldButton.unmark()
+            var oldButton = eraserButton.colorButton
+            if (oldButton != primaryToolButton.colorButton) oldButton.unmark()
 
-            eraserTool.colorButton = button
+            eraserButton.colorButton = button
             button.mark()
 
         }
@@ -145,25 +149,29 @@ function MainPanel () {
     })
 
     var pencilTool = PencilTool(pencilSize, canvas)
-    pencilTool.colorButton = palettePanel.blackButton
+
+    var bucketTool = BucketTool(canvas)
 
     var eraserTool = PencilTool(eraserSize, canvas)
-    eraserTool.colorButton = palettePanel.whiteButton
+
+    var primaryTool = pencilTool
 
     var pickTool = PickTool(canvas, function (hue, saturation, luminance) {
         pickPanel.setColor(hue, saturation, luminance, 1)
     })
 
     var paramsPanel = ParamsPanel(function (size) {
-        if (pencilOrEraserListener == pencilListener) {
+        if (primaryToolOrEraserListener == primaryToolListener) {
             pencilSize = size
-            pencilTool.setSize(size)
+            if (primaryTool == pencilTool) {
+                pencilTool.setSize(size)
+            }
         } else {
             eraserSize = size
             eraserTool.setSize(size)
         }
     }, function () {
-        pencilOrEraserListener()
+        primaryToolOrEraserListener()
     })
     paramsPanel.setSize(pencilSize)
 
@@ -174,19 +182,19 @@ function MainPanel () {
             c.globalAlpha = 1
             c.fillRect(0, 0, size, size)
         })
-        pencilOrEraserListener()
+        primaryToolOrEraserListener()
     }, function (image) {
         canvas.operate(function (c) {
             var canvasElement = canvas.element
             OpenImage(c, image, canvasElement.offsetWidth, canvasElement.offsetHeight)
         })
-        pencilOrEraserListener()
+        primaryToolOrEraserListener()
     }, function () {
         var canvasElement = canvas.element,
             width = canvasElement.offsetWidth,
             height = canvasElement.offsetHeight
         SaveCanvas(canvas.canvas, width, height)
-        pencilOrEraserListener()
+        primaryToolOrEraserListener()
     })
 
     var primaryToolButton = ToolButton('pencil', function () {
@@ -194,22 +202,24 @@ function MainPanel () {
             if (toolPanel.isVisible()) toolPanel.hide()
             else toolPanel.show()
         }
-        pencilListener()
+        primaryToolListener()
     })
     primaryToolButton.addClass(classPrefix + '-primaryToolButton')
+    primaryToolButton.colorButton = palettePanel.blackButton
 
     var eraserButton = ToolButton('eraser', eraserListener)
     eraserButton.addClass(classPrefix + '-eraserButton')
+    eraserButton.colorButton = palettePanel.whiteButton
 
     setEraserColor(0, 0, 100, 1)
-    setPencilColor(0, 0, 0, 1)
+    setPrimaryToolColor(0, 0, 0, 1)
 
     var paletteButton = BarButton('palette', function () {
         if (paletteButton.isChecked()) {
-            pencilOrEraserListener()
+            primaryToolOrEraserListener()
         } else {
 
-            disablePencil()
+            disablePrimaryTool()
             disableEraser()
             toolPanel.hide()
             closeParams()
@@ -225,10 +235,10 @@ function MainPanel () {
 
     var paramsButton = BarButton('params', function () {
         if (paramsButton.isChecked()) {
-            pencilOrEraserListener()
+            primaryToolOrEraserListener()
         } else {
 
-            disablePencil()
+            disablePrimaryTool()
             disableEraser()
             toolPanel.hide()
             closePalette()
@@ -249,10 +259,10 @@ function MainPanel () {
 
     var fileButton = BarButton('burger', function () {
         if (fileButton.isChecked()) {
-            pencilOrEraserListener()
+            primaryToolOrEraserListener()
         } else {
 
-            disablePencil()
+            disablePrimaryTool()
             disableEraser()
             toolPanel.hide()
             closePalette()
@@ -280,7 +290,7 @@ function MainPanel () {
         pickTool.disable()
         unslideMainBar()
         if (palettePanel.isEditVisible()) palettePanel.show()
-        else pencilOrEraserListener()
+        else primaryToolOrEraserListener()
     })
 
     var mainBar = MainBar(pickPanel)
@@ -300,7 +310,7 @@ function MainPanel () {
     return {
         element: element,
         show: function () {
-            pencilListener()
+            primaryToolListener()
             mainBar.show()
         },
     }
