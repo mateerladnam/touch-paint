@@ -35,6 +35,7 @@ echo_html(
     .'<script type="text/javascript" src="js/EditColorPanel.js"></script>'
     .'<script type="text/javascript" src="js/FileButton.js"></script>'
     .'<script type="text/javascript" src="js/FilePanel.js"></script>'
+    .'<script type="text/javascript" src="js/hsl2rgb.js"></script>'
     .'<script type="text/javascript" src="js/HueSlider.js"></script>'
     .'<script type="text/javascript" src="js/LuminanceSlider.js"></script>'
     .'<script type="text/javascript" src="js/MainBar.js"></script>'
