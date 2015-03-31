@@ -109,10 +109,14 @@ function MainPanel () {
 
     var toolPanel = ToolPanel(function () {
         primaryToolButton.setIcon('pencil')
+        primaryTool.disable()
         primaryTool = pencilTool
+        primaryTool.enable()
     }, function () {
         primaryToolButton.setIcon('bucket')
+        primaryTool.disable()
         primaryTool = bucketTool
+        primaryTool.enable()
     })
 
     var palettePanel = PalettePanel(setCurrentToolColor, function () {
