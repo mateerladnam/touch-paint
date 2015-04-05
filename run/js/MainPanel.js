@@ -112,11 +112,13 @@ function MainPanel () {
         primaryTool.disable()
         primaryTool = pencilTool
         primaryTool.enable()
+        paramsButton.enable()
     }, function () {
         primaryToolButton.setIcon('bucket')
         primaryTool.disable()
         primaryTool = bucketTool
         primaryTool.enable()
+        paramsButton.disable()
     })
 
     var palettePanel = PalettePanel(setCurrentToolColor, function () {
