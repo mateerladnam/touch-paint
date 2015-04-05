@@ -56,13 +56,11 @@ function BucketTool (canvas) {
 
                 var rIndex = (pixelY * width + pixelX) * 4,
                     gIndex = rIndex + 1,
-                    bIndex = gIndex + 1,
-                    aIndex = bIndex + 1
+                    bIndex = gIndex + 1
 
                 var r = imageDataData[rIndex],
                     g = imageDataData[gIndex],
-                    b = imageDataData[bIndex],
-                    a = imageDataData[aIndex]
+                    b = imageDataData[bIndex]
 
                 var diffR = Math.abs(rMatch - r),
                     diffG = Math.abs(gMatch - g),

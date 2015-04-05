@@ -9,6 +9,7 @@ var uglifyJs = require('uglify-js')
 var files = [
     'js/AlphaSlider.js',
     'js/BarButton.js',
+    'js/BucketTool.js',
     'js/Canvas.js',
     'js/ColorButton.js',
     'js/ColorButtonsPanel.js',
@@ -16,6 +17,7 @@ var files = [
     'js/EditColorPanel.js',
     'js/FileButton.js',
     'js/FilePanel.js',
+    'js/hsl2rgb.js',
     'js/HueSlider.js',
     'js/LuminanceSlider.js',
     'js/MainBar.js',
@@ -32,6 +34,7 @@ var files = [
     'js/SaturationSlider.js',
     'js/Slider.js',
     'js/ToolButton.js',
+    'js/ToolPanel.js',
     'js/UndoButton.js',
     'js/Main.js',
 ]

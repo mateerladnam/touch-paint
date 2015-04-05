@@ -27,6 +27,7 @@ var files = [
     'js/PickButton.css',
     'js/PickPanel.css',
     'js/ToolButton.css',
+    'js/ToolPanel.css',
     'js/UndoButton.css',
 ]
 
