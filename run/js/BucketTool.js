@@ -42,6 +42,8 @@ function BucketTool (canvas) {
             var passed = Object.create(null)
             enqueue(mouseX, mouseY)
 
+            var neighbors = Object.create(null)
+
             var maxDifference = 20
 
             while (queue.length) {
@@ -66,7 +68,11 @@ function BucketTool (canvas) {
                     diffB = Math.abs(bMatch - b)
 
                 var difference = Math.max(diffR, diffG, diffB)
-                if (difference > maxDifference) continue
+                if (difference > maxDifference) {
+                    if (!neighbors[pixelY]) neighbors[pixelY] = Object.create(null)
+                    neighbors[pixelY][pixelX] = true
+                    continue
+                }
 
                 imageDataData[rIndex] = red
                 imageDataData[gIndex] = green
@@ -77,6 +83,21 @@ function BucketTool (canvas) {
                 enqueue(pixelX, pixelY + 1)
                 enqueue(pixelX, pixelY - 1)
 
+            }
+
+            for (var y in neighbors) {
+                var xs = neighbors[y]
+                for (var x in xs) {
+
+                    var rIndex = (y * width + Number(x)) * 4,
+                        gIndex = rIndex + 1,
+                        bIndex = gIndex + 1
+
+                    imageDataData[rIndex] = (imageDataData[rIndex] + red) / 2
+                    imageDataData[gIndex] = (imageDataData[gIndex] + green) / 2
+                    imageDataData[bIndex] = (imageDataData[bIndex] + blue) / 2
+
+                }
             }
 
             c.putImageData(imageData, 0, 0)
