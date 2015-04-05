@@ -41,4 +41,8 @@
         }
     })
 
+    var resize = mainPanel.resize
+    addEventListener('resize', resize)
+    resize()
+
 })()

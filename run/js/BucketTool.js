@@ -19,7 +19,8 @@ function BucketTool (canvas) {
 
             function enqueue (x, y) {
 
-                if (x < 0 || x == width || y < 0 || y == height) return
+                if (x < wrapperLeft || x == wrapperRight ||
+                    y < wrapperTop || y == wrapperBottom) return
 
                 if (passed[y]) {
                     if (passed[y][x]) return
@@ -115,6 +116,8 @@ function BucketTool (canvas) {
 
     var enabled = false
 
+    var wrapperTop, wrapperRight, wrapperBottom, wrapperLeft
+
     return {
         disable: function () {
             if (!enabled) return
@@ -132,6 +135,20 @@ function BucketTool (canvas) {
             green = rgb.g
             blue = rgb.b
             alpha = _alpha
+        },
+        resize: function (wrapperWidth, wrapperHeight) {
+
+            var halfWidth = canvasElement.width / 2,
+                halfHeight = canvasElement.height / 2
+
+            var halfWrapperWidth = wrapperWidth / 2,
+                halfWrapperHeight = wrapperHeight / 2
+
+            wrapperTop = halfHeight - halfWrapperHeight
+            wrapperRight = halfWidth + halfWrapperWidth
+            wrapperBottom = halfHeight + halfWrapperHeight
+            wrapperLeft = halfWidth - halfWrapperWidth
+
         },
     }
 

@@ -313,6 +313,10 @@ function MainPanel () {
 
     return {
         element: element,
+        resize: function () {
+            var canvasElement = canvas.element
+            bucketTool.resize(canvasElement.offsetWidth, canvasElement.offsetHeight)
+        },
         show: function () {
             primaryToolListener()
             mainBar.show()
