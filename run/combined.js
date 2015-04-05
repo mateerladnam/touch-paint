@@ -276,10 +276,10 @@ function BucketTool (canvas) {
             var halfWrapperWidth = wrapperWidth / 2,
                 halfWrapperHeight = wrapperHeight / 2
 
-            wrapperTop = halfHeight - halfWrapperHeight
-            wrapperRight = halfWidth + halfWrapperWidth
-            wrapperBottom = halfHeight + halfWrapperHeight
-            wrapperLeft = halfWidth - halfWrapperWidth
+            wrapperTop = Math.floor(halfHeight - halfWrapperHeight)
+            wrapperRight = Math.floor(halfWidth + halfWrapperWidth)
+            wrapperBottom = Math.ceil(halfHeight + halfWrapperHeight)
+            wrapperLeft = Math.ceil(halfWidth - halfWrapperWidth)
 
         },
     }
