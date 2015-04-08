@@ -56,6 +56,11 @@ function AlphaSlider (changeListener, endListener) {
 ;
 function BarButton (icon, clickListener) {
 
+    function addListeners () {
+        element.addEventListener('mousedown', mouseDown)
+        element.addEventListener('touchstart', touchStart)
+    }
+
     function click () {
         clickListener()
         classList.add('active')
@@ -65,32 +70,41 @@ function BarButton (icon, clickListener) {
         }, 100)
     }
 
-    var touched = false
-
-    var contentElement = Div('Button-content')
-    contentElement.style.backgroundImage = 'url(images/' + icon + '.svg)'
-
-    var element = Div('Button')
-    element.appendChild(contentElement)
-    element.addEventListener('mousedown', function (e) {
+    function mouseDown (e) {
         if (e.button !== 0) return
         e.preventDefault()
         if (touched) touched = false
         else click()
-    })
-    element.addEventListener('touchstart', function (e) {
+    }
+
+    function setIcon (icon) {
+        contentElement.style.backgroundImage = 'url(images/' + icon + '.svg)'
+    }
+
+    function touchStart (e) {
         touched = true
         e.preventDefault()
         click()
-    })
+    }
+
+    var touched = false
+
+    var contentElement = Div('Button-content')
+
+    var element = Div('Button')
+    element.appendChild(contentElement)
 
     var activeTimeout
     var checked = false
     var classList = element.classList
 
+    setIcon(icon)
+    addListeners()
+
     return {
         contentElement: contentElement,
         element: element,
+        setIcon: setIcon,
         addClass: function (className) {
             classList.add(className)
         },
@@ -98,12 +112,175 @@ function BarButton (icon, clickListener) {
             classList.add('checked')
             checked = true
         },
+        disable: function () {
+            classList.add('disabled')
+            element.removeEventListener('mousedown', mouseDown)
+            element.removeEventListener('touchstart', touchStart)
+        },
+        enable: function () {
+            classList.remove('disabled')
+            addListeners()
+        },
         isChecked: function () {
             return checked
         },
         uncheck: function () {
             classList.remove('checked')
             checked = false
+        },
+    }
+
+}
+;
+function BucketTool (canvas) {
+
+    function mouseDown (e) {
+
+        var rect = canvasElement.getBoundingClientRect(),
+            mouseX = Math.floor(e.clientX - rect.left),
+            mouseY = Math.floor(e.clientY - rect.top)
+
+        var c = canvasElement.getContext('2d')
+
+        var imageData = c.getImageData(mouseX, mouseY, 1, 1),
+            imageDataData = imageData.data
+
+        var rMatch = imageDataData[0],
+            gMatch = imageDataData[1],
+            bMatch = imageDataData[2]
+
+        canvas.operate(function (c) {
+
+            function enqueue (x, y) {
+
+                if (x < wrapperLeft || x == wrapperRight ||
+                    y < wrapperTop || y == wrapperBottom) return
+
+                if (passed[y]) {
+                    if (passed[y][x]) return
+                } else {
+                    passed[y] = Object.create(null)
+                }
+
+                passed[y][x] = true
+                queue.push([x, y])
+
+            }
+
+            var width = canvasElement.width,
+                height = canvasElement.height
+
+            var imageData = c.getImageData(0, 0, width, height)
+            var imageDataData = imageData.data
+
+            var queue = []
+            var passed = Object.create(null)
+            enqueue(mouseX, mouseY)
+
+            var neighbors = Object.create(null)
+
+            var maxDifference = 20
+
+            while (queue.length) {
+
+                var coords = queue.shift()
+
+                var pixelX = coords[0],
+                    pixelY = coords[1]
+
+                var rIndex = (pixelY * width + pixelX) * 4,
+                    gIndex = rIndex + 1,
+                    bIndex = gIndex + 1
+
+                var r = imageDataData[rIndex],
+                    g = imageDataData[gIndex],
+                    b = imageDataData[bIndex]
+
+                var diffR = Math.abs(rMatch - r),
+                    diffG = Math.abs(gMatch - g),
+                    diffB = Math.abs(bMatch - b)
+
+                var difference = Math.max(diffR, diffG, diffB)
+                if (difference > maxDifference) {
+                    if (!neighbors[pixelY]) neighbors[pixelY] = Object.create(null)
+                    neighbors[pixelY][pixelX] = true
+                    continue
+                }
+
+                imageDataData[rIndex] = red
+                imageDataData[gIndex] = green
+                imageDataData[bIndex] = blue
+
+                enqueue(pixelX + 1, pixelY)
+                enqueue(pixelX - 1, pixelY)
+                enqueue(pixelX, pixelY + 1)
+                enqueue(pixelX, pixelY - 1)
+
+            }
+
+            for (var y in neighbors) {
+                var xs = neighbors[y]
+                for (var x in xs) {
+
+                    var rIndex = (y * width + Number(x)) * 4,
+                        gIndex = rIndex + 1,
+                        bIndex = gIndex + 1
+
+                    imageDataData[rIndex] = (imageDataData[rIndex] + red) / 2
+                    imageDataData[gIndex] = (imageDataData[gIndex] + green) / 2
+                    imageDataData[bIndex] = (imageDataData[bIndex] + blue) / 2
+
+                }
+            }
+
+            c.putImageData(imageData, 0, 0)
+
+        })
+
+    }
+
+    var red = 0,
+        green = 0,
+        blue = 0,
+        alpha = 1
+
+    var canvasElement = canvas.canvas
+
+    var enabled = false
+
+    var wrapperTop, wrapperRight, wrapperBottom, wrapperLeft
+
+    return {
+        disable: function () {
+            if (!enabled) return
+            canvasElement.removeEventListener('mousedown', mouseDown)
+            enabled = false
+        },
+        enable: function () {
+            if (enabled) return
+            canvasElement.addEventListener('mousedown', mouseDown)
+            enabled = true
+        },
+        setColor: function (_hue, _saturation, _luminance, _alpha) {
+            var rgb = hsl2rgb(_hue, _saturation, _luminance)
+            red = rgb.r
+            green = rgb.g
+            blue = rgb.b
+            alpha = _alpha
+        },
+        resize: function (wrapperWidth, wrapperHeight) {
+
+            var halfWidth = canvasElement.width / 2,
+                halfHeight = canvasElement.height / 2
+
+            var halfWrapperWidth = wrapperWidth / 2,
+                halfWrapperHeight = wrapperHeight / 2
+
+            wrapperTop = Math.floor(halfHeight - halfWrapperHeight)
+            wrapperRight = Math.floor(halfWidth + halfWrapperWidth)
+            wrapperBottom = Math.ceil(halfHeight + halfWrapperHeight)
+            wrapperLeft = Math.ceil(halfWidth - halfWrapperWidth)
+
         },
     }
 
@@ -572,6 +749,59 @@ function FilePanel (newListener, openListener, saveListener) {
 
 }
 ;
+function hsl2rgb (h, s, l) {
+
+    var r, g, b, m, c, x
+
+    if (!isFinite(h)) h = 0
+    if (!isFinite(s)) s = 0
+    if (!isFinite(l)) l = 0
+
+    h /= 60
+    if (h < 0) h = 6 - (-h % 6)
+    h %= 6
+
+    s = Math.max(0, Math.min(1, s / 100))
+    l = Math.max(0, Math.min(1, l / 100))
+
+    c = (1 - Math.abs((2 * l) - 1)) * s
+    x = c * (1 - Math.abs((h % 2) - 1))
+
+    if (h < 1) {
+        r = c
+        g = x
+        b = 0
+    } else if (h < 2) {
+        r = x
+        g = c
+        b = 0
+    } else if (h < 3) {
+        r = 0
+        g = c
+        b = x
+    } else if (h < 4) {
+        r = 0
+        g = x
+        b = c
+    } else if (h < 5) {
+        r = x
+        g = 0
+        b = c
+    } else {
+        r = c
+        g = 0
+        b = x
+    }
+
+    m = l - c / 2
+    r = Math.round((r + m) * 255)
+    g = Math.round((g + m) * 255)
+    b = Math.round((b + m) * 255)
+
+    return { r: r, g: g, b: b }
+
+}
+;
 function HueSlider (changeListener, endListener) {
 
     var slider = Slider(function (ratio) {
@@ -704,9 +934,9 @@ function MainPanel () {
         eraserTool.disable()
     }
 
-    function disablePencil () {
-        pencilButton.uncheck()
-        pencilTool.disable()
+    function disablePrimaryTool () {
+        primaryToolButton.uncheck()
+        primaryTool.disable()
     }
 
     function enableEraser () {
@@ -714,38 +944,39 @@ function MainPanel () {
         eraserTool.enable()
     }
 
-    function enablePencil () {
-        pencilButton.check()
-        pencilTool.enable()
+    function enablePrimaryTool () {
+        primaryToolButton.check()
+        primaryTool.enable()
     }
 
     function eraserListener () {
+        toolPanel.hide()
         closeAllPanels()
-        disablePencil()
+        disablePrimaryTool()
         enableEraser()
         paramsPanel.setSize(eraserSize)
         eraserButton.mark()
-        pencilButton.unmark()
-        updateToolColor(eraserTool)
-        pencilOrEraserListener = eraserListener
+        primaryToolButton.unmark()
+        updateButtonColor(eraserButton, [eraserTool])
+        primaryToolOrEraserListener = eraserListener
     }
 
-    function pencilListener () {
+    function primaryToolListener () {
         closeAllPanels()
         disableEraser()
-        enablePencil()
+        enablePrimaryTool()
         paramsPanel.setSize(pencilSize)
-        pencilButton.mark()
+        primaryToolButton.mark()
         eraserButton.unmark()
-        updateToolColor(pencilTool)
-        pencilOrEraserListener = pencilListener
+        updateButtonColor(primaryToolButton, [pencilTool, bucketTool])
+        primaryToolOrEraserListener = primaryToolListener
     }
 
     function setCurrentToolColor (hue, saturation, luminance, alpha, button) {
-        if (button == pencilTool.colorButton) {
-            setPencilColor(hue, saturation, luminance, alpha)
+        if (button == primaryToolButton.colorButton) {
+            setPrimaryToolColor(hue, saturation, luminance, alpha)
         }
-        if (button == eraserTool.colorButton) {
+        if (button == eraserButton.colorButton) {
             setEraserColor(hue, saturation, luminance, alpha)
         }
         paramsPanel.setColor(hue, saturation, luminance)
@@ -756,19 +987,21 @@ function MainPanel () {
         eraserButton.setColor(hue, saturation, luminance, alpha)
     }
 
-    function setPencilColor (hue, saturation, luminance, alpha) {
-        pencilTool.setColor(hue, saturation, luminance, alpha)
-        pencilButton.setColor(hue, saturation, luminance, alpha)
+    function setPrimaryToolColor (hue, saturation, luminance, alpha) {
+        primaryTool.setColor(hue, saturation, luminance, alpha)
+        primaryToolButton.setColor(hue, saturation, luminance, alpha)
     }
 
-    function updateToolColor (tool) {
-        var colorButton = tool.colorButton
+    function updateButtonColor (button, tools) {
+        var colorButton = button.colorButton
         palettePanel.select(colorButton)
         var color = colorButton.color,
             hue = color.hue,
             saturation = color.saturation,
             luminance = color.luminance
-        tool.setColor(hue, saturation, luminance, color.alpha)
+        tools.forEach(function (tool) {
+            tool.setColor(hue, saturation, luminance, color.alpha)
+        })
         paramsPanel.setColor(hue, saturation, luminance)
     }
 
@@ -779,27 +1012,41 @@ function MainPanel () {
 
     var canvas = Canvas()
 
-    var pencilOrEraserListener = pencilListener
+    var primaryToolOrEraserListener = primaryToolListener
+
+    var toolPanel = ToolPanel(function () {
+        primaryToolButton.setIcon('pencil')
+        primaryTool.disable()
+        primaryTool = pencilTool
+        primaryTool.enable()
+        paramsButton.enable()
+    }, function () {
+        primaryToolButton.setIcon('bucket')
+        primaryTool.disable()
+        primaryTool = bucketTool
+        primaryTool.enable()
+        paramsButton.disable()
+    })
 
     var palettePanel = PalettePanel(setCurrentToolColor, function () {
         closePalette()
         closeFile()
-        pencilOrEraserListener()
+        primaryToolOrEraserListener()
     }, function (button) {
-        if (pencilOrEraserListener == pencilListener) {
+        if (primaryToolOrEraserListener == primaryToolListener) {
 
-            var oldButton = pencilTool.colorButton
-            if (oldButton != eraserTool.colorButton) oldButton.unmark()
+            var oldButton = primaryToolButton.colorButton
+            if (oldButton != eraserButton.colorButton) oldButton.unmark()
 
-            pencilTool.colorButton = button
+            primaryToolButton.colorButton = button
             button.mark()
 
         } else {
 
-            var oldButton = eraserTool.colorButton
-            if (oldButton != pencilTool.colorButton) oldButton.unmark()
+            var oldButton = eraserButton.colorButton
+            if (oldButton != primaryToolButton.colorButton) oldButton.unmark()
 
-            eraserTool.colorButton = button
+            eraserButton.colorButton = button
             button.mark()
 
         }
@@ -815,25 +1062,29 @@ function MainPanel () {
     })
 
     var pencilTool = PencilTool(pencilSize, canvas)
-    pencilTool.colorButton = palettePanel.blackButton
+
+    var bucketTool = BucketTool(canvas)
 
     var eraserTool = PencilTool(eraserSize, canvas)
-    eraserTool.colorButton = palettePanel.whiteButton
+
+    var primaryTool = pencilTool
 
     var pickTool = PickTool(canvas, function (hue, saturation, luminance) {
         pickPanel.setColor(hue, saturation, luminance, 1)
     })
 
     var paramsPanel = ParamsPanel(function (size) {
-        if (pencilOrEraserListener == pencilListener) {
+        if (primaryToolOrEraserListener == primaryToolListener) {
             pencilSize = size
-            pencilTool.setSize(size)
+            if (primaryTool == pencilTool) {
+                pencilTool.setSize(size)
+            }
         } else {
             eraserSize = size
             eraserTool.setSize(size)
         }
     }, function () {
-        pencilOrEraserListener()
+        primaryToolOrEraserListener()
     })
     paramsPanel.setSize(pencilSize)
 
@@ -844,37 +1095,46 @@ function MainPanel () {
             c.globalAlpha = 1
             c.fillRect(0, 0, size, size)
         })
-        pencilOrEraserListener()
+        primaryToolOrEraserListener()
     }, function (image) {
         canvas.operate(function (c) {
             var canvasElement = canvas.element
             OpenImage(c, image, canvasElement.offsetWidth, canvasElement.offsetHeight)
         })
-        pencilOrEraserListener()
+        primaryToolOrEraserListener()
     }, function () {
         var canvasElement = canvas.element,
             width = canvasElement.offsetWidth,
             height = canvasElement.offsetHeight
         SaveCanvas(canvas.canvas, width, height)
-        pencilOrEraserListener()
+        primaryToolOrEraserListener()
     })
 
-    var pencilButton = ToolButton('pencil', pencilListener)
-    pencilButton.addClass(classPrefix + '-pencilButton')
+    var primaryToolButton = ToolButton('pencil', function () {
+        if (primaryToolButton.isChecked()) {
+            if (toolPanel.isVisible()) toolPanel.hide()
+            else toolPanel.show()
+        }
+        primaryToolListener()
+    })
+    primaryToolButton.addClass(classPrefix + '-primaryToolButton')
+    primaryToolButton.colorButton = palettePanel.blackButton
 
     var eraserButton = ToolButton('eraser', eraserListener)
     eraserButton.addClass(classPrefix + '-eraserButton')
+    eraserButton.colorButton = palettePanel.whiteButton
 
     setEraserColor(0, 0, 100, 1)
-    setPencilColor(0, 0, 0, 1)
+    setPrimaryToolColor(0, 0, 0, 1)
 
     var paletteButton = BarButton('palette', function () {
         if (paletteButton.isChecked()) {
-            pencilOrEraserListener()
+            primaryToolOrEraserListener()
         } else {
 
-            disablePencil()
+            disablePrimaryTool()
             disableEraser()
+            toolPanel.hide()
             closeParams()
             closeFile()
             unslideMainBar()
@@ -888,11 +1148,12 @@ function MainPanel () {
 
     var paramsButton = BarButton('params', function () {
         if (paramsButton.isChecked()) {
-            pencilOrEraserListener()
+            primaryToolOrEraserListener()
         } else {
 
-            disablePencil()
+            disablePrimaryTool()
             disableEraser()
+            toolPanel.hide()
             closePalette()
             closeFile()
             unslideMainBar()
@@ -911,11 +1172,12 @@ function MainPanel () {
 
     var fileButton = BarButton('burger', function () {
         if (fileButton.isChecked()) {
-            pencilOrEraserListener()
+            primaryToolOrEraserListener()
         } else {
 
-            disablePencil()
+            disablePrimaryTool()
             disableEraser()
+            toolPanel.hide()
             closePalette()
             closeParams()
             unslideMainBar()
@@ -929,6 +1191,7 @@ function MainPanel () {
 
     var contentElement = Div(classPrefix + '-content')
     contentElement.appendChild(canvas.element)
+    contentElement.appendChild(toolPanel.element)
     contentElement.appendChild(palettePanel.element)
     contentElement.appendChild(paramsPanel.element)
     contentElement.appendChild(filePanel.element)
@@ -940,11 +1203,11 @@ function MainPanel () {
         pickTool.disable()
         unslideMainBar()
         if (palettePanel.isEditVisible()) palettePanel.show()
-        else pencilOrEraserListener()
+        else primaryToolOrEraserListener()
     })
 
     var mainBar = MainBar(pickPanel)
-    mainBar.addButton(pencilButton)
+    mainBar.addButton(primaryToolButton)
     mainBar.addButton(eraserButton)
     mainBar.addButton(paletteButton)
     mainBar.addButton(paramsButton)
@@ -959,8 +1222,12 @@ function MainPanel () {
 
     return {
         element: element,
+        resize: function () {
+            var canvasElement = canvas.element
+            bucketTool.resize(canvasElement.offsetWidth, canvasElement.offsetHeight)
+        },
         show: function () {
-            pencilListener()
+            primaryToolListener()
             mainBar.show()
         },
     }
@@ -1585,6 +1852,16 @@ function Slider (changeListener, endListener) {
             endListener()
         }
 
+        function endSlide () {
+            sliding = false
+            identifier = null
+            handleClassList.remove('active')
+            removeEventListener('mousemove', mouseMove)
+            removeEventListener('mouseup', mouseUp)
+            removeEventListener('touchmove', touchMove)
+            removeEventListener('touchend', touchEnd)
+        }
+
         function mouseMove (e) {
             if (touched) touched = false
             else change(e)
@@ -1618,16 +1895,6 @@ function Slider (changeListener, endListener) {
                     break
                 }
             }
-        }
-
-        endSlide = function () {
-            sliding = false
-            identifier = null
-            handleClassList.remove('active')
-            removeEventListener('mousemove', mouseMove)
-            removeEventListener('mouseup', mouseUp)
-            removeEventListener('touchmove', touchMove)
-            removeEventListener('touchend', touchEnd)
         }
 
         sliding = true
@@ -1724,6 +1991,7 @@ function ToolButton (icon, clickListener) {
         check: barButton.check,
         element: element,
         isChecked: barButton.isChecked,
+        setIcon: barButton.setIcon,
         uncheck: barButton.uncheck,
         mark: function () {
             classList.add('marked')
@@ -1741,6 +2009,57 @@ function ToolButton (icon, clickListener) {
         },
         unmark: function () {
             classList.remove('marked')
+        },
+    }
+
+}
+;
+function ToolPanel (pencilListener, bucketListener) {
+
+    function hide () {
+        classList.remove('visible')
+        visible = false
+    }
+
+    var classPrefix = 'ToolPanel'
+
+    var pencilButton = BarButton('pencil', function () {
+        bucketButton.uncheck()
+        pencilButton.check()
+        pencilListener()
+        hide()
+    })
+    pencilButton.addClass(classPrefix + '-pencilButton')
+    pencilButton.check()
+
+    var bucketButton = BarButton('bucket', function () {
+        pencilButton.uncheck()
+        bucketButton.check()
+        bucketListener()
+        hide()
+    })
+    bucketButton.addClass(classPrefix + '-bucketButton')
+
+    var contentElement = Div(classPrefix + '-content')
+    contentElement.appendChild(pencilButton.element)
+    contentElement.appendChild(bucketButton.element)
+
+    var element = Div(classPrefix)
+    element.appendChild(contentElement)
+
+    var classList = contentElement.classList
+
+    var visible = false
+
+    return {
+        element: element,
+        hide: hide,
+        isVisible: function () {
+            return visible
+        },
+        show: function () {
+            classList.add('visible')
+            visible = true
         },
     }
 
@@ -1837,7 +2156,8 @@ function UndoButton (undoListener) {
     body.appendChild(loadBarElement)
 
     var finished = 0
-    var icons = ['pencil', 'eraser', 'palette', 'params', 'undo', 'burger']
+    var icons = ['bucket', 'burger', 'eraser',
+        'palette', 'params', 'pencil', 'undo']
     icons.forEach(function (icon) {
         var image = new Image
         image.src = 'images/' + icon + '.svg'
@@ -1861,6 +2181,10 @@ function UndoButton (undoListener) {
 
         }
     })
+
+    var resize = mainPanel.resize
+    addEventListener('resize', resize)
+    resize()
 
 })()
 ;

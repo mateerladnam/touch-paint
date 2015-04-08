@@ -26,6 +26,16 @@ function Slider (changeListener, endListener) {
             endListener()
         }
 
+        function endSlide () {
+            sliding = false
+            identifier = null
+            handleClassList.remove('active')
+            removeEventListener('mousemove', mouseMove)
+            removeEventListener('mouseup', mouseUp)
+            removeEventListener('touchmove', touchMove)
+            removeEventListener('touchend', touchEnd)
+        }
+
         function mouseMove (e) {
             if (touched) touched = false
             else change(e)
@@ -59,16 +69,6 @@ function Slider (changeListener, endListener) {
                     break
                 }
             }
-        }
-
-        endSlide = function () {
-            sliding = false
-            identifier = null
-            handleClassList.remove('active')
-            removeEventListener('mousemove', mouseMove)
-            removeEventListener('mouseup', mouseUp)
-            removeEventListener('touchmove', touchMove)
-            removeEventListener('touchend', touchEnd)
         }
 
         sliding = true

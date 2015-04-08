@@ -1,11 +1,3 @@
-.UndoButton.disabled {
-    opacity: 0.4;
-}
-.UndoButton.disabled.active {
-    background: none;
-    box-shadow: none;
-}
-
 @media (orientation: portrait) {
     .UndoButton {
         top: 8px;

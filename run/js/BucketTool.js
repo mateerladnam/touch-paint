@@ -19,7 +19,8 @@ function BucketTool (canvas) {
 
             function enqueue (x, y) {
 
-                if (x < 0 || x == width || y < 0 || y == height) return
+                if (x < wrapperLeft || x == wrapperRight ||
+                    y < wrapperTop || y == wrapperBottom) return
 
                 if (passed[y]) {
                     if (passed[y][x]) return
@@ -42,6 +43,8 @@ function BucketTool (canvas) {
             var passed = Object.create(null)
             enqueue(mouseX, mouseY)
 
+            var neighbors = Object.create(null)
+
             var maxDifference = 20
 
             while (queue.length) {
@@ -53,20 +56,22 @@ function BucketTool (canvas) {
 
                 var rIndex = (pixelY * width + pixelX) * 4,
                     gIndex = rIndex + 1,
-                    bIndex = gIndex + 1,
-                    aIndex = bIndex + 1
+                    bIndex = gIndex + 1
 
                 var r = imageDataData[rIndex],
                     g = imageDataData[gIndex],
-                    b = imageDataData[bIndex],
-                    a = imageDataData[aIndex]
+                    b = imageDataData[bIndex]
 
                 var diffR = Math.abs(rMatch - r),
                     diffG = Math.abs(gMatch - g),
                     diffB = Math.abs(bMatch - b)
 
                 var difference = Math.max(diffR, diffG, diffB)
-                if (difference > maxDifference) continue
+                if (difference > maxDifference) {
+                    if (!neighbors[pixelY]) neighbors[pixelY] = Object.create(null)
+                    neighbors[pixelY][pixelX] = true
+                    continue
+                }
 
                 imageDataData[rIndex] = red
                 imageDataData[gIndex] = green
@@ -77,6 +82,21 @@ function BucketTool (canvas) {
                 enqueue(pixelX, pixelY + 1)
                 enqueue(pixelX, pixelY - 1)
 
+            }
+
+            for (var y in neighbors) {
+                var xs = neighbors[y]
+                for (var x in xs) {
+
+                    var rIndex = (y * width + Number(x)) * 4,
+                        gIndex = rIndex + 1,
+                        bIndex = gIndex + 1
+
+                    imageDataData[rIndex] = (imageDataData[rIndex] + red) / 2
+                    imageDataData[gIndex] = (imageDataData[gIndex] + green) / 2
+                    imageDataData[bIndex] = (imageDataData[bIndex] + blue) / 2
+
+                }
             }
 
             c.putImageData(imageData, 0, 0)
@@ -93,6 +113,8 @@ function BucketTool (canvas) {
     var canvasElement = canvas.canvas
 
     var enabled = false
+
+    var wrapperTop, wrapperRight, wrapperBottom, wrapperLeft
 
     return {
         disable: function () {
@@ -111,6 +133,20 @@ function BucketTool (canvas) {
             green = rgb.g
             blue = rgb.b
             alpha = _alpha
+        },
+        resize: function (wrapperWidth, wrapperHeight) {
+
+            var halfWidth = canvasElement.width / 2,
+                halfHeight = canvasElement.height / 2
+
+            var halfWrapperWidth = wrapperWidth / 2,
+                halfWrapperHeight = wrapperHeight / 2
+
+            wrapperTop = Math.floor(halfHeight - halfWrapperHeight)
+            wrapperRight = Math.floor(halfWidth + halfWrapperWidth)
+            wrapperBottom = Math.ceil(halfHeight + halfWrapperHeight)
+            wrapperLeft = Math.ceil(halfWidth - halfWrapperWidth)
+
         },
     }
 
