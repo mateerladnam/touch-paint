@@ -16,6 +16,13 @@ function BucketTool (canvas) {
             bMatch = imageDataData[2]
 
         ;(function (red, green, blue, alpha) {
+
+            var invertedAlpha = 1 - alpha
+
+            var redAlpha = red * alpha,
+                greenAlpha = green * alpha,
+                blueAlpha = blue * alpha
+
             canvas.operate(function (c) {
 
                 function enqueue (x, y) {
@@ -74,9 +81,9 @@ function BucketTool (canvas) {
                         continue
                     }
 
-                    imageDataData[rIndex] = red
-                    imageDataData[gIndex] = green
-                    imageDataData[bIndex] = blue
+                    imageDataData[rIndex] = redAlpha + r * invertedAlpha
+                    imageDataData[gIndex] = greenAlpha + g * invertedAlpha
+                    imageDataData[bIndex] = blueAlpha + b * invertedAlpha
 
                     enqueue(pixelX + 1, pixelY)
                     enqueue(pixelX - 1, pixelY)
@@ -93,9 +100,13 @@ function BucketTool (canvas) {
                             gIndex = rIndex + 1,
                             bIndex = gIndex + 1
 
-                        imageDataData[rIndex] = (imageDataData[rIndex] + red) / 2
-                        imageDataData[gIndex] = (imageDataData[gIndex] + green) / 2
-                        imageDataData[bIndex] = (imageDataData[bIndex] + blue) / 2
+                        var r = imageDataData[rIndex],
+                            g = imageDataData[gIndex],
+                            b = imageDataData[bIndex]
+
+                        imageDataData[rIndex] = ((r + red) / 2 + redAlpha + r * invertedAlpha) / 2
+                        imageDataData[gIndex] = ((g + green) / 2 + greenAlpha + g * invertedAlpha) / 2
+                        imageDataData[bIndex] = ((b + blue) / 2 + blueAlpha + r * invertedAlpha) / 2
 
                     }
                 }
@@ -103,6 +114,7 @@ function BucketTool (canvas) {
                 c.putImageData(imageData, 0, 0)
 
             })
+
         })(red, green, blue, alpha)
 
     }
