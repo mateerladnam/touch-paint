@@ -15,93 +15,95 @@ function BucketTool (canvas) {
             gMatch = imageDataData[1],
             bMatch = imageDataData[2]
 
-        canvas.operate(function (c) {
+        ;(function (red, green, blue, alpha) {
+            canvas.operate(function (c) {
 
-            function enqueue (x, y) {
+                function enqueue (x, y) {
 
-                if (x < wrapperLeft || x == wrapperRight ||
-                    y < wrapperTop || y == wrapperBottom) return
+                    if (x < wrapperLeft || x == wrapperRight ||
+                        y < wrapperTop || y == wrapperBottom) return
 
-                if (passed[y]) {
-                    if (passed[y][x]) return
-                } else {
-                    passed[y] = Object.create(null)
+                    if (passed[y]) {
+                        if (passed[y][x]) return
+                    } else {
+                        passed[y] = Object.create(null)
+                    }
+
+                    passed[y][x] = true
+                    queue.push([x, y])
+
                 }
 
-                passed[y][x] = true
-                queue.push([x, y])
+                var width = canvasElement.width,
+                    height = canvasElement.height
 
-            }
+                var imageData = c.getImageData(0, 0, width, height)
+                var imageDataData = imageData.data
 
-            var width = canvasElement.width,
-                height = canvasElement.height
+                var queue = []
+                var passed = Object.create(null)
+                enqueue(mouseX, mouseY)
 
-            var imageData = c.getImageData(0, 0, width, height)
-            var imageDataData = imageData.data
+                var neighbors = Object.create(null)
 
-            var queue = []
-            var passed = Object.create(null)
-            enqueue(mouseX, mouseY)
+                var maxDifference = 20
 
-            var neighbors = Object.create(null)
+                while (queue.length) {
 
-            var maxDifference = 20
+                    var coords = queue.shift()
 
-            while (queue.length) {
+                    var pixelX = coords[0],
+                        pixelY = coords[1]
 
-                var coords = queue.shift()
-
-                var pixelX = coords[0],
-                    pixelY = coords[1]
-
-                var rIndex = (pixelY * width + pixelX) * 4,
-                    gIndex = rIndex + 1,
-                    bIndex = gIndex + 1
-
-                var r = imageDataData[rIndex],
-                    g = imageDataData[gIndex],
-                    b = imageDataData[bIndex]
-
-                var diffR = Math.abs(rMatch - r),
-                    diffG = Math.abs(gMatch - g),
-                    diffB = Math.abs(bMatch - b)
-
-                var difference = Math.max(diffR, diffG, diffB)
-                if (difference > maxDifference) {
-                    if (!neighbors[pixelY]) neighbors[pixelY] = Object.create(null)
-                    neighbors[pixelY][pixelX] = true
-                    continue
-                }
-
-                imageDataData[rIndex] = red
-                imageDataData[gIndex] = green
-                imageDataData[bIndex] = blue
-
-                enqueue(pixelX + 1, pixelY)
-                enqueue(pixelX - 1, pixelY)
-                enqueue(pixelX, pixelY + 1)
-                enqueue(pixelX, pixelY - 1)
-
-            }
-
-            for (var y in neighbors) {
-                var xs = neighbors[y]
-                for (var x in xs) {
-
-                    var rIndex = (y * width + Number(x)) * 4,
+                    var rIndex = (pixelY * width + pixelX) * 4,
                         gIndex = rIndex + 1,
                         bIndex = gIndex + 1
 
-                    imageDataData[rIndex] = (imageDataData[rIndex] + red) / 2
-                    imageDataData[gIndex] = (imageDataData[gIndex] + green) / 2
-                    imageDataData[bIndex] = (imageDataData[bIndex] + blue) / 2
+                    var r = imageDataData[rIndex],
+                        g = imageDataData[gIndex],
+                        b = imageDataData[bIndex]
+
+                    var diffR = Math.abs(rMatch - r),
+                        diffG = Math.abs(gMatch - g),
+                        diffB = Math.abs(bMatch - b)
+
+                    var difference = Math.max(diffR, diffG, diffB)
+                    if (difference > maxDifference) {
+                        if (!neighbors[pixelY]) neighbors[pixelY] = Object.create(null)
+                        neighbors[pixelY][pixelX] = true
+                        continue
+                    }
+
+                    imageDataData[rIndex] = red
+                    imageDataData[gIndex] = green
+                    imageDataData[bIndex] = blue
+
+                    enqueue(pixelX + 1, pixelY)
+                    enqueue(pixelX - 1, pixelY)
+                    enqueue(pixelX, pixelY + 1)
+                    enqueue(pixelX, pixelY - 1)
 
                 }
-            }
 
-            c.putImageData(imageData, 0, 0)
+                for (var y in neighbors) {
+                    var xs = neighbors[y]
+                    for (var x in xs) {
 
-        })
+                        var rIndex = (y * width + Number(x)) * 4,
+                            gIndex = rIndex + 1,
+                            bIndex = gIndex + 1
+
+                        imageDataData[rIndex] = (imageDataData[rIndex] + red) / 2
+                        imageDataData[gIndex] = (imageDataData[gIndex] + green) / 2
+                        imageDataData[bIndex] = (imageDataData[bIndex] + blue) / 2
+
+                    }
+                }
+
+                c.putImageData(imageData, 0, 0)
+
+            })
+        })(red, green, blue, alpha)
 
     }
 
