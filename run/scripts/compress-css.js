@@ -20,6 +20,7 @@ var files = [
     'FileButton',
     'FilePanel',
     'HueSlider',
+    'LineTool',
     'MainBar',
     'MainPanel',
     'PalettePanel',

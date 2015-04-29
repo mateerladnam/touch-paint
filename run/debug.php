@@ -16,6 +16,7 @@ echo_html(
     .'<link rel="stylesheet" type="text/css" href="css/FileButton.css" />'
     .'<link rel="stylesheet" type="text/css" href="css/FilePanel.css" />'
     .'<link rel="stylesheet" type="text/css" href="css/HueSlider.css" />'
+    .'<link rel="stylesheet" type="text/css" href="css/LineTool.css" />'
     .'<link rel="stylesheet" type="text/css" href="css/MainBar.css" />'
     .'<link rel="stylesheet" type="text/css" href="css/MainPanel.css" />'
     .'<link rel="stylesheet" type="text/css" href="css/PalettePanel.css" />'
