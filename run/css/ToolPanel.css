@@ -39,9 +39,14 @@
         top: 8px;
     }
 
-    .ToolPanel-bucketButton {
+    .ToolPanel-lineButton {
         top: 8px;
         left: 56px;
+    }
+
+    .ToolPanel-bucketButton {
+        top: 8px;
+        left: 104px;
     }
 
 }
@@ -66,8 +71,13 @@
         bottom: 8px;
     }
 
-    .ToolPanel-bucketButton {
+    .ToolPanel-lineButton {
         bottom: 56px;
+        left: 8px;
+    }
+
+    .ToolPanel-bucketButton {
+        bottom: 104px;
         left: 8px;
     }
 

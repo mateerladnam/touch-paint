@@ -114,6 +114,12 @@ function MainPanel () {
         primaryTool.enable()
         paramsButton.enable()
     }, function () {
+        primaryToolButton.setIcon('line')
+        primaryTool.disable()
+        //primaryTool = lineTool
+        primaryTool.enable()
+        paramsButton.enable()
+    }, function () {
         primaryToolButton.setIcon('bucket')
         primaryTool.disable()
         primaryTool = bucketTool

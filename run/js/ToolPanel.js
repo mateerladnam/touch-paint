@@ -1,4 +1,4 @@
-function ToolPanel (pencilListener, bucketListener) {
+function ToolPanel (pencilListener, lineListener, bucketListener) {
 
     function hide () {
         classList.remove('visible')
@@ -8,6 +8,7 @@ function ToolPanel (pencilListener, bucketListener) {
     var classPrefix = 'ToolPanel'
 
     var pencilButton = BarButton('pencil', function () {
+        lineButton.uncheck()
         bucketButton.uncheck()
         pencilButton.check()
         pencilListener()
@@ -16,8 +17,18 @@ function ToolPanel (pencilListener, bucketListener) {
     pencilButton.addClass(classPrefix + '-pencilButton')
     pencilButton.check()
 
+    var lineButton = BarButton('line', function () {
+        pencilButton.uncheck()
+        bucketButton.uncheck()
+        lineButton.check()
+        lineListener()
+        hide()
+    })
+    lineButton.addClass(classPrefix + '-lineButton')
+
     var bucketButton = BarButton('bucket', function () {
         pencilButton.uncheck()
+        lineButton.uncheck()
         bucketButton.check()
         bucketListener()
         hide()
@@ -26,6 +37,7 @@ function ToolPanel (pencilListener, bucketListener) {
 
     var contentElement = Div(classPrefix + '-content')
     contentElement.appendChild(pencilButton.element)
+    contentElement.appendChild(lineButton.element)
     contentElement.appendChild(bucketButton.element)
 
     var element = Div(classPrefix)
