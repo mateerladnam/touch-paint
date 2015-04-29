@@ -7,33 +7,33 @@ var fs = require('fs'),
     uglifyCss = require('uglifycss')
 
 var files = [
-    'js/Main.css',
-    'css/Button.css',
-    'js/Canvas.css',
-    'js/ColorButton.css',
-    'js/ColorButtonsPanel.css',
-    'js/Slider.css',
-    'js/AlphaSlider.css',
-    'js/SaturationSlider.css',
-    'js/LuminanceSlider.css',
-    'js/EditColorPanel.css',
-    'js/FileButton.css',
-    'js/FilePanel.css',
-    'js/HueSlider.css',
-    'js/MainBar.css',
-    'js/MainPanel.css',
-    'js/PalettePanel.css',
-    'js/ParamsPanel.css',
-    'js/PickButton.css',
-    'js/PickPanel.css',
-    'js/ToolButton.css',
-    'js/ToolPanel.css',
-    'js/UndoButton.css',
+    'Main',
+    'Button',
+    'Canvas',
+    'ColorButton',
+    'ColorButtonsPanel',
+    'Slider',
+    'AlphaSlider',
+    'SaturationSlider',
+    'LuminanceSlider',
+    'EditColorPanel',
+    'FileButton',
+    'FilePanel',
+    'HueSlider',
+    'MainBar',
+    'MainPanel',
+    'PalettePanel',
+    'ParamsPanel',
+    'PickButton',
+    'PickPanel',
+    'ToolButton',
+    'ToolPanel',
+    'UndoButton',
 ]
 
 var source = ''
 files.forEach(function (file) {
-    source += fs.readFileSync(file, 'utf-8') + '\n'
+    source += fs.readFileSync('css/' + file + '.css', 'utf-8') + '\n'
 })
 
 var compressCss = uglifyCss.processString(source)
