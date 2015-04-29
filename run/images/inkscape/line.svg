@@ -24,12 +24,12 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1"
-     inkscape:cx="-24.202294"
-     inkscape:cy="-14.829431"
+     inkscape:zoom="45.254834"
+     inkscape:cx="38.350792"
+     inkscape:cy="32.305303"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
-     showgrid="false"
+     showgrid="true"
      inkscape:snap-global="true"
      inkscape:window-width="1920"
      inkscape:window-height="1044"
@@ -62,7 +62,7 @@
      transform="translate(0,-1020.3622)">
     <path
        style="fill:none;fill-rule:evenodd;stroke:#333333;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="m 1.5,1050.8622 29,-29"
+       d="m 2.5,1049.8622 27,-27"
        id="path4140"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cc" />
