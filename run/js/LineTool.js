@@ -1,35 +1,49 @@
 function LineTool (size, canvas) {
 
-    function Line (e) {
+    function beginLine (e) {
 
-        var start = {}
-        setCoords(start, e)
+        var startPoint = {}
+        setCoords(startPoint, e)
 
-        var end = {
-            x: start.x,
-            y: start.y
+        var endPoint = {
+            x: startPoint.x,
+            y: startPoint.y
         }
 
-        return {
+        var that = {
             color: hsl,
-            end: end,
+            endPoint: endPoint,
             size: size,
-            start: start,
+            startPoint: startPoint,
+            end: function () {
+                lines.splice(lines.indexOf(that), 1)
+                update()
+                canvas.operate(function (c) {
+                    drawLine(c, that)
+                })
+            },
             move: function (e) {
-                setCoords(end, e)
+                setCoords(endPoint, e)
+                update()
             },
         }
+
+        lines.push(that)
+        update()
+
+        return that
 
     }
 
     function drawLine (c, line) {
 
-        var start = line.start,
-            end = line.end
+        console.log(line)
+        var startPoint = line.startPoint,
+            endPoint = line.endPoint
 
         c.beginPath()
-        c.moveTo(start.x, start.y)
-        c.lineTo(end.x, end.y)
+        c.moveTo(startPoint.x, startPoint.y)
+        c.lineTo(endPoint.x, endPoint.y)
         c.strokeStyle = line.color
         c.lineWidth = line.size
         c.stroke()
@@ -44,21 +58,20 @@ function LineTool (size, canvas) {
         }
 
         function mouseUp () {
-            lines.splice(lines.indexOf(line), 1)
-            canvas.operate(function (c) {
-                drawLine(c, line)
-            })
+            line.end()
             removeEventListener('mousemove', mouseMove)
             removeEventListener('mouseup', mouseUp)
-            update()
         }
 
-        addEventListener('mousemove', mouseMove)
-        addEventListener('mouseup', mouseUp)
+        if (e.button !== 0) return
 
-        var line = Line(e)
-        lines.push(line)
-        update()
+        e.preventDefault()
+        if (touched) touched = false
+        else {
+            var line = beginLine(e)
+            addEventListener('mousemove', mouseMove)
+            addEventListener('mouseup', mouseUp)
+        }
 
     }
 
@@ -66,6 +79,42 @@ function LineTool (size, canvas) {
         var rect = canvasElement.getBoundingClientRect()
         coords.x = e.clientX - rect.left
         coords.y = e.clientY - rect.top
+    }
+
+    function touchEnd (e) {
+        touched = true
+        e.preventDefault()
+        var touches = e.changedTouches
+        for (var i = 0; i < touches.length; i++) {
+            var touch = touches[i]
+            var identifier = touch.identifier
+            var activeTouch = activeTouches[identifier]
+            if (!activeTouch) continue
+            activeTouch.end()
+            delete activeTouches[identifier]
+        }
+    }
+
+    function touchMove (e) {
+        touched = true
+        e.preventDefault()
+        var touches = e.changedTouches
+        for (var i = 0; i < touches.length; i++) {
+            var touch = touches[i]
+            var activeTouch = activeTouches[touch.identifier]
+            if (!activeTouch) continue
+            activeTouch.move(touch)
+        }
+    }
+
+    function touchStart (e) {
+        touched = true
+        e.preventDefault()
+        var touches = e.changedTouches
+        for (var i = 0; i < touches.length; i++) {
+            var touch = touches[i]
+            activeTouches[touch.identifier] = beginLine(touch)
+        }
     }
 
     function update () {
@@ -77,6 +126,8 @@ function LineTool (size, canvas) {
 
     var lines = []
 
+    var touched = false
+    var activeTouches = {}
     var enabled = false
     var canvasElement = canvas.canvas
     var hue = 0, saturation = 0, luminance = 0, alpha = 1
@@ -97,9 +148,15 @@ function LineTool (size, canvas) {
     return {
         disable: function () {
             canvasElement.removeEventListener('mousedown', mouseDown)
+            canvasElement.removeEventListener('touchstart', touchStart)
+            canvasElement.removeEventListener('touchmove', touchMove)
+            canvasElement.removeEventListener('touchend', touchEnd)
         },
         enable: function () {
             canvasElement.addEventListener('mousedown', mouseDown)
+            canvasElement.addEventListener('touchstart', touchStart)
+            canvasElement.addEventListener('touchmove', touchMove)
+            canvasElement.addEventListener('touchend', touchEnd)
         },
         setColor: function (_hue, _saturation, _luminance, _alpha) {
             hue = _hue
