@@ -37,7 +37,6 @@ function LineTool (size, canvas) {
 
     function drawLine (c, line) {
 
-        console.log(line)
         var startPoint = line.startPoint,
             endPoint = line.endPoint
 
