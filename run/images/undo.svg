@@ -1,17 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Created with Inkscape (http://www.inkscape.org/) -->
-
 <svg
    xmlns:dc="http://purl.org/dc/elements/1.1/"
    xmlns:cc="http://creativecommons.org/ns#"
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    version="1.1"
-   width="32"
+   id="svg2"
    height="32"
-   id="svg2">
+   width="32">
   <defs
      id="defs4" />
   <metadata
@@ -30,24 +27,21 @@
      transform="translate(0,-1020.3622)"
      id="layer1">
     <path
-       d="M 4.9990091,15.999999 A 11.000991,11.001 0 0 1 27.000991,16"
        transform="translate(4.0017954,1016.364)"
+       d="M 4.9990091,15.999999 A 11.000991,11.001 0 0 1 27.000991,16"
        id="path3769"
        style="fill:none;stroke:#333333;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
     <path
-       d="m 1,1043.3622 8.0019818,8 7.9980182,-8"
-       inkscape:connector-curvature="0"
        id="path3771"
+       d="m 1,1043.3622 8.0019818,8 7.9980182,-8"
        style="fill:none;stroke:#333333;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
     <path
-       d="m 9,1050.3622 0,-18"
-       inkscape:connector-curvature="0"
        id="path3773"
+       d="m 9,1050.3622 0,-18"
        style="fill:none;stroke:#333333;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
     <path
-       d="m 31,1032.3622 0,19"
-       inkscape:connector-curvature="0"
        id="path3775"
+       d="m 31,1032.3622 0,19"
        style="fill:none;stroke:#333333;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
   </g>
 </svg>

@@ -1,17 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Created with Inkscape (http://www.inkscape.org/) -->
-
 <svg
    xmlns:dc="http://purl.org/dc/elements/1.1/"
    xmlns:cc="http://creativecommons.org/ns#"
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    version="1.1"
-   width="32"
+   id="svg2"
    height="32"
-   id="svg2">
+   width="32">
   <defs
      id="defs4" />
   <metadata
@@ -29,40 +26,34 @@
      transform="translate(0,-1020.3622)"
      id="layer1">
     <path
-       d="M 24.5,1.5 C 25,1 26,1 26.5,1.5 l 4,4 C 31,6 31,7 30.5,7.5 L 10,28 1,31 4,22 z"
-       inkscape:connector-curvature="0"
        transform="translate(0,1020.3622)"
        id="path2987"
+       d="M 24.5,1.5 C 25,1 26,1 26.5,1.5 l 4,4 C 31,6 31,7 30.5,7.5 L 10,28 1,31 4,22 z"
        style="fill:none;stroke:#333333;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
     <path
-       d="M 22,8 7,23"
-       inkscape:connector-curvature="0"
        transform="translate(0,1020.3622)"
        id="path3757"
+       d="M 22,8 7,23"
        style="fill:none;stroke:#333333;stroke-width:1px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1" />
     <path
-       d="M 24,10 9,25"
-       inkscape:connector-curvature="0"
        transform="translate(0,1020.3622)"
        id="path3759"
+       d="M 24,10 9,25"
        style="fill:none;stroke:#333333;stroke-width:1px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1" />
     <path
-       d="M 2.5200893,26.167411 5.7165066,29.463493 1,31 z"
-       inkscape:connector-curvature="0"
        transform="translate(0,1020.3622)"
        id="path3761"
-       style="fill:#333333;fill-opacity:1;stroke:none" />
+       d="M 2.5200893,26.167411 5.7165066,29.463493 1,31 z"
+       style="fill:#333333;fill-opacity:1;stroke:none;stroke-linecap:round;stroke-linejoin:round" />
     <path
-       d="m 20,6 6,6"
-       inkscape:connector-curvature="0"
        transform="translate(0,1020.3622)"
        id="path3763"
+       d="m 20,6 6,6"
        style="fill:none;stroke:#333333;stroke-width:1px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1" />
     <path
-       d="M 27,11 21,5"
-       inkscape:connector-curvature="0"
        transform="translate(0,1020.3622)"
        id="path3765"
+       d="M 27,11 21,5"
        style="fill:none;stroke:#333333;stroke-width:1px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1" />
   </g>
 </svg>
