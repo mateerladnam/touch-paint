@@ -16,6 +16,7 @@ echo
     ."../images/color-background.svg\n"
     ."../images/eraser.svg\n"
     ."../images/file.svg\n"
+    ."../images/line.svg\n"
     ."../images/open.svg\n"
     ."../images/palette.svg\n"
     ."../images/params.svg\n"
