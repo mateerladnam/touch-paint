@@ -19,6 +19,7 @@ var files = [
     'FilePanel',
     'hsl2rgb',
     'HueSlider',
+    'LineTool',
     'LuminanceSlider',
     'MainBar',
     'MainPanel',
