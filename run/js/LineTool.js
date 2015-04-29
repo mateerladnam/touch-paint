@@ -146,16 +146,20 @@ function LineTool (size, canvas) {
 
     return {
         disable: function () {
+            if (!enabled) return
             canvasElement.removeEventListener('mousedown', mouseDown)
             canvasElement.removeEventListener('touchstart', touchStart)
             canvasElement.removeEventListener('touchmove', touchMove)
             canvasElement.removeEventListener('touchend', touchEnd)
+            enabled = false
         },
         enable: function () {
+            if (enabled) return
             canvasElement.addEventListener('mousedown', mouseDown)
             canvasElement.addEventListener('touchstart', touchStart)
             canvasElement.addEventListener('touchmove', touchMove)
             canvasElement.addEventListener('touchend', touchEnd)
+            enabled = true
         },
         setColor: function (_hue, _saturation, _luminance, _alpha) {
             hue = _hue
