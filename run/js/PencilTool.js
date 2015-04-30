@@ -8,7 +8,7 @@ function PencilTool (size, canvas) {
                 c.beginPath()
                 c.arc(x, y, halfSize, 0, Math.PI * 2)
                 c.fill()
-            })
+            }, 50)
         })(size, halfSize, hsl)
     }
 
@@ -59,7 +59,7 @@ function PencilTool (size, canvas) {
                 c.moveTo(oldX, oldY)
                 c.lineTo(x, y)
                 c.stroke()
-            })
+            }, 50)
         })(size, hsl)
     }
 

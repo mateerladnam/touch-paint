@@ -203,13 +203,13 @@ function MainPanel () {
             c.fillStyle = '#fff'
             c.globalAlpha = 1
             c.fillRect(0, 0, size, size)
-        })
+        }, 200)
         primaryToolOrEraserListener()
     }, function (image) {
         canvas.operate(function (c) {
             var canvasElement = canvas.element
             OpenImage(c, image, canvasElement.offsetWidth, canvasElement.offsetHeight)
-        })
+        }, 200)
         primaryToolOrEraserListener()
     }, function () {
         var canvasElement = canvas.element,

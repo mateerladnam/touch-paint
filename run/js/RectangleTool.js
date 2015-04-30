@@ -20,7 +20,7 @@ function RectangleTool (size, canvas) {
                 update()
                 canvas.operate(function (c) {
                     drawRectangle(c, that)
-                })
+                }, 200)
             },
             move: function (e) {
                 setCoords(endPoint, e)

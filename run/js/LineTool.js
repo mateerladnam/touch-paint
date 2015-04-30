@@ -20,7 +20,7 @@ function LineTool (size, canvas) {
                 update()
                 canvas.operate(function (c) {
                     drawLine(c, that)
-                })
+                }, 200)
             },
             move: function (e) {
                 setCoords(endPoint, e)

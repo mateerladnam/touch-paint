@@ -37,11 +37,11 @@ function Canvas () {
         onUndoUnavailable: function (listener) {
             undoUnavailableListener = listener
         },
-        operate: function (operation) {
+        operate: function (operation, timeout) {
 
             operations.push({
                 operation: operation,
-                timeout: 50 + Math.random() * 600,
+                timeout: timeout,
             })
             if (operations.length == 1) undoAvailableListener()
             operation(c)

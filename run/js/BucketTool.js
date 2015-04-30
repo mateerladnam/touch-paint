@@ -113,7 +113,7 @@ function BucketTool (canvas) {
 
                 c.putImageData(imageData, 0, 0)
 
-            })
+            }, 200)
 
         })(red, green, blue, alpha)
 
