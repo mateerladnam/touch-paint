@@ -96,6 +96,8 @@ function Canvas () {
 
             }
 
+            return 50
+
         },
     }
 
