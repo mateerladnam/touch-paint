@@ -39,7 +39,10 @@ function Canvas () {
         },
         operate: function (operation) {
 
-            operations.push(operation)
+            operations.push({
+                operation: operation,
+                timeout: 50 + Math.random() * 600,
+            })
             if (operations.length == 1) undoAvailableListener()
             operation(c)
 
@@ -66,7 +69,7 @@ function Canvas () {
             undoCanvases.push(undoCanvas)
 
             for (var i = operationIndex; i < operationIndex + undoSize; i++) {
-                operations[i](undoC)
+                operations[i].operation(undoC)
             }
 
         },
@@ -80,23 +83,22 @@ function Canvas () {
                 c.fillRect(0, 0, size, size)
             }
 
-            if (operations.length) {
+            if (!operations.length) return 50
 
-                operations.pop()
-                var startIndex = undoCanvases.length * undoSize
-                for (var i = startIndex; i < operations.length; i++) {
-                    operations[i](c)
-                }
+            var lastOperation = operations.pop()
 
-                if (undoCanvases.length * undoSize > operations.length) {
-                    undoCanvases.pop()
-                }
-
-                if (!operations.length) undoUnavailableListener()
-
+            var startIndex = undoCanvases.length * undoSize
+            for (var i = startIndex; i < operations.length; i++) {
+                operations[i].operation(c)
             }
 
-            return 50
+            if (undoCanvases.length * undoSize > operations.length) {
+                undoCanvases.pop()
+            }
+
+            if (!operations.length) undoUnavailableListener()
+
+            return lastOperation.timeout
 
         },
     }
