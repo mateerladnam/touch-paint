@@ -1,6 +1,6 @@
-function LineTool (size, canvas) {
+function RectangleTool (size, canvas) {
 
-    function beginLine (e) {
+    function beginRectangle (e) {
 
         var startPoint = {}
         setCoords(startPoint, e)
@@ -16,10 +16,10 @@ function LineTool (size, canvas) {
             size: size,
             startPoint: startPoint,
             end: function () {
-                lines.splice(lines.indexOf(that), 1)
+                rectangles.splice(rectangles.indexOf(that), 1)
                 update()
                 canvas.operate(function (c) {
-                    drawLine(c, that)
+                    drawRectangle(c, that)
                 })
             },
             move: function (e) {
@@ -28,24 +28,25 @@ function LineTool (size, canvas) {
             },
         }
 
-        lines.push(that)
+        rectangles.push(that)
         update()
 
         return that
 
     }
 
-    function drawLine (c, line) {
+    function drawRectangle (c, rectangle) {
 
-        var startPoint = line.startPoint,
-            endPoint = line.endPoint
+        var startPoint = rectangle.startPoint,
+            startX = startPoint.x,
+            startY = startPoint.y,
+            endPoint = rectangle.endPoint
 
         c.beginPath()
-        c.moveTo(startPoint.x, startPoint.y)
-        c.lineTo(endPoint.x, endPoint.y)
-        c.strokeStyle = line.color
-        c.lineCap = 'round'
-        c.lineWidth = line.size
+        c.rect(startX, startY, endPoint.x - startX, endPoint.y - startY)
+        c.strokeStyle = rectangle.color
+        c.lineJoin = 'round'
+        c.lineWidth = rectangle.size
         c.stroke()
 
     }
@@ -53,12 +54,12 @@ function LineTool (size, canvas) {
     function mouseDown (e) {
 
         function mouseMove (e) {
-            line.move(e)
+            rectangle.move(e)
             update()
         }
 
         function mouseUp () {
-            line.end()
+            rectangle.end()
             removeEventListener('mousemove', mouseMove)
             removeEventListener('mouseup', mouseUp)
         }
@@ -68,7 +69,7 @@ function LineTool (size, canvas) {
         e.preventDefault()
         if (touched) touched = false
         else {
-            var line = beginLine(e)
+            var rectangle = beginRectangle(e)
             addEventListener('mousemove', mouseMove)
             addEventListener('mouseup', mouseUp)
         }
@@ -113,18 +114,18 @@ function LineTool (size, canvas) {
         var touches = e.changedTouches
         for (var i = 0; i < touches.length; i++) {
             var touch = touches[i]
-            activeTouches[touch.identifier] = beginLine(touch)
+            activeTouches[touch.identifier] = beginRectangle(touch)
         }
     }
 
     function update () {
         overlayC.clearRect(0, 0, overlayCanvas.width, overlayCanvas.height)
-        lines.forEach(function (line) {
-            drawLine(overlayC, line)
+        rectangles.forEach(function (rectangle) {
+            drawRectangle(overlayC, rectangle)
         })
     }
 
-    var lines = []
+    var rectangles = []
 
     var touched = false
     var activeTouches = {}
@@ -134,7 +135,7 @@ function LineTool (size, canvas) {
     var hsl = 'hsla(0, 0%, 0%, 1)'
 
     var overlayCanvas = document.createElement('canvas')
-    overlayCanvas.className = 'LineTool-overlayCanvas'
+    overlayCanvas.className = 'RectangleTool-overlayCanvas'
     overlayCanvas.width = canvasElement.width
     overlayCanvas.height = canvasElement.height
     overlayCanvas.style.top = canvasElement.style.top

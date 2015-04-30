@@ -61,7 +61,7 @@ function MainPanel () {
         paramsPanel.setSize(pencilSize)
         primaryToolButton.mark()
         eraserButton.unmark()
-        updateButtonColor(primaryToolButton, [pencilTool, lineTool, bucketTool])
+        updateButtonColor(primaryToolButton, [pencilTool, lineTool, rectangleTool, bucketTool])
         primaryToolOrEraserListener = primaryToolListener
     }
 
@@ -122,7 +122,7 @@ function MainPanel () {
     }, function () {
         primaryToolButton.setIcon('rectangle')
         primaryTool.disable()
-//        primaryTool = rectangleTool
+        primaryTool = rectangleTool
         primaryTool.enable()
         paramsButton.enable()
     }, function () {
@@ -170,6 +170,8 @@ function MainPanel () {
 
     var lineTool = LineTool(pencilSize, canvas)
 
+    var rectangleTool = RectangleTool(pencilSize, canvas)
+
     var bucketTool = BucketTool(canvas)
 
     var eraserTool = PencilTool(eraserSize, canvas)
@@ -185,6 +187,7 @@ function MainPanel () {
             pencilSize = size
             pencilTool.setSize(size)
             lineTool.setSize(size)
+            rectangleTool.setSize(size)
         } else {
             eraserSize = size
             eraserTool.setSize(size)

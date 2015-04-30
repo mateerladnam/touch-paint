@@ -27,6 +27,7 @@ var files = [
     'ParamsPanel',
     'PickButton',
     'PickPanel',
+    'RectangleTool',
     'ToolButton',
     'ToolPanel',
     'UndoButton',

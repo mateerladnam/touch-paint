@@ -23,6 +23,7 @@ echo_html(
     .'<link rel="stylesheet" type="text/css" href="css/ParamsPanel.css" />'
     .'<link rel="stylesheet" type="text/css" href="css/PickButton.css" />'
     .'<link rel="stylesheet" type="text/css" href="css/PickPanel.css" />'
+    .'<link rel="stylesheet" type="text/css" href="css/RectangleTool.css" />'
     .'<link rel="stylesheet" type="text/css" href="css/ToolButton.css" />'
     .'<link rel="stylesheet" type="text/css" href="css/ToolPanel.css" />'
     .'<link rel="stylesheet" type="text/css" href="css/UndoButton.css" />',
@@ -49,6 +50,7 @@ echo_html(
     .'<script type="text/javascript" src="js/PickButton.js"></script>'
     .'<script type="text/javascript" src="js/PickPanel.js"></script>'
     .'<script type="text/javascript" src="js/PickTool.js"></script>'
+    .'<script type="text/javascript" src="js/RectangleTool.js"></script>'
     .'<script type="text/javascript" src="js/rgb2hsl.js"></script>'
     .'<script type="text/javascript" src="js/SaveCanvas.js"></script>'
     .'<script type="text/javascript" src="js/SaturationSlider.js"></script>'

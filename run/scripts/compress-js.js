@@ -30,6 +30,7 @@ var files = [
     'PickButton',
     'PickPanel',
     'PickTool',
+    'RectangleTool',
     'rgb2hsl',
     'SaveCanvas',
     'SaturationSlider',
