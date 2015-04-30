@@ -24,7 +24,7 @@
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
      inkscape:window-width="1920"
-     inkscape:window-height="1017"
+     inkscape:window-height="1044"
      id="namedview7"
      showgrid="true"
      inkscape:snap-bbox="true"
@@ -37,11 +37,11 @@
      inkscape:object-paths="true"
      inkscape:snap-intersection-paths="true"
      inkscape:object-nodes="true"
-     inkscape:zoom="29.5"
-     inkscape:cx="11.787876"
-     inkscape:cy="26.543776"
-     inkscape:window-x="0"
-     inkscape:window-y="27"
+     inkscape:zoom="20.85965"
+     inkscape:cx="29.828872"
+     inkscape:cy="22.486001"
+     inkscape:window-x="1920"
+     inkscape:window-y="0"
      inkscape:window-maximized="1"
      inkscape:current-layer="svg2">
     <inkscape:grid
@@ -75,7 +75,7 @@
      id="layer1">
     <path
        id="path4140"
-       d="m 1,1051.3622 0,-30 30,0 0,30 z"
+       d="m 2,1050.3622 0,-28 28,0 0,28 z"
        style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#333333;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccccc" />
