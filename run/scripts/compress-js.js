@@ -15,6 +15,7 @@ var files = [
     'ColorButtonsPanel',
     'Div',
     'EditColorPanel',
+    'EllipseTool',
     'FileButton',
     'FilePanel',
     'hsl2rgb',

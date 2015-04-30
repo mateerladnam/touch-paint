@@ -15,7 +15,7 @@
     body.appendChild(loadBarElement)
 
     var finished = 0
-    var icons = ['bucket', 'burger', 'eraser', 'line',
+    var icons = ['bucket', 'burger', 'ellipse', 'eraser', 'line',
         'palette', 'params', 'pencil', 'rectangle', 'undo']
     icons.forEach(function (icon) {
         var image = new Image

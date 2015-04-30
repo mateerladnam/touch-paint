@@ -12,6 +12,7 @@ var files = [
     'Canvas',
     'ColorButton',
     'ColorButtonsPanel',
+    'EllipseTool',
     'Slider',
     'AlphaSlider',
     'SaturationSlider',

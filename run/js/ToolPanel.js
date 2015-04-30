@@ -1,4 +1,5 @@
-function ToolPanel (pencilListener, lineListener, rectangleListener, bucketListener) {
+function ToolPanel (pencilListener, lineListener,
+    ellipseListener, rectangleListener, bucketListener) {
 
     function hide () {
         classList.remove('visible')
@@ -9,6 +10,7 @@ function ToolPanel (pencilListener, lineListener, rectangleListener, bucketListe
 
     var pencilButton = BarButton('pencil', function () {
         lineButton.uncheck()
+        ellipseButton.uncheck()
         rectangleButton.uncheck()
         bucketButton.uncheck()
         pencilButton.check()
@@ -20,6 +22,7 @@ function ToolPanel (pencilListener, lineListener, rectangleListener, bucketListe
 
     var lineButton = BarButton('line', function () {
         pencilButton.uncheck()
+        ellipseButton.uncheck()
         rectangleButton.uncheck()
         bucketButton.uncheck()
         lineButton.check()
@@ -28,9 +31,21 @@ function ToolPanel (pencilListener, lineListener, rectangleListener, bucketListe
     })
     lineButton.addClass(classPrefix + '-lineButton')
 
+    var ellipseButton = BarButton('ellipse', function () {
+        pencilButton.uncheck()
+        lineButton.uncheck()
+        rectangleButton.uncheck()
+        bucketButton.uncheck()
+        ellipseButton.check()
+        ellipseListener()
+        hide()
+    })
+    ellipseButton.addClass(classPrefix + '-ellipseButton')
+
     var rectangleButton = BarButton('rectangle', function () {
         pencilButton.uncheck()
         lineButton.uncheck()
+        ellipseButton.uncheck()
         bucketButton.uncheck()
         rectangleButton.check()
         rectangleListener()
@@ -41,6 +56,7 @@ function ToolPanel (pencilListener, lineListener, rectangleListener, bucketListe
     var bucketButton = BarButton('bucket', function () {
         pencilButton.uncheck()
         lineButton.uncheck()
+        ellipseButton.uncheck()
         rectangleButton.uncheck()
         bucketButton.check()
         bucketListener()
@@ -51,6 +67,7 @@ function ToolPanel (pencilListener, lineListener, rectangleListener, bucketListe
     var contentElement = Div(classPrefix + '-content')
     contentElement.appendChild(pencilButton.element)
     contentElement.appendChild(lineButton.element)
+    contentElement.appendChild(ellipseButton.element)
     contentElement.appendChild(rectangleButton.element)
     contentElement.appendChild(bucketButton.element)
 

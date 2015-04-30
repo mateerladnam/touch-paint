@@ -1,0 +1,6 @@
+.EllipseTool-overlayCanvas {
+    display: inline-block;
+    vertical-align: top;
+    position: absolute;
+    pointer-events: none;
+}

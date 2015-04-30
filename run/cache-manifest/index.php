@@ -14,6 +14,7 @@ echo
     ."../images/burger.svg\n"
     ."../images/cancel.svg\n"
     ."../images/color-background.svg\n"
+    ."../images/ellipse.svg\n"
     ."../images/eraser.svg\n"
     ."../images/file.svg\n"
     ."../images/line.svg\n"
