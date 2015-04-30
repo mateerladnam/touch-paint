@@ -44,9 +44,14 @@
         left: 56px;
     }
 
-    .ToolPanel-bucketButton {
+    .ToolPanel-rectangleButton {
         top: 8px;
         left: 104px;
+    }
+
+    .ToolPanel-bucketButton {
+        top: 8px;
+        left: 152px;
     }
 
 }
@@ -76,8 +81,13 @@
         left: 8px;
     }
 
-    .ToolPanel-bucketButton {
+    .ToolPanel-rectangleButton {
         bottom: 104px;
+        left: 8px;
+    }
+
+    .ToolPanel-bucketButton {
+        bottom: 152px;
         left: 8px;
     }
 

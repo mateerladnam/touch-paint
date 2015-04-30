@@ -120,6 +120,12 @@ function MainPanel () {
         primaryTool.enable()
         paramsButton.enable()
     }, function () {
+        primaryToolButton.setIcon('rectangle')
+        primaryTool.disable()
+//        primaryTool = rectangleTool
+        primaryTool.enable()
+        paramsButton.enable()
+    }, function () {
         primaryToolButton.setIcon('bucket')
         primaryTool.disable()
         primaryTool = bucketTool
