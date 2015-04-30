@@ -16,7 +16,7 @@
 
     var finished = 0
     var icons = ['bucket', 'burger', 'eraser', 'line',
-        'palette', 'params', 'pencil', 'undo']
+        'palette', 'params', 'pencil', 'rectangle', 'undo']
     icons.forEach(function (icon) {
         var image = new Image
         image.src = 'images/' + icon + '.svg'
