@@ -879,6 +879,7 @@ function LineTool (size, canvas) {
         c.moveTo(startPoint.x, startPoint.y)
         c.lineTo(endPoint.x, endPoint.y)
         c.strokeStyle = line.color
+        c.lineCap = 'round'
         c.lineWidth = line.size
         c.stroke()
 
@@ -975,7 +976,6 @@ function LineTool (size, canvas) {
     overlayCanvas.style.left = canvasElement.style.left
 
     var overlayC = overlayCanvas.getContext('2d')
-    overlayC.lineCap = 'round'
 
     canvasElement.parentNode.appendChild(overlayCanvas)
 
@@ -1159,7 +1159,7 @@ function MainPanel () {
         paramsPanel.setSize(pencilSize)
         primaryToolButton.mark()
         eraserButton.unmark()
-        updateButtonColor(primaryToolButton, [pencilTool, lineTool, bucketTool])
+        updateButtonColor(primaryToolButton, [pencilTool, lineTool, rectangleTool, bucketTool])
         primaryToolOrEraserListener = primaryToolListener
     }
 
@@ -1218,6 +1218,12 @@ function MainPanel () {
         primaryTool.enable()
         paramsButton.enable()
     }, function () {
+        primaryToolButton.setIcon('rectangle')
+        primaryTool.disable()
+        primaryTool = rectangleTool
+        primaryTool.enable()
+        paramsButton.enable()
+    }, function () {
         primaryToolButton.setIcon('bucket')
         primaryTool.disable()
         primaryTool = bucketTool
@@ -1262,6 +1268,8 @@ function MainPanel () {
 
     var lineTool = LineTool(pencilSize, canvas)
 
+    var rectangleTool = RectangleTool(pencilSize, canvas)
+
     var bucketTool = BucketTool(canvas)
 
     var eraserTool = PencilTool(eraserSize, canvas)
@@ -1277,6 +1285,7 @@ function MainPanel () {
             pencilSize = size
             pencilTool.setSize(size)
             lineTool.setSize(size)
+            rectangleTool.setSize(size)
         } else {
             eraserSize = size
             eraserTool.setSize(size)
@@ -1914,6 +1923,184 @@ function PickTool (canvas, pickListener) {
 
 }
 ;
+function RectangleTool (size, canvas) {
+
+    function beginRectangle (e) {
+
+        var startPoint = {}
+        setCoords(startPoint, e)
+
+        var endPoint = {
+            x: startPoint.x,
+            y: startPoint.y
+        }
+
+        var that = {
+            color: hsl,
+            endPoint: endPoint,
+            size: size,
+            startPoint: startPoint,
+            end: function () {
+                rectangles.splice(rectangles.indexOf(that), 1)
+                update()
+                canvas.operate(function (c) {
+                    drawRectangle(c, that)
+                })
+            },
+            move: function (e) {
+                setCoords(endPoint, e)
+                update()
+            },
+        }
+
+        rectangles.push(that)
+        update()
+
+        return that
+
+    }
+
+    function drawRectangle (c, rectangle) {
+
+        var startPoint = rectangle.startPoint,
+            startX = startPoint.x,
+            startY = startPoint.y,
+            endPoint = rectangle.endPoint
+
+        c.beginPath()
+        c.rect(startX, startY, endPoint.x - startX, endPoint.y - startY)
+        c.strokeStyle = rectangle.color
+        c.lineJoin = 'round'
+        c.lineWidth = rectangle.size
+        c.stroke()
+
+    }
+
+    function mouseDown (e) {
+
+        function mouseMove (e) {
+            rectangle.move(e)
+            update()
+        }
+
+        function mouseUp () {
+            rectangle.end()
+            removeEventListener('mousemove', mouseMove)
+            removeEventListener('mouseup', mouseUp)
+        }
+
+        if (e.button !== 0) return
+
+        e.preventDefault()
+        if (touched) touched = false
+        else {
+            var rectangle = beginRectangle(e)
+            addEventListener('mousemove', mouseMove)
+            addEventListener('mouseup', mouseUp)
+        }
+
+    }
+
+    function setCoords (coords, e) {
+        var rect = canvasElement.getBoundingClientRect()
+        coords.x = e.clientX - rect.left
+        coords.y = e.clientY - rect.top
+    }
+
+    function touchEnd (e) {
+        touched = true
+        e.preventDefault()
+        var touches = e.changedTouches
+        for (var i = 0; i < touches.length; i++) {
+            var touch = touches[i]
+            var identifier = touch.identifier
+            var activeTouch = activeTouches[identifier]
+            if (!activeTouch) continue
+            activeTouch.end()
+            delete activeTouches[identifier]
+        }
+    }
+
+    function touchMove (e) {
+        touched = true
+        e.preventDefault()
+        var touches = e.changedTouches
+        for (var i = 0; i < touches.length; i++) {
+            var touch = touches[i]
+            var activeTouch = activeTouches[touch.identifier]
+            if (!activeTouch) continue
+            activeTouch.move(touch)
+        }
+    }
+
+    function touchStart (e) {
+        touched = true
+        e.preventDefault()
+        var touches = e.changedTouches
+        for (var i = 0; i < touches.length; i++) {
+            var touch = touches[i]
+            activeTouches[touch.identifier] = beginRectangle(touch)
+        }
+    }
+
+    function update () {
+        overlayC.clearRect(0, 0, overlayCanvas.width, overlayCanvas.height)
+        rectangles.forEach(function (rectangle) {
+            drawRectangle(overlayC, rectangle)
+        })
+    }
+
+    var rectangles = []
+
+    var touched = false
+    var activeTouches = {}
+    var enabled = false
+    var canvasElement = canvas.canvas
+    var hue = 0, saturation = 0, luminance = 0, alpha = 1
+    var hsl = 'hsla(0, 0%, 0%, 1)'
+
+    var overlayCanvas = document.createElement('canvas')
+    overlayCanvas.className = 'RectangleTool-overlayCanvas'
+    overlayCanvas.width = canvasElement.width
+    overlayCanvas.height = canvasElement.height
+    overlayCanvas.style.top = canvasElement.style.top
+    overlayCanvas.style.left = canvasElement.style.left
+
+    var overlayC = overlayCanvas.getContext('2d')
+
+    canvasElement.parentNode.appendChild(overlayCanvas)
+
+    return {
+        disable: function () {
+            if (!enabled) return
+            canvasElement.removeEventListener('mousedown', mouseDown)
+            canvasElement.removeEventListener('touchstart', touchStart)
+            canvasElement.removeEventListener('touchmove', touchMove)
+            canvasElement.removeEventListener('touchend', touchEnd)
+            enabled = false
+        },
+        enable: function () {
+            if (enabled) return
+            canvasElement.addEventListener('mousedown', mouseDown)
+            canvasElement.addEventListener('touchstart', touchStart)
+            canvasElement.addEventListener('touchmove', touchMove)
+            canvasElement.addEventListener('touchend', touchEnd)
+            enabled = true
+        },
+        setColor: function (_hue, _saturation, _luminance, _alpha) {
+            hue = _hue
+            saturation = _saturation
+            luminance = _luminance
+            alpha = _alpha
+            hsl = 'hsla(' + hue + ', ' + saturation + '%, ' + luminance + '%, ' + alpha + ')'
+        },
+        setSize: function (_size) {
+            size = _size
+        },
+    }
+
+}
+;
 function rgb2hsl (r, g, b) {
     var max, min, h, s, l, d
     r /= 255
@@ -2212,7 +2399,7 @@ function ToolButton (icon, clickListener) {
 
 }
 ;
-function ToolPanel (pencilListener, lineListener, bucketListener) {
+function ToolPanel (pencilListener, lineListener, rectangleListener, bucketListener) {
 
     function hide () {
         classList.remove('visible')
@@ -2223,6 +2410,7 @@ function ToolPanel (pencilListener, lineListener, bucketListener) {
 
     var pencilButton = BarButton('pencil', function () {
         lineButton.uncheck()
+        rectangleButton.uncheck()
         bucketButton.uncheck()
         pencilButton.check()
         pencilListener()
@@ -2233,6 +2421,7 @@ function ToolPanel (pencilListener, lineListener, bucketListener) {
 
     var lineButton = BarButton('line', function () {
         pencilButton.uncheck()
+        rectangleButton.uncheck()
         bucketButton.uncheck()
         lineButton.check()
         lineListener()
@@ -2240,9 +2429,20 @@ function ToolPanel (pencilListener, lineListener, bucketListener) {
     })
     lineButton.addClass(classPrefix + '-lineButton')
 
+    var rectangleButton = BarButton('rectangle', function () {
+        pencilButton.uncheck()
+        lineButton.uncheck()
+        bucketButton.uncheck()
+        rectangleButton.check()
+        rectangleListener()
+        hide()
+    })
+    rectangleButton.addClass(classPrefix + '-rectangleButton')
+
     var bucketButton = BarButton('bucket', function () {
         pencilButton.uncheck()
         lineButton.uncheck()
+        rectangleButton.uncheck()
         bucketButton.check()
         bucketListener()
         hide()
@@ -2252,6 +2452,7 @@ function ToolPanel (pencilListener, lineListener, bucketListener) {
     var contentElement = Div(classPrefix + '-content')
     contentElement.appendChild(pencilButton.element)
     contentElement.appendChild(lineButton.element)
+    contentElement.appendChild(rectangleButton.element)
     contentElement.appendChild(bucketButton.element)
 
     var element = Div(classPrefix)
@@ -2367,7 +2568,7 @@ function UndoButton (undoListener) {
 
     var finished = 0
     var icons = ['bucket', 'burger', 'eraser', 'line',
-        'palette', 'params', 'pencil', 'undo']
+        'palette', 'params', 'pencil', 'rectangle', 'undo']
     icons.forEach(function (icon) {
         var image = new Image
         image.src = 'images/' + icon + '.svg'
