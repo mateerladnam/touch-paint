@@ -1,0 +1,31 @@
+.ButtonExpandable-top {
+    position: absolute;
+    top: -8px;
+    right: 0;
+    left: 0;
+    margin: auto;
+    width: 24px;
+    height: 8px;
+}
+
+.ButtonExpandable-left {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: -8px;
+    margin: auto;
+    width: 8px;
+    height: 24px;
+}
+
+@media (orientation: portrait) {
+    .ButtonExpandable-left {
+        display: none;
+    }
+}
+
+@media (orientation: landscape) {
+    .ButtonExpandable-top {
+        display: none;
+    }
+}

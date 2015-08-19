@@ -23,8 +23,10 @@ function ToolButton (icon, clickListener) {
         addClass: barButton.addClass,
         check: barButton.check,
         element: element,
+        hideExpandable: barButton.hideExpandable,
         isChecked: barButton.isChecked,
         setIcon: barButton.setIcon,
+        showExpandable: barButton.showExpandable,
         uncheck: barButton.uncheck,
         mark: function () {
             classList.add('marked')

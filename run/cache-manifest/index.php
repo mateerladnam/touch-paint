@@ -17,6 +17,7 @@ echo
     ."../images/ellipse.svg\n"
     ."../images/eraser.svg\n"
     ."../images/file.svg\n"
+    ."../images/left-expandable.svg\n"
     ."../images/line.svg\n"
     ."../images/open.svg\n"
     ."../images/palette.svg\n"
@@ -25,4 +26,5 @@ echo
     ."../images/pick.svg\n"
     ."../images/rectangle.svg\n"
     ."../images/save.svg\n"
+    ."../images/top-expandable.svg\n"
     ."../images/undo.svg\n";

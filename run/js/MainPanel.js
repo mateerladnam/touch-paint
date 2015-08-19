@@ -29,6 +29,7 @@ function MainPanel () {
 
     function disablePrimaryTool () {
         primaryToolButton.uncheck()
+        primaryToolButton.hideExpandable()
         primaryTool.disable()
     }
 
@@ -39,6 +40,7 @@ function MainPanel () {
 
     function enablePrimaryTool () {
         primaryToolButton.check()
+        primaryToolButton.showExpandable()
         primaryTool.enable()
     }
 
@@ -263,6 +265,7 @@ function MainPanel () {
         }
     })
     paletteButton.addClass(classPrefix + '-paletteButton')
+    paletteButton.showExpandable()
 
     var paramsButton = BarButton('params', function () {
         if (paramsButton.isChecked()) {
@@ -282,6 +285,7 @@ function MainPanel () {
         }
     })
     paramsButton.addClass(classPrefix + '-paramsButton')
+    paramsButton.showExpandable()
 
     var undoButton = UndoButton(canvas.undo)
 
@@ -306,6 +310,7 @@ function MainPanel () {
         }
     })
     fileButton.addClass(classPrefix + '-fileButton')
+    fileButton.showExpandable()
 
     var contentElement = Div(classPrefix + '-content')
     contentElement.appendChild(canvas.element)

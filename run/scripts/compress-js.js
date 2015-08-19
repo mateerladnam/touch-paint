@@ -10,6 +10,7 @@ var files = [
     'AlphaSlider',
     'BarButton',
     'BucketTool',
+    'ButtonExpandable',
     'Canvas',
     'ColorButton',
     'ColorButtonsPanel',

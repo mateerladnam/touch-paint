@@ -38,6 +38,8 @@ function BarButton (icon, clickListener) {
     var element = Div('Button')
     element.appendChild(contentElement)
 
+    var buttonExpandable = ButtonExpandable(element)
+
     var activeTimeout
     var checked = false
     var classList = element.classList
@@ -48,7 +50,9 @@ function BarButton (icon, clickListener) {
     return {
         contentElement: contentElement,
         element: element,
+        hideExpandable: buttonExpandable.hide,
         setIcon: setIcon,
+        showExpandable: buttonExpandable.show,
         addClass: function (className) {
             classList.add(className)
         },

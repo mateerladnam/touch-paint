@@ -5,6 +5,7 @@ echo_html(
     '<html>',
     '<link rel="stylesheet" type="text/css" href="css/Main.css" />'
     .'<link rel="stylesheet" type="text/css" href="css/Button.css" />'
+    .'<link rel="stylesheet" type="text/css" href="css/ButtonExpandable.css" />'
     .'<link rel="stylesheet" type="text/css" href="css/Canvas.css" />'
     .'<link rel="stylesheet" type="text/css" href="css/ColorButton.css" />'
     .'<link rel="stylesheet" type="text/css" href="css/ColorButtonsPanel.css" />'
@@ -31,6 +32,7 @@ echo_html(
     '<script type="text/javascript" src="js/AlphaSlider.js"></script>'
     .'<script type="text/javascript" src="js/BarButton.js"></script>'
     .'<script type="text/javascript" src="js/BucketTool.js"></script>'
+    .'<script type="text/javascript" src="js/ButtonExpandable.js"></script>'
     .'<script type="text/javascript" src="js/Canvas.js"></script>'
     .'<script type="text/javascript" src="js/ColorButton.js"></script>'
     .'<script type="text/javascript" src="js/ColorButtonsPanel.js"></script>'

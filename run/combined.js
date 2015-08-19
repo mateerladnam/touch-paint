@@ -94,6 +94,8 @@ function BarButton (icon, clickListener) {
     var element = Div('Button')
     element.appendChild(contentElement)
 
+    var buttonExpandable = ButtonExpandable(element)
+
     var activeTimeout
     var checked = false
     var classList = element.classList
@@ -104,7 +106,9 @@ function BarButton (icon, clickListener) {
     return {
         contentElement: contentElement,
         element: element,
+        hideExpandable: buttonExpandable.hide,
         setIcon: setIcon,
+        showExpandable: buttonExpandable.show,
         addClass: function (className) {
             classList.add(className)
         },
@@ -300,6 +304,33 @@ function BucketTool (canvas) {
 
 }
 ;
+function ButtonExpandable (element) {
+
+    var topElement = Div('ButtonExpandable-top')
+    topElement.style.backgroundImage = 'url(images/top-expandable.svg)'
+
+    var leftElement = Div('ButtonExpandable-left')
+    leftElement.style.backgroundImage = 'url(images/left-expandable.svg)'
+
+    var visible = false
+
+    return {
+        hide: function () {
+            if (visible === false) return
+            visible = false
+            element.removeChild(topElement)
+            element.removeChild(leftElement)
+        },
+        show: function () {
+            if (visible === true) return
+            visible = true
+            element.appendChild(topElement)
+            element.appendChild(leftElement)
+        },
+    }
+
+}
+;
 function Canvas () {
 
     var classPrefix = 'Canvas'
@@ -445,6 +476,8 @@ function ColorButton (clickListener) {
         click()
     })
 
+    var buttonExpandable = ButtonExpandable(element)
+
     var activeTimeout
     var checked = false
     var classList = element.classList
@@ -454,6 +487,8 @@ function ColorButton (clickListener) {
     return {
         color: color,
         element: element,
+        hideExpandable: buttonExpandable.hide,
+        showExpandable: buttonExpandable.show,
         addClass: function (className) {
             classList.add(className)
         },
@@ -1326,6 +1361,7 @@ function MainPanel () {
 
     function disablePrimaryTool () {
         primaryToolButton.uncheck()
+        primaryToolButton.hideExpandable()
         primaryTool.disable()
     }
 
@@ -1336,6 +1372,7 @@ function MainPanel () {
 
     function enablePrimaryTool () {
         primaryToolButton.check()
+        primaryToolButton.showExpandable()
         primaryTool.enable()
     }
 
@@ -1560,6 +1597,7 @@ function MainPanel () {
         }
     })
     paletteButton.addClass(classPrefix + '-paletteButton')
+    paletteButton.showExpandable()
 
     var paramsButton = BarButton('params', function () {
         if (paramsButton.isChecked()) {
@@ -1579,6 +1617,7 @@ function MainPanel () {
         }
     })
     paramsButton.addClass(classPrefix + '-paramsButton')
+    paramsButton.showExpandable()
 
     var undoButton = UndoButton(canvas.undo)
 
@@ -1603,6 +1642,7 @@ function MainPanel () {
         }
     })
     fileButton.addClass(classPrefix + '-fileButton')
+    fileButton.showExpandable()
 
     var contentElement = Div(classPrefix + '-content')
     contentElement.appendChild(canvas.element)
@@ -1707,6 +1747,7 @@ function PalettePanel (colorListener, closeListener, buttonListener, pickListene
     })
     previewButton.setColor(0, 0, 0, 1)
     previewButton.addClass(classPrefix + '-previewButton')
+    previewButton.showExpandable()
 
     var editColorPanel = EditColorPanel(function (hue, saturation, luminance, alpha) {
         previewButton.setColor(hue, saturation, luminance, alpha)
@@ -2583,8 +2624,10 @@ function ToolButton (icon, clickListener) {
         addClass: barButton.addClass,
         check: barButton.check,
         element: element,
+        hideExpandable: barButton.hideExpandable,
         isChecked: barButton.isChecked,
         setIcon: barButton.setIcon,
+        showExpandable: barButton.showExpandable,
         uncheck: barButton.uncheck,
         mark: function () {
             classList.add('marked')
@@ -2795,8 +2838,9 @@ function UndoButton (undoListener) {
     body.appendChild(loadBarElement)
 
     var finished = 0
-    var icons = ['bucket', 'burger', 'ellipse', 'eraser', 'line',
-        'palette', 'params', 'pencil', 'rectangle', 'undo']
+    var icons = ['bucket', 'burger', 'ellipse', 'eraser',
+        'left-expandable', 'line', 'palette', 'params',
+        'pencil', 'rectangle', 'top-expandable', 'undo']
     icons.forEach(function (icon) {
         var image = new Image
         image.src = 'images/' + icon + '.svg'

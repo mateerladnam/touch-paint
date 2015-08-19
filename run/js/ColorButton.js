@@ -36,6 +36,8 @@ function ColorButton (clickListener) {
         click()
     })
 
+    var buttonExpandable = ButtonExpandable(element)
+
     var activeTimeout
     var checked = false
     var classList = element.classList
@@ -45,6 +47,8 @@ function ColorButton (clickListener) {
     return {
         color: color,
         element: element,
+        hideExpandable: buttonExpandable.hide,
+        showExpandable: buttonExpandable.show,
         addClass: function (className) {
             classList.add(className)
         },

@@ -34,6 +34,7 @@ function PalettePanel (colorListener, closeListener, buttonListener, pickListene
     })
     previewButton.setColor(0, 0, 0, 1)
     previewButton.addClass(classPrefix + '-previewButton')
+    previewButton.showExpandable()
 
     var editColorPanel = EditColorPanel(function (hue, saturation, luminance, alpha) {
         previewButton.setColor(hue, saturation, luminance, alpha)

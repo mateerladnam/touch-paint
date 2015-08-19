@@ -9,6 +9,7 @@ var fs = require('fs'),
 var files = [
     'Main',
     'Button',
+    'ButtonExpandable',
     'Canvas',
     'ColorButton',
     'ColorButtonsPanel',
