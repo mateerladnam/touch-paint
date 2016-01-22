@@ -79,6 +79,11 @@ function Canvas () {
                 operations[i].operation(undoC)
             }
 
+            if (undoCanvases.length > 16) {
+                initialC.drawImage(undoCanvases.shift(), 0, 0)
+                operations.splice(0, undoSize)
+            }
+
         },
         undo: function () {
 
