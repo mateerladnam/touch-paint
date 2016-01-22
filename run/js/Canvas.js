@@ -20,6 +20,14 @@ function Canvas () {
     var element = Div(classPrefix)
     element.appendChild(centerElement)
 
+    var initialCanvas = document.createElement('canvas')
+    initialCanvas.width = initialCanvas.height = size
+
+    var initialC = initialCanvas.getContext('2d')
+    initialC.lineCap = 'round'
+    initialC.fillStyle = '#fff'
+    initialC.fillRect(0, 0, size, size)
+
     var operations = []
 
     var undoAvailableListener
@@ -62,8 +70,7 @@ function Canvas () {
             if (canvasIndex) {
                 undoC.drawImage(undoCanvases[canvasIndex - 1], 0, 0)
             } else {
-                undoC.fillStyle = '#fff'
-                undoC.fillRect(0, 0, size, size)
+                undoC.drawImage(initialCanvas, 0, 0)
             }
 
             undoCanvases.push(undoCanvas)
@@ -79,8 +86,7 @@ function Canvas () {
             if (undoCanvases.length) {
                 c.drawImage(undoCanvases[undoCanvases.length - 1], 0, 0)
             } else {
-                c.fillStyle = '#fff'
-                c.fillRect(0, 0, size, size)
+                c.drawImage(initialCanvas, 0, 0)
             }
 
             if (!operations.length) return 50
