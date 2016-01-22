@@ -353,6 +353,14 @@ function Canvas () {
     var element = Div(classPrefix)
     element.appendChild(centerElement)
 
+    var initialCanvas = document.createElement('canvas')
+    initialCanvas.width = initialCanvas.height = size
+
+    var initialC = initialCanvas.getContext('2d')
+    initialC.lineCap = 'round'
+    initialC.fillStyle = '#fff'
+    initialC.fillRect(0, 0, size, size)
+
     var operations = []
 
     var undoAvailableListener
@@ -395,14 +403,18 @@ function Canvas () {
             if (canvasIndex) {
                 undoC.drawImage(undoCanvases[canvasIndex - 1], 0, 0)
             } else {
-                undoC.fillStyle = '#fff'
-                undoC.fillRect(0, 0, size, size)
+                undoC.drawImage(initialCanvas, 0, 0)
             }
 
             undoCanvases.push(undoCanvas)
 
             for (var i = operationIndex; i < operationIndex + undoSize; i++) {
                 operations[i].operation(undoC)
+            }
+
+            if (undoCanvases.length > 16) {
+                initialC.drawImage(undoCanvases.shift(), 0, 0)
+                operations.splice(0, undoSize)
             }
 
         },
@@ -412,8 +424,7 @@ function Canvas () {
             if (undoCanvases.length) {
                 c.drawImage(undoCanvases[undoCanvases.length - 1], 0, 0)
             } else {
-                c.fillStyle = '#fff'
-                c.fillRect(0, 0, size, size)
+                c.drawImage(initialCanvas, 0, 0)
             }
 
             if (!operations.length) return 50
@@ -886,6 +897,7 @@ function EllipseTool (size, canvas) {
             canvasElement.removeEventListener('touchstart', touchStart)
             canvasElement.removeEventListener('touchmove', touchMove)
             canvasElement.removeEventListener('touchend', touchEnd)
+            canvasElement.removeEventListener('touchcancel', touchEnd)
             enabled = false
         },
         enable: function () {
@@ -894,6 +906,7 @@ function EllipseTool (size, canvas) {
             canvasElement.addEventListener('touchstart', touchStart)
             canvasElement.addEventListener('touchmove', touchMove)
             canvasElement.addEventListener('touchend', touchEnd)
+            canvasElement.addEventListener('touchcancel', touchEnd)
             enabled = true
         },
         setColor: function (_hue, _saturation, _luminance, _alpha) {
@@ -1220,6 +1233,7 @@ function LineTool (size, canvas) {
             canvasElement.removeEventListener('touchstart', touchStart)
             canvasElement.removeEventListener('touchmove', touchMove)
             canvasElement.removeEventListener('touchend', touchEnd)
+            canvasElement.removeEventListener('touchcancel', touchEnd)
             enabled = false
         },
         enable: function () {
@@ -1228,6 +1242,7 @@ function LineTool (size, canvas) {
             canvasElement.addEventListener('touchstart', touchStart)
             canvasElement.addEventListener('touchmove', touchMove)
             canvasElement.addEventListener('touchend', touchEnd)
+            canvasElement.addEventListener('touchcancel', touchEnd)
             enabled = true
         },
         setColor: function (_hue, _saturation, _luminance, _alpha) {
@@ -2001,6 +2016,7 @@ function PencilTool (size, canvas) {
             canvasElement.removeEventListener('touchstart', touchStart)
             canvasElement.removeEventListener('touchmove', touchMove)
             canvasElement.removeEventListener('touchend', touchEnd)
+            canvasElement.removeEventListener('touchcancel', touchEnd)
             enabled = false
         },
         enable: function () {
@@ -2009,6 +2025,7 @@ function PencilTool (size, canvas) {
             canvasElement.addEventListener('touchstart', touchStart)
             canvasElement.addEventListener('touchmove', touchMove)
             canvasElement.addEventListener('touchend', touchEnd)
+            canvasElement.addEventListener('touchcancel', touchEnd)
             enabled = true
         },
         setColor: function (_hue, _saturation, _luminance, _alpha) {
@@ -2157,6 +2174,7 @@ function PickTool (canvas, pickListener) {
             canvasElement.removeEventListener('touchstart', touchStart)
             removeEventListener('touchmove', touchMove)
             removeEventListener('touchend', touchEnd)
+            removeEventListener('touchcancel', touchEnd)
             enabled = false
         },
         enable: function () {
@@ -2165,6 +2183,7 @@ function PickTool (canvas, pickListener) {
             canvasElement.addEventListener('touchstart', touchStart)
             addEventListener('touchmove', touchMove)
             addEventListener('touchend', touchEnd)
+            addEventListener('touchcancel', touchEnd)
             enabled = true
             data = c.getImageData(0, 0, canvasWidth, canvasHeight).data
         },
@@ -2326,6 +2345,7 @@ function RectangleTool (size, canvas) {
             canvasElement.removeEventListener('touchstart', touchStart)
             canvasElement.removeEventListener('touchmove', touchMove)
             canvasElement.removeEventListener('touchend', touchEnd)
+            canvasElement.removeEventListener('touchcancel', touchEnd)
             enabled = false
         },
         enable: function () {
@@ -2334,6 +2354,7 @@ function RectangleTool (size, canvas) {
             canvasElement.addEventListener('touchstart', touchStart)
             canvasElement.addEventListener('touchmove', touchMove)
             canvasElement.addEventListener('touchend', touchEnd)
+            canvasElement.addEventListener('touchcancel', touchEnd)
             enabled = true
         },
         setColor: function (_hue, _saturation, _luminance, _alpha) {
@@ -2494,6 +2515,7 @@ function Slider (changeListener, endListener) {
             removeEventListener('mouseup', mouseUp)
             removeEventListener('touchmove', touchMove)
             removeEventListener('touchend', touchEnd)
+            removeEventListener('touchcancel', touchEnd)
         }
 
         function mouseMove (e) {
@@ -2538,6 +2560,7 @@ function Slider (changeListener, endListener) {
         addEventListener('mouseup', mouseUp)
         addEventListener('touchmove', touchMove)
         addEventListener('touchend', touchEnd)
+        addEventListener('touchcancel', touchEnd)
 
     }
 
@@ -2751,6 +2774,7 @@ function UndoButton (undoListener) {
         function endUndo () {
             removeEventListener('mouseup', mouseUp)
             removeEventListener('touchend', touchEnd)
+            removeEventListener('touchcancel', touchEnd)
             classList.remove('active')
             clearTimeout(repeatTimeout)
         }
@@ -2777,8 +2801,9 @@ function UndoButton (undoListener) {
 
         var touched = false
 
-        addEventListener('touchend', touchEnd)
         addEventListener('mouseup', mouseUp)
+        addEventListener('touchend', touchEnd)
+        addEventListener('touchcancel', touchEnd)
         classList.add('active')
         undo()
 
