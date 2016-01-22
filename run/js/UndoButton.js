@@ -5,6 +5,7 @@ function UndoButton (undoListener) {
         function endUndo () {
             removeEventListener('mouseup', mouseUp)
             removeEventListener('touchend', touchEnd)
+            removeEventListener('touchcancel', touchEnd)
             classList.remove('active')
             clearTimeout(repeatTimeout)
         }
@@ -31,8 +32,9 @@ function UndoButton (undoListener) {
 
         var touched = false
 
-        addEventListener('touchend', touchEnd)
         addEventListener('mouseup', mouseUp)
+        addEventListener('touchend', touchEnd)
+        addEventListener('touchcancel', touchEnd)
         classList.add('active')
         undo()
 

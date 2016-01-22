@@ -151,6 +151,7 @@ function LineTool (size, canvas) {
             canvasElement.removeEventListener('touchstart', touchStart)
             canvasElement.removeEventListener('touchmove', touchMove)
             canvasElement.removeEventListener('touchend', touchEnd)
+            canvasElement.removeEventListener('touchcancel', touchEnd)
             enabled = false
         },
         enable: function () {
@@ -159,6 +160,7 @@ function LineTool (size, canvas) {
             canvasElement.addEventListener('touchstart', touchStart)
             canvasElement.addEventListener('touchmove', touchMove)
             canvasElement.addEventListener('touchend', touchEnd)
+            canvasElement.addEventListener('touchcancel', touchEnd)
             enabled = true
         },
         setColor: function (_hue, _saturation, _luminance, _alpha) {

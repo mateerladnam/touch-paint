@@ -98,6 +98,7 @@ function PickTool (canvas, pickListener) {
             canvasElement.removeEventListener('touchstart', touchStart)
             removeEventListener('touchmove', touchMove)
             removeEventListener('touchend', touchEnd)
+            removeEventListener('touchcancel', touchEnd)
             enabled = false
         },
         enable: function () {
@@ -106,6 +107,7 @@ function PickTool (canvas, pickListener) {
             canvasElement.addEventListener('touchstart', touchStart)
             addEventListener('touchmove', touchMove)
             addEventListener('touchend', touchEnd)
+            addEventListener('touchcancel', touchEnd)
             enabled = true
             data = c.getImageData(0, 0, canvasWidth, canvasHeight).data
         },

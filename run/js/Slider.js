@@ -34,6 +34,7 @@ function Slider (changeListener, endListener) {
             removeEventListener('mouseup', mouseUp)
             removeEventListener('touchmove', touchMove)
             removeEventListener('touchend', touchEnd)
+            removeEventListener('touchcancel', touchEnd)
         }
 
         function mouseMove (e) {
@@ -78,6 +79,7 @@ function Slider (changeListener, endListener) {
         addEventListener('mouseup', mouseUp)
         addEventListener('touchmove', touchMove)
         addEventListener('touchend', touchEnd)
+        addEventListener('touchcancel', touchEnd)
 
     }
 
